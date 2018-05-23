@@ -70,6 +70,29 @@ namespace JingTum.Lib
             return true;
         }
 
+        public static object ToAmount(AmountSettings amount)
+        {
+            if (amount == null) return null;
+
+            decimal value = 0;
+            if (amount.Value != null && !decimal.TryParse(amount.Value, out value))
+            {
+                return new Exception("Invalid amount value.");
+            }
+
+            if (value > new decimal(100000000000))
+            {
+                return new Exception("Invalid amount: amount\'s maximum value is 100000000000");
+            }
+
+            if (amount.Currency == Config.Currency)
+            {
+                return (value * 1000000).ToString("0");
+            }
+
+            return amount;
+        }
+
         public static string Sha1(string data)
         {
             var hash = System.Security.Cryptography.SHA1.Create();

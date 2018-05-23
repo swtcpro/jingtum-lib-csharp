@@ -37,7 +37,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             var ov = (byte)Convert.ChangeType(val, typeof(byte));
             Serialize(so, ov, noMarker);
@@ -61,7 +61,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             var ov = (ushort)Convert.ChangeType(val, typeof(ushort));
             Serialize(so, ov, noMarker);
@@ -138,7 +138,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (MemoDataInfo)val, noMarker);
         }
@@ -192,7 +192,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (ParameterInfo)val, noMarker);
         }
@@ -215,7 +215,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             var ov = (uint)Convert.ChangeType(val, typeof(uint));
             Serialize(so, ov, noMarker);
@@ -239,7 +239,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             ulong? number = Utils.TryGetNumber<ulong>(val, false);
             if(number.HasValue)
@@ -297,7 +297,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val, noMarker);
         }
@@ -327,7 +327,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val, noMarker);
         }
@@ -463,7 +463,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             var amount = TumAmount.FromJson(val);
             Serialize(so, amount);
@@ -535,7 +535,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val);
         }
@@ -613,7 +613,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (IEnumerable)val);
         }
@@ -636,7 +636,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val);
         }
@@ -723,7 +723,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (PathComputed[][])val);
         }
@@ -751,7 +751,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (IEnumerable<string>)val);
         }
@@ -774,7 +774,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val);
         }
@@ -799,7 +799,7 @@ namespace JingTum.Lib
             return Parse(so);
         }
 
-        void ISerializedType.Serialize(Serializer so, object val, bool noMarker = false)
+        void ISerializedType.Serialize(Serializer so, object val, bool noMarker)
         {
             Serialize(so, (string)val);
         }

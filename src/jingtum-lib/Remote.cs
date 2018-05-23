@@ -837,7 +837,7 @@ namespace JingTum.Lib
             request.Message.subcommand = "create";
             request.Message.source_account = options.Account;
             request.Message.destination_account = options.Destination;
-            request.Message.destination_amount = ToAmount(options.Amount);
+            request.Message.destination_amount = Utils.ToAmount(options.Amount);
             return request;
         }
         #endregion
@@ -883,29 +883,6 @@ namespace JingTum.Lib
         #endregion
 
         #region transaction request
-        private object ToAmount(AmountSettings amount)
-        {
-            if (amount == null) return null;
-
-            decimal value = 0;
-            if (amount.Value!=null && !decimal.TryParse(amount.Value, out value))
-            {
-                return new Exception("Invalid amount value.");
-            }
-
-            if (value > new decimal(100000000000))
-            {
-                return new Exception("Invalid amount: amount\'s maximum value is 100000000000");
-            }
-
-            if(amount.Currency == Config.Currency)
-            {
-                return (value * 1000000).ToString("0");
-            }
-
-            return amount;
-        }
-
         /// <summary>
         /// Creates <see cref="Transaction"/> object and builds normal payment transaction.
         /// </summary>
@@ -942,7 +919,7 @@ namespace JingTum.Lib
 
             tx.SetTransactionType(TransactionType.Payment);
             tx.TxJson.Account = options.From;
-            tx.TxJson.Amount = ToAmount(options.Amount);
+            tx.TxJson.Amount = Utils.ToAmount(options.Amount);
             tx.TxJson.Destination = options.To;
 
             return tx;
@@ -973,7 +950,7 @@ namespace JingTum.Lib
 
             tx.SetTransactionType(TransactionType.ConfigContract);
             tx.TxJson.Account = options.Account;
-            tx.TxJson.Amount = (options.Amount * 1000000).ToString();
+            tx.TxJson.Amount = (options.Amount * 1000000).ToString("0");
             tx.TxJson.Method = 0;
             tx.TxJson.Payload = Utils.StringToHex(options.Payload);
             tx.TxJson.Args = options.Params == null ? new ArgInfo[0] : options.Params.Select(p=>
@@ -1114,7 +1091,7 @@ namespace JingTum.Lib
             tx.SetTransactionType(options.Type == RelationType.Unfreeze ? TransactionType.RelationDel : TransactionType.RelationSet);
             tx.TxJson.Account = options.Account;
             tx.TxJson.Target = options.Target;
-            tx.TxJson.RelationType = options.Type == RelationType.Authorize ? "1" : "3";
+            tx.TxJson.RelationType = (uint)(options.Type == RelationType.Authorize ? 1 : 3);
             if (options.Limit != null)
             {
                 tx.TxJson.LimitAmount = options.Limit;
@@ -1278,8 +1255,8 @@ namespace JingTum.Lib
                 tx.SetFlags((UInt32)OfferCreateFlags.Sell);
             }
             tx.TxJson.Account = options.Account;
-            tx.TxJson.TakerPays = ToAmount(takerPays);
-            tx.TxJson.TakerGets = ToAmount(takerGets);
+            tx.TxJson.TakerPays = Utils.ToAmount(takerPays);
+            tx.TxJson.TakerGets = Utils.ToAmount(takerGets);
 
             return tx;
         }
