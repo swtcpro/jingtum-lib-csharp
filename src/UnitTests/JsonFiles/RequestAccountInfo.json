@@ -1,0 +1,21 @@
+﻿{
+    "id": 0,
+    "result": {
+        "account_data": {
+            "Account": "jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT",
+            "Balance": "1015641623",
+            "Flags": 0,
+            "LedgerEntryType": "AccountRoot",
+            "OwnerCount": 0,
+            "PreviousTxnID": "0798938CD98C5722FD153B1397F576BFFF834B109873A0B265113757B9001B7E",
+            "PreviousTxnLgrSeq": 9551979,
+            "Sequence": 5,
+            "index": "8532904D645677129310E09C74A0F4CF371ED569B49B78CC4D0F3F2D3C377986"
+        },
+        "ledger_hash": "D6CA7D280B4D54131303A0BDFE7F16CED6CCA0523569365E6E9D53C73A9F234A",
+        "ledger_index": 9646117,
+        "validated": true
+    },
+    "status": "success",
+    "type": "response"
+}

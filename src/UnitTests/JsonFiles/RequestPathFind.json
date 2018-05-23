@@ -1,0 +1,30 @@
+﻿{
+    "id": 0,
+    "result": {
+        "alternatives": [
+            {
+                "paths_computed": [
+                    [
+                        {
+                            "currency": "CNY",
+                            "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                            "type": 48,
+                            "type_hex": "0000000000000030"
+                        }
+                    ]
+                ],
+                "source_amount": "24661"
+            }
+        ],
+        "destination_account": "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn",
+        "destination_amount": {
+            "currency": "CNY",
+            "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+            "value": "0.001"
+        },
+        "id": 3,
+        "source_account": "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr"
+    },
+    "status": "success",
+    "type": "response"
+}

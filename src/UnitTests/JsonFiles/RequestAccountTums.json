@@ -1,0 +1,12 @@
+﻿{
+    "id": 0,
+    "result": {
+        "ledger_hash": "62F993679853F86A6193CBFC017F307A60A78B74D1E57C50676D74816B0CCFC6",
+        "ledger_index": 9646172,
+        "receive_currencies": [ "CNY" ],
+        "send_currencies": [ "USD" ],
+        "validated": true
+    },
+    "status": "success",
+    "type": "response"
+}

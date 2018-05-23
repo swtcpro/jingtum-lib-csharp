@@ -1,0 +1,37 @@
+﻿{
+    "id": 0,
+    "result": {
+        "account": "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr",
+        "ledger_hash": "A7C9D84B7FAD0AE7DA7A835AA74FAAF02CF69042735E32EA13EEB30C00CD972E",
+        "ledger_index": 9646353,
+        "lines": [
+            {
+                "account": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                "balance": "1.18017",
+                "currency": "CNY",
+                "limit": "10000000000",
+                "limit_peer": "0",
+                "no_skywell": true,
+                "quality_in": 0,
+                "quality_out": 0
+            },
+            {
+                "currency": "CCA",
+                "issuer": "js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u",
+                "limit": "0.01",
+                "limit_peer": "jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT",
+                "relation_type": "1"
+            },
+            {
+                "currency": "CCA",
+                "issuer": "js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u",
+                "limit": "0.02",
+                "limit_peer": "jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT",
+                "relation_type": "3"
+            }
+        ],
+        "validated": true
+    },
+    "status": "success",
+    "type": "response"
+}

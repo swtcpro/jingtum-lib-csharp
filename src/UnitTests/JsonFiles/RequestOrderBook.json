@@ -1,0 +1,210 @@
+﻿{
+    "id": 0,
+    "result": {
+        "ledger_current_index": 9654178,
+        "offers": [
+            {
+                "Account": "jJpfha3V2W8cHuB246Nm1EscFPyyhy5NiL",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08C48EB8C4BB84",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "02B438FF38167AE849AB2AD43DF5E526F9CF3DD2AA65D5A79A88B9CC3E5B2CE6",
+                "PreviousTxnLgrSeq": 9654177,
+                "Sequence": 5261,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "8104"
+                },
+                "TakerPays": "200000000000",
+                "index": "B11833A2376C6725439FCAC02FC8999346FCE2FD90D234DAFCD4F52A6B9C5792",
+                "owner_funds": "9040.62140918998",
+                "quality": "24679170.7798618"
+            },
+            {
+                "Account": "jKvhETz1xmx7yZRfFkarK1EN91GM1cL5eW",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08C5AA7A688B10",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "05FD92BE9614A49685C3961133DC28292A42C63C30C4165C7269728DC23CCC1A",
+                "PreviousTxnLgrSeq": 9654177,
+                "Sequence": 872,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "405"
+                },
+                "TakerPays": "10000000000",
+                "index": "6E5C009C39A9DE967B9A999A12F4CC3ADF9D0EEBDBA9AC5C48712FD9C46FD497",
+                "owner_funds": "3598.847700000019",
+                "quality": "24691358.02469136"
+            },
+            {
+                "Account": "jhAf6ZhSMApYoPNNE336Uc6zcTRgRSXgFk",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08C6387623A73B",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "DADEB40D890F1BDE41C21CE61BCAAC8722D96B92DA7CF69C2BE655579C396614",
+                "PreviousTxnLgrSeq": 9654177,
+                "Sequence": 10655,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "3684.59"
+                },
+                "TakerPays": "91000000000",
+                "index": "23F906242C55F1241DF184B416D2C66628493DC52575A95FC001E3763CF00CA4",
+                "owner_funds": "3684.75063309245",
+                "quality": "24697456.16201531"
+            },
+            {
+                "Account": "jKqy9WDQ4zEDwYe3P6W7BkbUsCqrhnkibw",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CA1C4FD610F9",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "5EFFB7592EF58607B5AA1BC1B4CD8C133815ED0AEC495EDD6804B299FB703699",
+                "PreviousTxnLgrSeq": 9654175,
+                "Sequence": 19016,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "6063"
+                },
+                "TakerPays": "150000000000",
+                "index": "146D42B83EA33F5043CC463AF157E340743F9A05661D4766A136289AEDD2A54B",
+                "owner_funds": "19704.01607342125",
+                "quality": "24740227.61009401"
+            },
+            {
+                "Account": "jpirFEEppJgULXgEQy4EbqMtdv4KmouhNE",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CAAADB9B8519",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "6115A1F2A785E590D72F02299369F34E397F6A1598F8B6A5C1FE916D7D9198A6",
+                "PreviousTxnLgrSeq": 9654169,
+                "Sequence": 16,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "1999.93131"
+                },
+                "TakerPays": "49491000000",
+                "index": "F2C46149B5A7CB5A96F6D48464977D1D2102C80FBE4D5390534026983BAA6299",
+                "owner_funds": "2000.03481",
+                "quality": "24746349.91338777"
+            },
+            {
+                "Account": "jHbDrENd1r8djGB3teeKp55GrUHuXVjVWA",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CAAADB9B851A",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "DF57FD182A1BD3E67424AA6B8C8AA7B98A6F3E6335CBB8DC2576822AD8BB555D",
+                "PreviousTxnLgrSeq": 9654173,
+                "Sequence": 4303,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "4041"
+                },
+                "TakerPays": "100000000000",
+                "index": "5F26D7E58BC3D142B4F6093AA000C0A7ADB0A908ED072F10050FCE2454B2273F",
+                "owner_funds": "14562.248422724",
+                "quality": "24746349.91338778"
+            },
+            {
+                "Account": "jwD5SNcnGbrmWcoLoonfgNVFPuuFn9iRbo",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CB397971AC5B",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "8A29756DBD1FE249042312F71B9B0D0AEA0BF2C96B8DF15FBC8A2DCF4CD09DA4",
+                "PreviousTxnLgrSeq": 9654162,
+                "Sequence": 37498,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "12120"
+                },
+                "TakerPays": "300000000000",
+                "index": "19E8A91D7FCAAB68152C181248B59D3B378ABEBB53E23C1289D945B0348869E4",
+                "owner_funds": "33134.50289868477",
+                "quality": "24752475.24752475"
+            },
+            {
+                "Account": "jwTdJWmweNY1oeEzB57WDnsPCYnRvBpQAt",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CB397971AC5B",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "04F6D3EF7BEB5CE5F16DD5C630B78D5D8AD1851D7D5C266DDDF96933CC53ECD6",
+                "PreviousTxnLgrSeq": 9654163,
+                "Sequence": 4882,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "4040"
+                },
+                "TakerPays": "100000000000",
+                "index": "87579D09964435B84CF1DB5B69CD8EC3CA22CD6983B566D30E5DF45081D4A05F",
+                "owner_funds": "10475.6206783067",
+                "quality": "24752475.24752475"
+            },
+            {
+                "Account": "jKqy9WDQ4zEDwYe3P6W7BkbUsCqrhnkibw",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CBC8295BF61D",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "A62E4AF6465C67FFCEBDD5ABD11116E5AF47973821D1CEDB05DC0D3BC2DE61A2",
+                "PreviousTxnLgrSeq": 9654158,
+                "Sequence": 19015,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "4846.8"
+                },
+                "TakerPays": "120000000000",
+                "index": "BEE3558DA93413D50307F73D6118533AD627A7E66F2C8BED79030E84B4A9A54B",
+                "quality": "24758603.61475613"
+            },
+            {
+                "Account": "jJ6NTADAhFJJMKMq8bdLA84YixXX31TkaX",
+                "BookDirectory": "51603377F758E3C8FA007C77312DDA06A737A1395CD5FC435C08CC56EB5DD29B",
+                "BookNode": "0000000000000000",
+                "Flags": 0,
+                "LedgerEntryType": "Offer",
+                "OwnerNode": "0000000000000000",
+                "PreviousTxnID": "990B6CB09305913E9F09011A8C9AA5E7D38A8676A50F654BEC2A5E33F2C78291",
+                "PreviousTxnLgrSeq": 9654149,
+                "Sequence": 12,
+                "TakerGets": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "2220.9"
+                },
+                "TakerPays": "55000000000",
+                "index": "52D6D6148C9CB0664AC79F73AC5869888223636B364A172C79D3812230B47765",
+                "owner_funds": "5061.375",
+                "quality": "24764735.01733531"
+            }
+        ],
+        "validated": false
+    },
+    "status": "success",
+    "type": "response"
+}

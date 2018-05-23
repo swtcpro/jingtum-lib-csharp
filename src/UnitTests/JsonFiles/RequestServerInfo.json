@@ -1,0 +1,44 @@
+﻿{
+    "id": 0,
+    "result": {
+        "info": {
+            "build_version": "0.28.1",
+            "complete_ledgers": "1439816-1641979",
+            "hostid": "iZ2848appwoZ",
+            "io_latency_ms": 1,
+            "last_close": {
+                "converge_time_s": 2.002,
+                "proposers": 2
+            },
+            "load": {
+                "job_types": [
+                    {
+                        "in_progress": 1,
+                        "job_type": "clientCommand"
+                    }
+                ],
+                "threads": 6
+            },
+            "load_factor": 1,
+            "peers": 2,
+            "pubkey_node": "n9M1PrHjWz6GV6y6zaJk1UrPe3cik7hgvnoDAGNpyieQFA5BwfXq",
+            "pubkey_validator": "n9MP5H6bv6wc65yyZ16uxFEiC7Zjdf8b4DSrLz1Xn6TZ2D9CtABt",
+            "server_state": "proposing   69:31:03",
+            "startup_time": "2018-May-09 23:02:20",
+            "validated_ledger": {
+                "age": 2,
+                "base_fee_swt": 1e-05,
+                "fee_account_swt": "jHb9CJAWyB4jr91VRWn96DkukG4bwdtyTh",
+                "hash": "3BF924180893F5CBA66F001C8B8246B82FE16063A4C8596086CAA2AFFE76D3BD",
+                "issuerop_account": "j9cZ5oHbdL4Z9Mar6TdnfAos35nVzYuNds",
+                "manager_account": "jHb9CJAWyB4jr91VRWn96DkukG4bwdtyTh",
+                "reserve_base_swt": 10,
+                "reserve_inc_swt": 1,
+                "seq": 1641979
+            },
+            "validation_quorum": 2
+        }
+    },
+    "status": "success",
+    "type": "response"
+}

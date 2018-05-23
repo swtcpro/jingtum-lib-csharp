@@ -1,0 +1,21 @@
+﻿{
+    "id": 0,
+    "result": {
+        "fee_base": 10,
+        "fee_ref": 10,
+        "hostid": "iZ2848appwoZ",
+        "ledger_hash": "EA11FCEE992292106808E2D3B124EF6C63B7EDE4E094177F96785F8D6AC8344B",
+        "ledger_index": 1640880,
+        "ledger_time": 579432630,
+        "load_base": 256,
+        "load_factor": 256,
+        "pubkey_node": "n9M1PrHjWz6GV6y6zaJk1UrPe3cik7hgvnoDAGNpyieQFA5BwfXq",
+        "random": "AC099981EB042C4D3A674F20C7B515FB9F3A136F94FAC534650169E3CBCFAA67",
+        "reserve_base": 10000000,
+        "reserve_inc": 1000000,
+        "server_status": "proposing",
+        "validated_ledgers": "1439816-1640880"
+    },
+    "status": "success",
+    "type": "response"
+}

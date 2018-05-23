@@ -1,0 +1,77 @@
+﻿{
+    "id": 0,
+    "result": {
+        "ledger": {
+            "accepted": true,
+            "account_hash": "4CB4886061A97470D73E78D9DE4C790E5316A716B31F8E5381E1EDFB9412081A",
+            "close_time": 579062740,
+            "close_time_human": "2018-May-08 02:45:40",
+            "close_time_resolution": 10,
+            "closed": true,
+            "hash": "D673F9D61FED7FC28DECB5026B9EACAA831E304A5C4B20651C3FE680EBB9C00A",
+            "ledger_hash": "D673F9D61FED7FC28DECB5026B9EACAA831E304A5C4B20651C3FE680EBB9C00A",
+            "ledger_index": "1603891",
+            "parent_hash": "3A5C06F518D55615622C611700F86AB38380754490E5005488276D07B664DD5C",
+            "seqNum": "1603891",
+            "totalCoins": "600000000000000000",
+            "total_coins": "600000000000000000",
+            "transaction_hash": "02BFFFCA1FF9B2823D64D3A439ACAF53246659B39AA4B56A23A732034A4D50D8",
+            "transactions": [
+                {
+                    "Account": "jHb9CJAWyB4jr91VRWn96DkukG4bwdtyTh",
+                    "Amount": "10000000000",
+                    "Destination": "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr",
+                    "Fee": "10",
+                    "Flags": 2147483648,
+                    "Sequence": 1135,
+                    "SigningPubKey": "0330E7FC9D56BB25D6893BA3F317AE5BCF33B3291BD63DB32654A313222F7FD020",
+                    "Timestamp": 579062730,
+                    "TransactionType": "Payment",
+                    "TxnSignature": "3045022100989850A789C74C106EDCCEE3DE5986E24EF7F8B9E7BD63E7E0F19AC80B8A1A4302205330CB17C8AF08AFAF07FE3BAC7E5A90B55E52D53BF2EDC5A5AC65ECA396EE90",
+                    "hash": "08759EF7C9553C1A1DE014C88FFA9E8F4356E4962105BBE2D2E973B51714403A",
+                    "metaData": {
+                        "AffectedNodes": [
+                            {
+                                "ModifiedNode": {
+                                    "FinalFields": {
+                                        "Account": "jHb9CJAWyB4jr91VRWn96DkukG4bwdtyTh",
+                                        "Balance": "599968808447351723",
+                                        "Flags": 0,
+                                        "OwnerCount": 0,
+                                        "Sequence": 1137
+                                    },
+                                    "LedgerEntryType": "AccountRoot",
+                                    "LedgerIndex": "2B6AC232AA4C4BE41BF49D2459FA4A0347E1B543A4C92FCEE0821C0201E2E9A8",
+                                    "PreviousFields": {
+                                        "Balance": "599968818447351733",
+                                        "Sequence": 1135
+                                    },
+                                    "PreviousTxnID": "497D9B40369C8EAD4E9C70241C642B2E6686F3490EBCA9F9468B278661826377",
+                                    "PreviousTxnLgrSeq": 1599432
+                                }
+                            },
+                            {
+                                "CreatedNode": {
+                                    "LedgerEntryType": "AccountRoot",
+                                    "LedgerIndex": "E917D8D60D13040ADB1D1A4BED39B5D85A0BB7CBCABFA4CC724AE1015BAEBD89",
+                                    "NewFields": {
+                                        "Account": "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr",
+                                        "Balance": "10000000000",
+                                        "Sequence": 1
+                                    }
+                                }
+                            }
+                        ],
+                        "TransactionIndex": 0,
+                        "TransactionResult": "tesSUCCESS"
+                    }
+                }
+            ]
+        },
+        "ledger_hash": "D673F9D61FED7FC28DECB5026B9EACAA831E304A5C4B20651C3FE680EBB9C00A",
+        "ledger_index": 1603891,
+        "validated": true
+    },
+    "status": "success",
+    "type": "response"
+}

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4F32617-08FD-4736-8B51-4BC45C88B227}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JingTum.Lib</RootNamespace>
+    <AssemblyName>JingTum-Lib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.2.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.2\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
+      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net45\WebSocket4Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AsyncEx.cs" />
+    <Compile Include="Core\Utility.cs" />
+    <Compile Include="Remote.cs" />
+    <Compile Include="Serialization\DateTimeConverter.cs" />
+    <Compile Include="SerializedTypes\Bits.cs" />
+    <Compile Include="SerializedTypes\SerializedTypes.cs" />
+    <Compile Include="SerializedTypes\SerializedTypeHelper.cs" />
+    <Compile Include="Serialization\EnumConverter.cs" />
+    <Compile Include="Serialization\HexToUtf8Converter.cs" />
+    <Compile Include="Serialization\LedgerAccountStateConverter.cs" />
+    <Compile Include="Serialization\LedgerTransactionConverter.cs" />
+    <Compile Include="SerializedTypes\TumAmount.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TxData.cs" />
+    <Compile Include="Models\Cache.cs" />
+    <Compile Include="Models\Events.cs" />
+    <Compile Include="Models\Exceptions.cs" />
+    <Compile Include="Models\ResponseData.cs" />
+    <Compile Include="Models\ResponseParser.cs" />
+    <Compile Include="Serialization\AmountConverter.cs" />
+    <Compile Include="Serialization\HexToStringConverter.cs" />
+    <Compile Include="Wallet.cs" />
+    <Compile Include="Core\Config.cs" />
+    <Compile Include="Core\Crypto\Ecdsa\ECDSASignature.cs" />
+    <Compile Include="Core\Crypto\Ecdsa\KeyPair.cs" />
+    <Compile Include="Core\Crypto\Ecdsa\SECP256K1.cs" />
+    <Compile Include="Core\Crypto\Ecdsa\Seed.cs" />
+    <Compile Include="Core\Encodings.cs" />
+    <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Messages.cs" />
+    <Compile Include="Models\RequestCache.cs" />
+    <Compile Include="Models\RequestOptions.cs" />
+    <Compile Include="Models\ServerStatus.cs" />
+    <Compile Include="Models\TransactionOptions.cs" />
+    <Compile Include="OrderBook.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="Serialization\NoTypeConverterJsonConverter.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

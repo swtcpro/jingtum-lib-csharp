@@ -1,0 +1,23 @@
+﻿{
+    "id": 0,
+    "result": {
+        "account": "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr",
+        "ledger_hash": "39210701654A5DCDA1B01EF636B0A4FFA5159342B75F082B81B58E92DDCB24B1",
+        "ledger_index": 9646438,
+        "offers": [
+            {
+                "flags": 131072,
+                "seq": 16,
+                "taker_gets": "10000",
+                "taker_pays": {
+                    "currency": "CNY",
+                    "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or",
+                    "value": "1"
+                }
+            }
+        ],
+        "validated": true
+    },
+    "status": "success",
+    "type": "response"
+}
