@@ -182,7 +182,7 @@ namespace JingTum.Lib
         public UInt32? QualityIn { get; internal set; }
         public UInt32? QualityOut { get; internal set; }
         public string Target { get; internal set; }
-        public string RelationType { get; internal set; }
+        public UInt32? RelationType { get; internal set; }
 
         public override object Clone()
         {

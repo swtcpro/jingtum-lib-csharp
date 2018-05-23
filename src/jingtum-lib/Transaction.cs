@@ -123,15 +123,6 @@ namespace JingTum.Lib
             _txJson.Fee = fee;
         }
 
-        private object ToAmount(AmountSettings amount)
-        {
-            if (amount.Currency == Config.Currency)
-            {
-                return amount.Value;
-            }
-            return amount;
-        }
-
         private object MaxAmount(Amount amount)
         {
             return MaxAmount(new AmountSettings(amount.Currency, amount.Issuer, amount.Value));
@@ -210,7 +201,7 @@ namespace JingTum.Lib
                 return;
             }
 
-            _txJson.SendMax = ToAmount(amount);
+            _txJson.SendMax = Utils.ToAmount(amount);
         }
 
         /// <summary>
@@ -407,7 +398,13 @@ namespace JingTum.Lib
                 return;
             }
 
-            if (_remote.LocalSign)//签名之后传给底层
+            if (_type == TransactionType.Signer)//直接将blob传给底层
+            {
+                dynamic data = new ExpandoObject();
+                data.tx_blob = _txJson.Blob;
+                _remote.Submit("submit", data, _filter, callback);
+            }
+            else if (_remote.LocalSign)//签名之后传给底层
             {
                 Sign(result =>
                 {
@@ -421,12 +418,6 @@ namespace JingTum.Lib
                     data.tx_blob = result.Result;
                     _remote.Submit("submit", data, _filter, callback);
                 });
-            }
-            else if (_type == TransactionType.Signer)//直接将blob传给底层
-            {
-                dynamic data = new ExpandoObject();
-                data.tx_blob = _txJson.Blob;
-                _remote.Submit("submit", data, _filter, callback);
             }
             else//不签名交易传给底层
             {

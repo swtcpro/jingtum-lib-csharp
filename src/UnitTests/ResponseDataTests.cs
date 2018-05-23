@@ -418,7 +418,7 @@ namespace UnitTests
 
             Assert.AreEqual("jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT", data.Account);
             Assert.AreEqual(new Amount { Currency = "SWT", Issuer = "", Value = "1015.641623" }, data.Balance);
-            Assert.AreEqual(5, data.Sequence);
+            Assert.AreEqual((uint)5, data.Sequence);
             Assert.AreEqual("8532904D645677129310E09C74A0F4CF371ED569B49B78CC4D0F3F2D3C377986", data.Index);
             Assert.AreEqual(AccountStateLedgerEntryType.AccountRoot, data.LedgerEntryType);
         }

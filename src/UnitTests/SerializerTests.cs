@@ -494,7 +494,7 @@ namespace UnitTests
 
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.Target = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            data.RelationType = "3"; //1->authorize, 3->freeze
+            data.RelationType = 3; //1->authorize, 3->freeze
             data.LimitAmount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
@@ -513,7 +513,7 @@ namespace UnitTests
 
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.Target = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            data.RelationType = "1"; //1->authorize, 3->freeze
+            data.RelationType = 1; //1->authorize, 3->freeze
             data.LimitAmount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);

@@ -73,13 +73,13 @@ namespace JingTum.Lib
     public enum OfferType
     {
         /// <summary>
-        /// Sell order.
-        /// </summary>
-        Sell,
-        /// <summary>
         /// Buy order.
         /// </summary>
-        Buy
+        Buy,
+        /// <summary>
+        /// Sell order.
+        /// </summary>
+        Sell
     }
 
     /// <summary>
