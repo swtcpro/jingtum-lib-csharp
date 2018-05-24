@@ -11,7 +11,7 @@ namespace TestApp
         [Category("Optional")]
         public string Memo { get; set; }
         [Category("Optional")]
-        public long? Fee { get; set; }
+        public UInt32? Fee { get; set; }
         [Category("Optional")]
         public string Path { get; set; }
         [Category("Optional")]

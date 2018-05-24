@@ -1,14 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace JingTum.Lib
 {
@@ -21,16 +14,16 @@ namespace JingTum.Lib
     public class Remote : IDisposable
     {
         private Server _server;
-        private Hashtable _requests = new Hashtable();
+        private Cache<RequestCache> _requestsCache = new Cache<RequestCache>("RequestsCache", 1000 * 60 * 60 * 24);
         private Cache<bool> _txCache = new Cache<bool>("TransactionsCache", 1000 * 60 * 5);
         private Cache<PathFindAlternative> _pathsCache = new Cache<PathFindAlternative>("PathFindCache", 1000 * 60 * 5);
         private ServerStatus _status;
 
         /// <summary>
-        /// Create a new instance of <see cref="Remote"/> object.
+        /// Creates a new instance of <see cref="Remote"/> object.
         /// </summary>
         /// <param name="url">The jingtum websocket server url.</param>
-        /// <param name="localSign">If sign transaction in local.</param>
+        /// <param name="localSign">Whether sign transaction in local.</param>
         public Remote(string url, bool localSign = false)
         {
             if (url == null) throw new ArgumentNullException("url");
@@ -42,6 +35,10 @@ namespace JingTum.Lib
             _status = new ServerStatus();
         }
 
+        /// <summary>
+        /// For unit test.
+        /// </summary>
+        /// <param name="server"></param>
         internal void SetMockServer(Server server)
         {
             _server = server;
@@ -53,24 +50,26 @@ namespace JingTum.Lib
         public string Url { get; private set; }
 
         /// <summary>
-        /// Gets or sets whether sign transaction in local.
+        /// Gets or sets a value indicating whether sign transaction in local.
         /// </summary>
         public bool LocalSign { get; set; }
 
+        /// <summary>
+        /// Gets the path alternatives which is requested by <see cref="RequestPathFind(PathFindOptions)"/> method.
+        /// </summary>
         internal Cache<PathFindAlternative> Paths
         {
             get { return _pathsCache; }
         }
 
         /// <summary>
-        /// Connect to jingtum.
+        /// Connects to jingtum.
         /// </summary>
         /// <remarks>
         /// Each remote object should connect jingtum first.
         /// Now jingtum should connect manual, only then you can send request to backend.
         /// </remarks>
         /// <param name="callback">The callback.</param>
-        /// <returns></returns>
         public void Connect(MessageCallback<ConnectResponse> callback)
         {
             _server.Connect(callback, data =>
@@ -81,7 +80,7 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Disconnect to jingtum.
+        /// Disconnects to jingtum.
         /// </summary>
         /// <remarks>
         /// Remote object can be disconnected manual, and no parameters are required.
@@ -182,12 +181,9 @@ namespace JingTum.Lib
             var requestId = response.RequestId;
             if (requestId < 0) return;
 
-            var request = _requests[requestId] as RequestCache;
+            var request = _requestsCache.Remove(requestId.ToString()) as RequestCache;
             if (request != null)
             {
-                // pass process it when null callback
-                _requests[requestId] = null;
-                
                 if (response.Status == "success")
                 {
                     try
@@ -203,7 +199,7 @@ namespace JingTum.Lib
                 else
                 {
                     var message = response.ErrorMessage ?? response.ErrorException;
-                    var requestJson = response.Request == null ? null : response.Request.ToString();
+                    var requestJson = response.Request?.ToString();
                     request.Callback(new MessageResult<object>(data, new ResponseException(message) { Error = response.Error, ErrorCode = response.ErrorCode, Request=requestJson }));
                 }
             }
@@ -233,15 +229,16 @@ namespace JingTum.Lib
 
         internal void Submit<T>(string command, dynamic data, Func<object, T> filter, MessageCallback<T> callback, Type responseDataType = null)
         {
-            var requestId = _server.SendMessage(command, data);
-            if (requestId == -1)
+            int requestId = _server.SendMessage(command, data);
+            if (requestId < 0)
             {
                 callback?.Invoke(new MessageResult<T>(null, new Exception("The connection is closed. Please re-connect it.")));
             }
-
+            
             var cache = new RequestCache();
             cache.Command = command;
             cache.Data = data;
+
             cache.Filter = (message =>
             {
                 if (filter == null)
@@ -256,13 +253,17 @@ namespace JingTum.Lib
                         return message;
                     }
                 }
-
-                var response = filter(message);
-                return response;
+                else
+                {
+                    var response = filter(message);
+                    return response;
+                }
             });
+
             cache.Callback = (result =>
             {
                 if (callback == null) return;
+
                 T tResult;
                 try
                 {
@@ -272,9 +273,10 @@ namespace JingTum.Lib
                 {
                     tResult = default(T);
                 }
+
                 callback(new MessageResult<T>(result.Message, result.Exception, tResult));
             });
-            _requests[requestId] = cache;
+            _requestsCache.Add(requestId.ToString(), cache);
         }
 
         #endregion
@@ -386,52 +388,39 @@ namespace JingTum.Lib
 
         #region info request
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets server info from jingtum.
+        /// Creates the <see cref="Request{T}"/> object and gets server info from jingtum.
         /// </summary>
-        /// <remarks>
-        /// The callback message result is <see cref="ServerInfo"/> object.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<ServerInfoResponse> RequestServerInfo()
         {
-            return new Request<ServerInfoResponse>(this, "server_info", (data) =>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<ServerInfoResponse>>(data as string);
-                return response.Result;
-            });
+            return new Request<ServerInfoResponse>(this, "server_info");
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets last closed ledger in system.
+        /// Creates the <see cref="Request{T}"/> object and gets last closed ledger in system.
         /// </summary>
-        /// <remarks>
-        /// The callback message result is <see cref="LedgerClosedResponse"/> object.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<LedgerClosedResponse> RequestLedgerClosed()
         {
-            return new Request<LedgerClosedResponse>(this, "ledger_closed", (data) =>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<LedgerClosedResponse>>(data as string);
-                return response.Result;
-            });
+            return new Request<LedgerClosedResponse>(this, "ledger_closed");
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets ledger in system.
+        /// Creates the <see cref="Request{T}"/> object and gets the ledger in system.
         /// </summary>
         /// <param name="options">The options for this request.</param>
-        /// <remarks>The callback message result is not ready now.</remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<LedgerResponse> RequestLedger(LedgerOptions options = null)
         {
             var request = new Request<LedgerResponse>(this, "ledger", (data) =>
             {
                 var response = JsonConvert.DeserializeObject<ResponseData<LedgerResponse>>(data as string);
                 var result = response.Result;
-                if (result != null && result.Ledger.Transactions != null)
+
+                var transactions = result?.Ledger?.Transactions;
+                if (transactions != null)
                 {
-                    foreach (var tx in result.Ledger.Transactions)
+                    foreach (var tx in transactions)
                     {
                         if (tx.IsExpanded)
                         {
@@ -448,6 +437,7 @@ namespace JingTum.Lib
                 {
                     request.Message.ledger_index = options.LedgerIndex.Value;
                 }
+
                 if (options.LedgerHash != null)
                 {
                     if (!Utils.IsValidHash(options.LedgerHash))
@@ -457,18 +447,22 @@ namespace JingTum.Lib
                     }
                     request.Message.ledger_hash = options.LedgerHash;
                 }
+
                 if (options.Full != null)
                 {
                     request.Message.full = options.Full.Value;
                 }
+
                 if (options.Expand != null)
                 {
                     request.Message.expand = options.Expand.Value;
                 }
+
                 if (options.Transactions != null)
                 {
                     request.Message.transactions = options.Transactions.Value;
                 }
+
                 if (options.Accounts != null)
                 {
                     request.Message.accounts = options.Accounts.Value;
@@ -479,13 +473,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets one transaction information.
+        /// Creates the <see cref="Request{T}"/> object and gets one transaction information.
         /// </summary>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <param name="options">The options for request.</param>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<TxResponse> RequestTx(TxOptions options)
         {
             var request = new Request<TxResponse>(this, "tx", (data)=>
@@ -574,56 +565,35 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets account info.
+        /// Creates the <see cref="Request{T}"/> object and gets account info.
         /// </summary>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <param name="options">The options for request.</param>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<AccountInfoResponse> RequestAccountInfo(AccountInfoOptions options)
         {
-            var request = new Request<AccountInfoResponse>(this).SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<AccountInfoResponse>>(data as string);
-                return response.Result;
-            });
+            var request = new Request<AccountInfoResponse>(this);
             return RequestAccount("account_info", options, request);
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets the received and sent jingtum tunms held by the account.
+        /// Creates the <see cref="Request{T}"/> object and gets the received and sent jingtum tunms held by the account.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result is not ready.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<AccountTumsResponse> RequestAccountTums(AccountTumsOptions options)
         {
-            var request = new Request<AccountTumsResponse>(this).SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<AccountTumsResponse>>(data as string);
-                return response.Result;
-            });
+            var request = new Request<AccountTumsResponse>(this);
             return RequestAccount("account_currencies", options, request);
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets relations connected to the account.
+        /// Creates the <see cref="Request{T}"/> object and gets relations connected to the account.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result is not ready.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<AccountRelationsResponse> RequestAccountRelations(AccountRelationsOptions options)
         {
-            var request = new Request<AccountRelationsResponse>(this).SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<AccountRelationsResponse>>(data as string);
-                return response.Result;
-            });
+            var request = new Request<AccountRelationsResponse>(this);
 
             if (!Enum.IsDefined(typeof(RelationType), options.Type))
             {
@@ -664,13 +634,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets account's current offer that is suspended on jingtum system and will be filled by other accounts.
+        /// Creates the <see cref="Request{T}"/> object and gets account's current offer that is suspended on jingtum system and will be filled by other accounts.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<AccountOffersResponse> RequestAccountOffers(AccountOffersOptions options)
         {
             var request = new Request<AccountOffersResponse>(this).SetFilter(data=>
@@ -682,18 +649,14 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets account transactions.
+        /// Creates the <see cref="Request{T}"/> object and gets account transactions.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<AccountTxResponse> RequestAccountTx(AccountTxOptions options)
         {
             var request = new Request<AccountTxResponse>(this, "account_tx", (data) =>
             {
-                // todo, processTx
                 var response = JsonConvert.DeserializeObject<ResponseData<AccountTxResponse>>(data as string);
                 if (response.Result.RawTransactions != null)
                 {
@@ -714,18 +677,22 @@ namespace JingTum.Lib
             SetLedgerOptions(options.Ledger, request);
             request.Message.ledger_index_min = options.LedgerMin == null ? 0 : options.LedgerMin.Value;
             request.Message.ledger_index_max = options.LedgerMax == null ? -1 : options.LedgerMax;
+
             if (options.Limit != null)
             {
                 request.Message.limit = options.Limit.Value;
             }
+
             if (options.Offset != null)
             {
                 request.Message.offset = options.Offset.Value;
             }
+
             if(options.Marker!=null && options.Marker.IsValid())
             {
                 request.Message.marker = options.Marker;
             }
+
             if (options.Forward != null)
             {
                 request.Message.forward = options.Forward;
@@ -735,20 +702,18 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Request"/> object and gets order book info.
+        /// Creates the <see cref="Request{T}"/> object and gets order book info.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result is not ready.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<OrderBookResponse> RequestOrderBook(OrderBookOptions options)
         {
             var request = new Request<OrderBookResponse>(this, "book_offers").SetFilter(data=>
             {
                 var response = JsonConvert.DeserializeObject<ResponseData<OrderBookResponse>>(data as string);
                 var result = response.Result;
-                if(result!=null && result.Offers != null)
+
+                if(result?.Offers != null)
                 {
                     foreach(var offer in result.Offers)
                     {
@@ -757,6 +722,7 @@ namespace JingTum.Lib
                 }
                 return result;
             });
+
             var takerGets = options.Pays;
             if (!Utils.IsValidAmount0(takerGets))
             {
@@ -774,6 +740,7 @@ namespace JingTum.Lib
             request.Message.taker_gets = takerGets;
             request.Message.taker_pays = takerPays;
             request.Message.taker = options.Taker ?? Config.AccountOne;
+
             if (options.Limit != null)
             {
                 request.Message.limit = options.Limit;
@@ -785,13 +752,10 @@ namespace JingTum.Lib
 
         #region path find request
         /// <summary>
-        /// Creates <see cref="Reqeust"/> object and gets path from one currency to another.
+        /// Creates the <see cref="Reqeust"/> object and gets path from one currency to another.
         /// </summary>
-        /// <param name="options">The options for request.</param>
-        /// <remarks>
-        /// The callback message result array of <see cref="PathFind"/>.
-        /// </remarks>
-        /// <returns>A <see cref="Request"/> object.</returns>
+        /// <param name="options">The options for this request.</param>
+        /// <returns>A <see cref="Request{T}"/> object.</returns>
         public Request<PathFindResponse> RequestPathFind(PathFindOptions options)
         {
             var request = new Request<PathFindResponse>(this, "path_find", data =>
@@ -801,7 +765,8 @@ namespace JingTum.Lib
                 request2.Submit();
 
                 var response = JsonConvert.DeserializeObject<ResponseData<PathFindResponse>>(data as string);
-                if (response.Result.RawAlternatives != null)
+
+                if (response?.Result?.RawAlternatives != null)
                 {
                     response.Result.Alternatives = response.Result.RawAlternatives.Select(item=>
                     {
@@ -838,6 +803,7 @@ namespace JingTum.Lib
             request.Message.source_account = options.Account;
             request.Message.destination_account = options.Destination;
             request.Message.destination_amount = Utils.ToAmount(options.Amount);
+
             return request;
         }
         #endregion
@@ -864,7 +830,7 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates account stub to subscribe events of account.
+        /// Creates the account stub to subscribe events of account.
         /// </summary>
         /// <returns>A <see cref="Account"/> object.</returns>
         public Account CreateAccountStub()
@@ -873,7 +839,7 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates order book stub to subscribe events of order book.
+        /// Creates the order book stub to subscribe events of order book.
         /// </summary>
         /// <returns>A <see cref="OrderBook"/> object.</returns>
         public OrderBook CreateOrderBooksStub()
@@ -884,20 +850,13 @@ namespace JingTum.Lib
 
         #region transaction request
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds normal payment transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds normal payment transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction<PaymentResponse> BuildPaymentTx(PaymentTxOptions options)
         {
-            var tx = new InnerTransaction<PaymentTxData, PaymentResponse>(this, data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<PaymentResponse>>(data as string);
-                return response.Result;
-            });
+            var tx = new InnerTransaction<PaymentTxData, PaymentResponse>(this);
 
             if (!Utils.IsValidAddress(options.From))
             {
@@ -917,7 +876,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.Payment);
+            tx.TransactionType = TransactionType.Payment;
             tx.TxJson.Account = options.From;
             tx.TxJson.Amount = Utils.ToAmount(options.Amount);
             tx.TxJson.Destination = options.To;
@@ -926,21 +885,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the deploy contract transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the deploy contract transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction<DeployContractTxResponse> DeployContractTx(DeployContractTxOptions options)
         {
             var tx = new InnerTransaction<ContractTxData, DeployContractTxResponse>(this);
-            tx.SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<DeployContractTxResponse>>(data as string);
-                return response.Result;
-            });
 
             if (!Utils.IsValidAddress(options.Account))
             {
@@ -948,7 +899,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.ConfigContract);
+            tx.TransactionType = TransactionType.ConfigContract;
             tx.TxJson.Account = options.Account;
             tx.TxJson.Amount = (options.Amount * 1000000).ToString("0");
             tx.TxJson.Method = 0;
@@ -964,21 +915,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the call contract transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the call contract transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction< CallContractTxResponse> CallContractTx(CallContractTxOptions options)
         {
             var tx = new InnerTransaction<ContractTxData, CallContractTxResponse>(this);
-            tx.SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<CallContractTxResponse>>(data as string);
-                return response.Result;
-            });
 
             if (!Utils.IsValidAddress(options.Account))
             {
@@ -998,7 +941,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.ConfigContract);
+            tx.TransactionType = TransactionType.ConfigContract;
             tx.TxJson.Account = options.Account;
             tx.TxJson.Method = 1;
             tx.TxJson.ContractMethod = Utils.StringToHex(options.Foo);
@@ -1014,22 +957,14 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the sign transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the sign transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction< SignTxResponse> BuildSignTx(SignTxOptions options)
         {
             var tx = new InnerTransaction<TxData, SignTxResponse>(this);
-            tx.SetFilter(data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<SignTxResponse>>(data as string);
-                return response.Result;
-            });
-            tx.SetTransactionType(TransactionType.Signer);
+            tx.TransactionType = TransactionType.Signer;
             tx.TxJson.Blob = options.Blob;
             return tx;
         }
@@ -1049,7 +984,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.TrustSet);
+            tx.TransactionType = TransactionType.TrustSet;
             tx.TxJson.Account = options.Account;
             if (options.Limit != null)
             {
@@ -1088,7 +1023,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(options.Type == RelationType.Unfreeze ? TransactionType.RelationDel : TransactionType.RelationSet);
+            tx.TransactionType = options.Type == RelationType.Unfreeze ? TransactionType.RelationDel : TransactionType.RelationSet;
             tx.TxJson.Account = options.Account;
             tx.TxJson.Target = options.Target;
             tx.TxJson.RelationType = (uint)(options.Type == RelationType.Authorize ? 1 : 3);
@@ -1101,20 +1036,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the relation transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the relation transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction<RelationTxResponse> BuildRelationTx(RelationTxOptions options)
         {
-            var tx = new InnerTransaction<RelationTxData, RelationTxResponse>(this, data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<RelationTxResponse>>(data as string);
-                return response.Result;
-            });
+            var tx = new InnerTransaction<RelationTxData, RelationTxResponse>(this);
 
             switch (options.Type)
             {
@@ -1139,7 +1067,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.AccountSet);
+            tx.TransactionType = TransactionType.AccountSet;
             tx.TxJson.Account = options.Account;
 
             if (options.SetFlag != null)
@@ -1169,7 +1097,8 @@ namespace JingTum.Lib
                 tx.TxJson.Exception = new Exception("Invalid regular key address.");
                 return tx;
             }
-            tx.SetTransactionType(TransactionType.SetRegularKey);
+
+            tx.TransactionType = TransactionType.SetRegularKey;
             tx.TxJson.Account = options.Account;
             tx.TxJson.RegularKey = options.DelegateKey;
 
@@ -1184,20 +1113,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the set account attribute transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the set account attribute transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction<AccountSetTxResponse> BuildAccountSetTx(AccountSetTxOptions options)
         {
-            var tx = new InnerTransaction<AccountSetTxData, AccountSetTxResponse>(this, data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<AccountSetTxResponse>>(data as string);
-                return response.Result;
-            });
+            var tx = new InnerTransaction<AccountSetTxData, AccountSetTxResponse>(this);
 
             switch (options.Type)
             {
@@ -1214,20 +1136,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the offer create transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the offer create transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
-        /// <remarks>
-        /// The callback message result is not ready now.
-        /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <param name="options">The options for this transaction.</param>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction<OfferCreateTxResponse> BuildOfferCreateTx(OfferCreateTxOptions options)
         {
-            var tx = new InnerTransaction<OfferCreateTxData, OfferCreateTxResponse>(this, data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<OfferCreateTxResponse>>(data as string);
-                return response.Result;
-            });
+            var tx = new InnerTransaction<OfferCreateTxData, OfferCreateTxResponse>(this);
 
             if (!Utils.IsValidAddress(options.Account))
             {
@@ -1249,7 +1164,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.OfferCreate);
+            tx.TransactionType = TransactionType.OfferCreate;
             if (options.Type== OfferType.Sell)
             {
                 tx.SetFlags((UInt32)OfferCreateFlags.Sell);
@@ -1262,22 +1177,17 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates <see cref="Transaction"/> object and builds the offer cancel transaction.
+        /// Creates the <see cref=Transaction{T}"/> object and builds the offer cancel transaction.
         /// </summary>
-        /// <param name="options">The options for transaction.</param>
+        /// <param name="options">The options for this transaction.</param>
         /// <remarks>
-        /// The callback message result is not ready now.
         /// The order can be cancel by order sequence. 
         /// The sequence can be get when order is submitted or from offer query operation.
         /// </remarks>
-        /// <returns>A <see cref="Transaction"/> object.</returns>
+        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
         public Transaction< OfferCancelTxResponse> BuildOfferCancelTx(OfferCancelTxOptions options)
         {
-            var tx = new InnerTransaction<OfferCancelTxData, OfferCancelTxResponse>(this, data=>
-            {
-                var response = JsonConvert.DeserializeObject<ResponseData<OfferCancelTxResponse>>(data as string);
-                return response.Result;
-            });
+            var tx = new InnerTransaction<OfferCancelTxData, OfferCancelTxResponse>(this);
 
             if (!Utils.IsValidAddress(options.Account))
             {
@@ -1285,7 +1195,7 @@ namespace JingTum.Lib
                 return tx;
             }
 
-            tx.SetTransactionType(TransactionType.OfferCancel);
+            tx.TransactionType = TransactionType.OfferCancel;
             tx.TxJson.Account = options.Account;
             tx.TxJson.OfferSequence = options.Sequence;
             return tx;

@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 namespace JingTum.Lib
 {
     /// <summary>
-    /// Request server and account info without secret.
+    /// Requests server and account info without secret.
     /// </summary>
+    /// <typeparam name="T">The type of the parsed response message.</typeparam>
     /// <remarks>
     /// Request is used to get server, account, orderbook and path info.
     /// Request is not secret required, and will be public to every one.
-    /// All request is asynchronized and should provide a callback.
-    /// Each callback has two parameter, one is error and the other is result.
+    /// All requests are asynchronized and should provide a callback.
     /// </remarks>
     public class Request<T>
     {
@@ -50,7 +50,7 @@ namespace JingTum.Lib
         /// <summary>
         /// Callback entry for request.
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">The callback for the request result.</param>
         public void Submit(MessageCallback<T> callback = null)
         {
             foreach(KeyValuePair<string, object> pair in _message)
@@ -66,7 +66,7 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Select one ledger for current request.
+        /// Selects ledger for current request.
         /// </summary>
         /// <param name="state">The ledger state.</param>
         public void SelectLedger(LedgerState state)
@@ -75,16 +75,16 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Select one ledger for current request.
+        /// Selects ledger for current request.
         /// </summary>
         /// <param name="index">The ledger index.</param>
-        public void SelectLedger(long index)
+        public void SelectLedger(UInt32 index)
         {
             _message.ledger_index = index;
         }
 
         /// <summary>
-        /// Select one ledger for current request.
+        /// Selects ledger for current request.
         /// </summary>
         /// <param name="hash">The ledger hash.</param>
         public void SelectLedger(string hash)

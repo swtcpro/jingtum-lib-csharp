@@ -65,7 +65,7 @@ namespace JingTum.Lib
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class LedgerSettings
     {
-        private long? _ledgerIndex;
+        private UInt32? _ledgerIndex;
         private string _ledgerHash;
         private LedgerState? _ledgerState;
 
@@ -88,7 +88,7 @@ namespace JingTum.Lib
         /// The ledger index.
         /// </summary>
         [Category("Optional")]
-        public long? LedgerIndex
+        public UInt32? LedgerIndex
         {
             get { return _ledgerIndex; }
             set

@@ -8,15 +8,13 @@ using System.Text;
 namespace JingTum.Lib
 {
     /// <summary>
-    /// Post request to server with account secret.
+    /// Posts request to server with account secret.
     /// </summary>
-    /// <typeparam name="T">The type of the response data.</typeparam>
+    /// <typeparam name="T">The type of the parsed response message.</typeparam>
     /// <remarks>
     /// Transaction is used to make transaction and collect transaction parameter. 
     /// Each transaction is secret required, and transaction can be signed local or remote. 
-    /// Now remote sign is supported, local sign will be suport soon. 
-    /// All transaction is asynchronized and should provide a callback. 
-    /// Each callback has two parameter, one is error and the other is result.
+    /// All transactions are asynchronized and should provide a callback. 
     /// </remarks>
     public abstract class Transaction<T> where T : GeneralTxResponse
     {
@@ -25,6 +23,7 @@ namespace JingTum.Lib
         private string _secret;
         private TransactionType _type;
         private TxData _txJson;
+        private bool _localSigned;
 
         protected Transaction(Remote remote, Func<object, T> filter = null)
         {
@@ -45,31 +44,33 @@ namespace JingTum.Lib
         }
 
         /// <summary>
+        /// Gets the account which builds the transaction.
+        /// </summary>
+        /// <remarks>
         /// Account can be master account, delegate account or operation account.
-        /// </summary>
+        /// </remarks>
         /// <returns>The account for this transaction.</returns>
-        public string GetAccount()
+        public string Account
         {
-            return _txJson.Account;
+            get { return _txJson.Account; }
         }
 
         /// <summary>
-        /// Get transaction type.
+        /// Gets the transaction type.
         /// </summary>
-        /// <returns>The relation type.</returns>
-        public TransactionType GetTransactionType()
+        /// <returns>A <see cref="TransactionType"/> enum value.</returns>
+        public TransactionType TransactionType
         {
-            return _type;
-        }
-
-        internal void SetTransactionType(TransactionType type)
-        {
-            _type = type;
-            _txJson.TransactionType = _type.ToString();
+            get { return _type; }
+            internal set
+            {
+                _type = value;
+                _txJson.TransactionType = value.ToString();
+            }
         }
 
         /// <summary>
-        /// Set Transaction secret.
+        /// Sets the transaction secret.
         /// </summary>
         /// <remarks>
         /// It is required before transaction submit.
@@ -81,12 +82,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Add one memo to transaction.
+        /// Adds one memo to the transaction.
         /// </summary>
         /// <remarks>
         /// Memo is string and is limited to 2k.
-        /// Memo is one way to add payload to transaction. 
-        /// But payload should be add in another way.
         /// </remarks>
         /// <param name="data">The memo string.</param>
         public void AddMemo(string data)
@@ -112,7 +111,7 @@ namespace JingTum.Lib
         /// Sets the fee.
         /// </summary>
         /// <param name="fee">The fee.</param>
-        public void SetFee(long fee)
+        public void SetFee(UInt32 fee)
         {
             if (fee < 10)
             {
@@ -153,10 +152,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Set path for one transaction.
+        /// Sets the payment path for one transaction.
         /// </summary>
         /// <remarks>
-        /// The key parameter is request by requestPathFind. 
+        /// The key parameter is request by <see cref="Remote.RequestPathFind(PathFindOptions)"/>. 
         /// When the key is set, "SendMax" parameter is also set.
         /// </remarks>
         /// <param name="key">The key of the path.</param>
@@ -181,16 +180,15 @@ namespace JingTum.Lib
                 return;
             }
 
-            // todo,item.Path is complex
             _txJson.Paths = item.PathsComputed;
             _txJson.SendMax = MaxAmount(item.SourceAmount);
         }
 
         /// <summary>
-        /// Set payment transaction max amount when needed. 
+        /// Sets the payment transaction max amount when needed. 
         /// </summary>
         /// <remarks>
-        /// It is set by "Path" parameter default.
+        /// It is set by <see cref="SetPath(string)"/> default.
         /// </remarks>
         /// <param name="amount">The max amount.</param>
         public void SetSendMax(AmountSettings amount)
@@ -205,13 +203,13 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Set transaction transfer rate.
+        /// Sets the transaction transfer rate.
         /// </summary>
         /// <remarks>
-        ///  It should be check with fee.
+        ///  It should be checked with fee.
         /// </remarks>
         /// <param name="rate">The transfer rate.</param>
-        public void SetTransferRate(double rate)
+        public void SetTransferRate(float rate)
         {
             if (rate < 0 || rate > 1)
             {
@@ -223,10 +221,11 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Set transaction flags.
+        /// Sets the transaction flags.
         /// </summary>
         /// <remarks>
-        /// The flags depends on the TransactionType.
+        /// <para>It is used to set Offer type mainly.</para>
+        /// The flags depends on the transaction type.
         /// <para>There are following flags for specific transaction type.</para>
         /// <list type="bullet">
         /// <item><see cref="AccountSetFlags"/></item>
@@ -244,9 +243,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Set transaction flags.
+        /// Sets the transaction flags.
         /// </summary>
         /// <remarks>
+        /// <para>It is used to set Offer type mainly.</para>
         /// The flags depends on the TransactionType.
         /// <para>There are following flags for specific transaction type.</para>
         /// <list type="bullet">
@@ -258,7 +258,7 @@ namespace JingTum.Lib
         /// <item><see cref="UniversalFlags"/> Apply to any transaction type.</item>
         /// </list>
         /// </remarks>
-        /// <param name="flags">The flags value.</param>
+        /// <param name="flags">The flags name.</param>
         public void SetFlags(params string[] flags)
         {
             Type type = null;
@@ -309,6 +309,10 @@ namespace JingTum.Lib
             }
         }
 
+        /// <summary>
+        /// Sign the transaction.
+        /// </summary>
+        /// <param name="callback">The callback for the blob of sign result.</param>
         public void Sign(MessageCallback<string> callback)
         {
             var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
@@ -381,13 +385,14 @@ namespace JingTum.Lib
 
                 var soTx = Serializer.Create(_txJson);
                 _txJson.Blob = soTx.ToHex();
+                _localSigned = true;
 
                 callback(new MessageResult<string>(null, null, _txJson.Blob));
             });
         }
 
         /// <summary>
-        /// Submit entry for transaction.
+        /// Submits entry for transaction.
         /// </summary>
         /// <param name="callback">The callback.</param>
         public void Submit(MessageCallback<T> callback)
@@ -398,7 +403,7 @@ namespace JingTum.Lib
                 return;
             }
 
-            if (_type == TransactionType.Signer)//直接将blob传给底层
+            if (_type == TransactionType.Signer || _localSigned)//直接将blob传给底层
             {
                 dynamic data = new ExpandoObject();
                 data.tx_blob = _txJson.Blob;

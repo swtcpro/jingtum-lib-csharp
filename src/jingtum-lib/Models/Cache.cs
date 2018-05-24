@@ -34,9 +34,9 @@ namespace JingTum.Lib
             return (T)_cache[key];
         }
 
-        public void Remove(string key)
+        public object Remove(string key)
         {
-            _cache.Remove(key);
+            return _cache.Remove(key);
         }
 
         public bool Contains(string key)

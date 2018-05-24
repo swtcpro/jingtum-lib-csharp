@@ -110,7 +110,7 @@ namespace UnitTests
             tx.SetFee(20);
             tx.SetFlags(1);
             tx.SetSendMax(AmountSettings.SWT("1000"));
-            tx.SetTransferRate(0.5);
+            tx.SetTransferRate(0.5f);
             tx.AddMemo("I Love SWTC!我爱祖国。");
             tx.Sign(r =>
             {
