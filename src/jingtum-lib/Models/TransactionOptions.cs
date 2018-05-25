@@ -8,53 +8,74 @@ using System.Threading.Tasks;
 namespace JingTum.Lib
 {
     /// <summary>
-    /// Represents options for payment transaction.
+    /// Represents the options for payment transaction.
     /// </summary>
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class PaymentTxOptions
     {
         /// <summary>
-        /// Required. The source account address.
+        /// The source account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string From { get; set; }
         /// <summary>
-        /// Required. The destination account address.
+        /// The destination account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string To { get; set; }
         /// <summary>
-        /// Required. The payment amount.
+        /// The payment amount.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AmountSettings Amount { get; set; }
     }
 
+    /// <summary>
+    /// The options for contract transaction.
+    /// </summary>
     public abstract class ContractTxOptions
     {
         /// <summary>
-        /// Required. The account address.
+        /// The account address.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Optional.
+        /// The array of parameters.
         /// </summary>
+        /// <remarks>
+        /// Optional.
+        /// </remarks>
         public string[] Params { get; set; }
     }
 
     /// <summary>
-    /// Represents the options for contract transaction.
+    /// Represents the options for deploy contract transaction.
     /// </summary>
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class DeployContractTxOptions : ContractTxOptions
     {
         /// <summary>
-        /// Required. The amount.
+        /// The amount to active the contract address.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public double Amount { get; set; }
         /// <summary>
-        /// Required.
+        /// The content of the contract.
         /// </summary>
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public string Payload { get; set; }
     }
 
@@ -65,12 +86,18 @@ namespace JingTum.Lib
     public class CallContractTxOptions : ContractTxOptions
     {
         /// <summary>
-        /// Required. The destination address.
+        /// The contract address.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Destination { get; set; }
         /// <summary>
-        /// Required. The function name.
+        /// The function name to call.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Foo { get; set; }
     }
 
@@ -81,8 +108,11 @@ namespace JingTum.Lib
     public class SignTxOptions
     {
         /// <summary>
-        /// Required.
+        /// The blob of the sign result.
         /// </summary>
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public string Blob { get; set; }
     }
 
@@ -93,34 +123,47 @@ namespace JingTum.Lib
     public class RelationTxOptions
     {
         /// <summary>
-        /// Required. The account address.
+        /// The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Required. Optional for <see cref="RelationType.Trust"/>.
         /// The destination address.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Required for the relation types except <see cref="RelationType.Trust"/>.
+        /// </remarks>
         public string Target { get; set; }
         /// <summary>
-        /// Required. The type of the relation.
+        /// The type of the relation.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public RelationType Type { get; set; }
         /// <summary>
-        /// Required.The limit amount.
+        /// The limit amount.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public AmountSettings Limit { get; set; }
         /// <summary>
-        /// Optional.
+        /// Reserved.
         /// </summary>
+        /// <remarks>
+        /// Optional. Default is 0.
+        /// </remarks>
         [Category("Optional")]
         public UInt32? QualityIn { get; set; }
         /// <summary>
-        /// Optional.
+        /// Reserved.
         /// </summary>
+        /// <remarks>
+        /// Optional. Default is 0.
+        /// </remarks>
         [Category("Optional")]
         public UInt32? QualityOut { get; set; }
     }
@@ -132,29 +175,39 @@ namespace JingTum.Lib
     public class AccountSetTxOptions
     {
         /// <summary>
-        /// Required. The type of the account attribute.
+        /// The type of the account attribute.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AccountSetType Type { get; set; }
         /// <summary>
-        /// Requird. The account address.
+        /// The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Optional.
+        /// The flags to set.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional for type of <see cref="AccountSetType.Property"/>.
+        /// </remarks>
         public SetClearFlags? SetFlag { get; set; }
         /// <summary>
-        /// Optional.
+        /// The flags to clear.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional for type of <see cref="AccountSetType.Property"/>.
+        /// </remarks>
         public SetClearFlags? ClearFlag { get; set; }
         /// <summary>
-        /// Optional.
+        /// The regular key.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Required for type of <see cref="AccountSetType.Delegate"/>.
+        /// </remarks>
         public string DelegateKey { get; set; }
     }
 
@@ -165,24 +218,32 @@ namespace JingTum.Lib
     public class OfferCreateTxOptions
     {
         /// <summary>
-        /// Required. The type of the order.
+        ///  The type of the order.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public OfferType Type { get; set; }
         /// <summary>
-        /// Required. The accound address.
+        ///  The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Required. Same as <see cref="Pays"/>. The amount to get by taker.
+        /// The amount to get by taker.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AmountSettings TakerGets { get; set; }
         /// <summary>
-        /// Required. Same as <see cref="Gets"/>. The amount can to exchanged out by taker.
+        /// The amount can to exchanged out by taker.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AmountSettings TakerPays { get; set; }
     }
 
@@ -193,14 +254,18 @@ namespace JingTum.Lib
     public class OfferCancelTxOptions
     {
         /// <summary>
-        /// Required. The accound address.
+        /// The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Required. The order sequence.
+        /// The order sequence.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public UInt32 Sequence { get; set; }
     }
 }

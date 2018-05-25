@@ -62,7 +62,7 @@ namespace JingTum.Lib
         /// </summary>
         Delegate,
         /// <summary>
-        /// Used to set signers for this account.
+        /// Used to set signer for this account.
         /// </summary>
         Signer
     }
@@ -73,11 +73,11 @@ namespace JingTum.Lib
     public enum OfferType
     {
         /// <summary>
-        /// Buy order.
+        /// Buy offer.
         /// </summary>
         Buy,
         /// <summary>
-        /// Sell order.
+        /// Sell offer.
         /// </summary>
         Sell
     }
@@ -85,11 +85,23 @@ namespace JingTum.Lib
     /// <summary>
     /// Indicates the flags for acount set transaction.
     /// </summary>
-    public enum SetClearFlags
+    public enum SetClearFlags : UInt32
     {
+        /// <summary>
+        /// Require a destination tag for payments.
+        /// </summary>
         RequireDest = 1,
+        /// <summary>
+        /// Require an authorization to hold IOUs.
+        /// </summary>
         RequireAuth = 2,
+        /// <summary>
+        /// Disallow sending SWT.
+        /// </summary>
         DisallowSWT = 3,
+        /// <summary>
+        /// Force regular key.
+        /// </summary>
         DisableMaster = 4,
         NoFreeze = 6,
         GlobalFreeze = 7
@@ -99,7 +111,7 @@ namespace JingTum.Lib
     /// Indicates the flags for any transaction type.
     /// </summary>
     [Flags]
-    public enum UniversalFlags : long
+    public enum UniversalFlags : UInt32
     {
         FullyCanonicalSig = 0x80000000
     }
@@ -108,7 +120,7 @@ namespace JingTum.Lib
     /// Indicates the flags for <see cref="TransactionType.AccountSet"/>.
     /// </summary>
     [Flags]
-    public enum AccountSetFlags : long
+    public enum AccountSetFlags : UInt32
     {
         RequireDestTag = 0x00010000,
         OptionalDestTag = 0x00020000,
@@ -122,7 +134,7 @@ namespace JingTum.Lib
     /// Indicates the flags for <see cref="TransactionType.TrustSet"/>.
     /// </summary>
     [Flags]
-    public enum TrustSetFlags : long
+    public enum TrustSetFlags : UInt32
     {
         SetAuth = 0x00010000,
         NoSkywell = 0x00020000,
@@ -136,7 +148,7 @@ namespace JingTum.Lib
     /// Indicates the flags for <see cref="TransactionType.OfferCreate"/>.
     /// </summary>
     [Flags]
-    public enum OfferCreateFlags : long
+    public enum OfferCreateFlags : UInt32
     {
         Passive = 0x00010000,
         ImmediateOrCancel = 0x00020000,
@@ -148,7 +160,7 @@ namespace JingTum.Lib
     /// Indicates the flags for <see cref="TransactionType.Payment"/>.
     /// </summary>
     [Flags]
-    public enum PaymentFlags : long
+    public enum PaymentFlags : UInt32
     {
         NoSkywellDirect = 0x00010000,
         PartialPayment = 0x00020000,
@@ -159,7 +171,7 @@ namespace JingTum.Lib
     /// Indicates the flags for <see cref="TransactionType.RelationSet"/>.
     /// </summary>
     [Flags]
-    public enum RelationSetFlags : long
+    public enum RelationSetFlags : UInt32
     {
         Authorize = 0x00000001,
         Freeze = 0x00000011
@@ -168,7 +180,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Indicates the transaction type.
     /// </summary>
-    public enum TransactionType
+    public enum TransactionType : UInt32
     {
         /// <summary>
         /// For <see cref="Remote.BuildPaymentTx(PaymentTxOptions)"/> transaction.
@@ -212,6 +224,7 @@ namespace JingTum.Lib
         /// For <see cref="Remote.BuildSignTx(SignTxOptions)"/> transaction.
         /// </summary>
         EnableFeature = 100,
+
         SetFee = 101,
 
         // following transaction type value is unknown
@@ -220,7 +233,7 @@ namespace JingTum.Lib
         Operation,
     }
 
-    internal enum LedgerEntryType
+    internal enum LedgerEntryType : UInt32
     {
         AccountRoot = 97,
         Contract = 99,
@@ -256,7 +269,7 @@ namespace JingTum.Lib
         Connected
     }
 
-    internal enum LedgerAccountRootFlags : long
+    internal enum LedgerAccountRootFlags : UInt32
     {
         PasswordSpent = 0x00010000, // True, if password set fee is spent.
         RequireDestTag = 0x00020000, // True, to require a DestinationTag for payments.
@@ -265,13 +278,13 @@ namespace JingTum.Lib
         DisableMaster = 0x00100000  // True, force regular key.
     }
 
-    internal enum LedgerOfferFlags : long
+    internal enum LedgerOfferFlags : UInt32
     {
         Passive = 0x00010000,
         Sell = 0x00020000  // True, offer was placed as a sell.
     }
 
-    internal enum LedgerStateFlags : long
+    internal enum LedgerStateFlags : UInt32
     {
         LowReserve = 0x00010000, // True, if entry counts toward reserve.
         HighReserve = 0x00020000,

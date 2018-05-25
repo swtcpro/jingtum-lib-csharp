@@ -12,7 +12,7 @@ namespace JingTum.Lib
     public class MessageEventsArgs : EventArgs
     {
         /// <summary>
-        /// Gets the raw message received from server.
+        /// Gets the raw json message received from server.
         /// </summary>
         public string Message { get; internal set; }
     }
@@ -22,6 +22,9 @@ namespace JingTum.Lib
     /// </summary>
     public class TransactionsEventArgs : MessageEventsArgs
     {
+        /// <summary>
+        /// Gets the parsed response result of the transaction.
+        /// </summary>
         public TransactionResponse Result { get; internal set; }
     }
 
@@ -30,6 +33,9 @@ namespace JingTum.Lib
     /// </summary>
     public class LedgerClosedEventArgs : MessageEventsArgs
     {
+        /// <summary>
+        /// Gets the info of the closed ledger.
+        /// </summary>
         public LedgerClosedInfo LedgerClosed { get; internal set; }
     }
 

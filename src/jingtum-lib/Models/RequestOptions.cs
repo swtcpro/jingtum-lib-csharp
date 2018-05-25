@@ -10,40 +10,46 @@ namespace JingTum.Lib
     public class LedgerOptions
     {
         /// <summary>
-        /// Optional. The ledger index to return.
+        /// The ledger index to return.
         /// </summary>
         /// <remarks>
-        /// If <see cref="LedgerIndex"/> and <see cref="LedgerHash"/> are not provided, then last closed ledger is returned.
+        /// Opitonal. If <see cref="LedgerIndex"/> and <see cref="LedgerHash"/> are not provided, then last closed ledger is returned.
         /// </remarks>
-        [Category("Optional")]
         public long? LedgerIndex { get; set; }
         /// <summary>
-        /// Optional. The ledger hash to return.
+        /// The ledger hash to return.
         /// </summary>
         /// <remarks>
-        /// If <see cref="LedgerIndex"/> and <see cref="LedgerHash"/> are not provided, then last closed ledger is returned.
+        /// Optional. If <see cref="LedgerIndex"/> and <see cref="LedgerHash"/> are not provided, then last closed ledger is returned.
         /// </remarks>
-        [Category("Optional")]
         public string LedgerHash { get; set; }
         /// <summary>
-        /// Reserved.
+        /// Whether gets expanded info of both transactions and accounts.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. Default is false.
+        /// </remarks>
         public bool? Full { get; set; }
         /// <summary>
-        /// Reserved.
+        /// Whether gets expanded info the transactions or accounts.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. Default is false.
+        /// </remarks>
         public bool? Expand { get; set; }
         /// <summary>
-        /// Reserved.
+        /// Whether gets the transactions hash list in the ledger.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. Default is false.
+        /// </remarks>
         public bool? Transactions { get; set; }
         /// <summary>
-        /// Reserved.
+        /// Whether gets the accounts list in the ledger.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. Default is false.
+        /// </remarks>
         public bool? Accounts { get; set; }
     }
 
@@ -53,14 +59,17 @@ namespace JingTum.Lib
     public class TxOptions
     {
         /// <summary>
-        /// Required. The transaction hash.
+        /// The transaction hash.
         /// </summary>
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         [Category("Required")]
         public string Hash { get; set; }
     }
 
     /// <summary>
-    /// Represents the ledger option.
+    /// Represents the ledger settings.
     /// </summary>
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class LedgerSettings
@@ -72,7 +81,9 @@ namespace JingTum.Lib
         /// <summary>
         /// The ledger hash.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. It will be reset if <see cref="LedgerIndex"/> or <see cref="LedgerState"/> is set.
+        /// </remarks>
         public string LedgerHash
         {
             get { return _ledgerHash; }
@@ -87,7 +98,9 @@ namespace JingTum.Lib
         /// <summary>
         /// The ledger index.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. It will be reset if <see cref="LedgerHash"/> or <see cref="LedgerState"/> is set.
+        /// </remarks>
         public UInt32? LedgerIndex
         {
             get { return _ledgerIndex; }
@@ -102,7 +115,9 @@ namespace JingTum.Lib
         /// <summary>
         /// The ledger state.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional. It will be reset if <see cref="LedgerIndex"/> or <see cref="LedgerHash"/> is set.
+        /// </remarks>
         public LedgerState? LedgerState
         {
             get { return _ledgerState; }
@@ -119,165 +134,207 @@ namespace JingTum.Lib
     {
         string Account { get; set; }
         LedgerSettings Ledger { get; set; }
-        int? Limit { get; set; }
+        UInt32? Limit { get; set; }
         string Marker { get; set; }
         string Peer { get; set; }
     }
 
+    /// <summary>
+    /// Represents the options the account info request.
+    /// </summary>
     public class AccountInfoOptions : IAccountOptions
     {
         /// <summary>
-        /// Required. The account address.
-        /// </summary>
-        [Category("Required")]
-        public string Account { get; set; }
-        /// <summary>
-        /// Optional. The ledger option.
+        /// The account address.
         /// </summary>
         /// <remarks>
-        /// If it's not provided, the <see cref="LedgerState.Validated"/> is returned.
+        /// Required. 
         /// </remarks>
-        [Category("Optional")]
+        public string Account { get; set; }
+        /// <summary>
+        /// The ledger option.
+        /// </summary>
+        /// <remarks>
+        /// Optional. Default is the <see cref="LedgerState.Validated"/>.
+        /// </remarks>
         public LedgerSettings Ledger { get; set; }
 
-        int? IAccountOptions.Limit { get; set; }
+        UInt32? IAccountOptions.Limit { get; set; }
         string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
+    /// <summary>
+    /// Represents the options for the account tums request.
+    /// </summary>
     public class AccountTumsOptions : IAccountOptions
     {
         /// <summary>
-        /// Required. The account address.
-        /// </summary>
-        [Category("Required")]
-        public string Account { get; set; }
-        /// <summary>
-        /// Optional. The ledger option.
+        /// The account address.
         /// </summary>
         /// <remarks>
-        /// If it's not provided, the <see cref="LedgerState.Validated"/> is returned.
+        /// Required. 
+        /// </remarks>
+        public string Account { get; set; }
+        /// <summary>
+        /// The ledger option.
+        /// </summary>
+        /// <remarks>
+        /// Optional. Default is the <see cref="LedgerState.Validated"/>.
         /// </remarks>
         [Category("Optional")]
         public LedgerSettings Ledger { get; set; }
 
-        int? IAccountOptions.Limit { get; set; }
+        UInt32? IAccountOptions.Limit { get; set; }
         string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
+    /// <summary>
+    /// Represents the options for account relations request.
+    /// </summary>
     public class AccountRelationsOptions : IAccountOptions
     {
         /// <summary>
-        /// Required. The account address.
+        /// The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Required.The relation type.
+        /// The relation type.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required.
+        /// </remarks>
         public RelationType Type { get; set; }
         /// <summary>
-        /// Optional. The ledger option.
+        /// The ledger option.
         /// </summary>
         /// <remarks>
-        /// If it's not provided, the <see cref="LedgerState.Validated"/> is returned.
+        /// Optional. Default is the <see cref="LedgerState.Validated"/>.
         /// </remarks>
-        [Category("Optional")]
         public LedgerSettings Ledger { get; set; }
         /// <summary>
-        /// Optional. Limit output tx record.
+        ///  Limit output tx record.
         /// </summary>
         /// <remarks>
-        /// Min is 200.
+        /// Optional. Default is 200.
         /// </remarks>
-        [Category("Optional")]
-        public int? Limit { get; set; }
+        public UInt32? Limit { get; set; }
         /// <summary>
-        /// Optional.
+        /// The marker string.
         /// </summary>
-        [Category("Optional")]
+        /// <remarks>
+        /// Optional.
+        /// </remarks>
         public string Marker { get; set; }
-
+        /// <summary>
+        /// The peer string.
+        /// </summary>
+        /// <remarks>
+        /// Optional.
+        /// </remarks>
         public string Peer { get; set; }
     }
 
+    /// <summary>
+    /// Gets the options for account offers request.
+    /// </summary>
     public class AccountOffersOptions : IAccountOptions
     {
         /// <summary>
-        /// Required. The account address.
+        /// The account address.
         /// </summary>
-        [Category("Required")]
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Optional. The ledger option.
+        /// The ledger option.
         /// </summary>
         /// <remarks>
-        /// If it's not provided, the <see cref="LedgerState.Validated"/> is returned.
+        ///  Optional. Default is the <see cref="LedgerState.Validated"/>.
         /// </remarks>
-        [Category("Optional")]
         public LedgerSettings Ledger { get; set; }
         /// <summary>
-        /// Optional. Limit output tx record.
+        /// Limit output tx record.
         /// </summary>
         /// <remarks>
-        /// Min is 200.
+        /// Optional. Min is 200.
         /// </remarks>
-        [Category("Optional")]
-        public int? Limit { get; set; }
+        public UInt32? Limit { get; set; }
 
         string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
     /// <summary>
-    /// Represents the options of account tx request.
+    /// Represents the options for account tx request.
     /// </summary>
     public class AccountTxOptions
     {
         /// <summary>
-        /// Required. The accound address.
+        /// The accound address.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Optional. The ledger option.
+        /// The ledger option.
         /// </summary>
+        /// <remarks>
+        /// Optional. Default is the <see cref="LedgerState.Validated"/>.
+        /// </remarks>
         public LedgerSettings Ledger { get; set; }
         /// <summary>
-        /// Optional.
+        /// The min of the ledger range.
         /// </summary>
         /// <remarks>
-        /// Default is 0 it not provided.
+        ///  Optional. Default is 0.
         /// </remarks>
-        public int? LedgerMin { get; set; }
+        public long? LedgerMin { get; set; }
         /// <summary>
-        /// Optional.
+        /// The max of the ledger range.
         /// </summary>
         /// <remarks>
-        /// Default is -1 if not provided.
+        /// Optional. Default is -1.
         /// </remarks>
-        public int? LedgerMax { get; set; }
+        public long? LedgerMax { get; set; }
         /// <summary>
-        /// Optional. Limit output tx record.
+        /// Limit output tx record.
         /// </summary>
-        public int? Limit { get; set; }
+        /// <remarks>
+        /// Optional. 
+        /// </remarks>
+        public UInt32? Limit { get; set; }
         /// <summary>
+        /// The offset.
+        /// </summary>
+        /// <remarks>
         /// Opitonal.
-        /// </summary>
-        public int? Offset { get; set; }
+        /// </remarks>
+        public UInt32? Offset { get; set; }
         /// <summary>
-        /// Optional.
+        /// The marker settings.
         /// </summary>
+        /// <remarks>
+        /// Optional.
+        /// </remarks>
         public MarkerSettings Marker { get; set; }
         /// <summary>
-        /// Optional. If returns recently tx records.
+        ///  Whether returns tx records from older to newer.
         /// </summary>
+        /// <remarks>
+        /// Optional. Default is false.
+        /// </remarks>
         public bool? Forward { get; set; }
     }
 
     /// <summary>
-    /// Represents the marker option.
+    /// Represents the marker settings.
     /// </summary>
     [TypeConverter(typeof(ExpandableObjectConverter))]
     [JsonConverter(typeof(NoTypeConverterJsonConverter<MarkerSettings>))]
@@ -287,12 +344,12 @@ namespace JingTum.Lib
         /// The ledger index.
         /// </summary>
         [JsonProperty("ledger")]
-        public long? Ledger { get; set; }
+        public UInt32? Ledger { get; set; }
         /// <summary>
         /// The sequence.
         /// </summary>
         [JsonProperty("seq")]
-        public long? Seq { get; set; }
+        public UInt32? Seq { get; set; }
 
         internal bool IsValid()
         {
@@ -306,21 +363,33 @@ namespace JingTum.Lib
     public class OrderBookOptions
     {
         /// <summary>
-        /// Requied. The amout to get.
+        /// The amount to get.
         /// </summary>
+        /// <remarks>
+        /// Requied. 
+        /// </remarks>
         public AmountSettings Gets { get; set; }
         /// <summary>
-        /// Required. The amout to exchange out.
+        /// The amount to exchange out.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AmountSettings Pays { get; set; }
         /// <summary>
-        /// Optional.
+        /// The taker address.
         /// </summary>
+        /// <remarks>
+        ///  Optional.
+        /// </remarks>
         public string Taker { get; set; }
         /// <summary>
-        /// Opitonal.
+        /// The limit of the records.
         /// </summary>
-        public int? Limit { get; set; }
+        /// <remarks>
+        /// Opitonal. Default is 300.
+        /// </remarks>
+        public UInt32? Limit { get; set; }
     }
 
     internal interface IAmount
@@ -409,16 +478,25 @@ namespace JingTum.Lib
     public class PathFindOptions
     {
         /// <summary>
-        /// Required. Account to find path.
+        /// Account to find path.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Account { get; set; }
         /// <summary>
-        /// Required. Destination account.
+        /// Destination account.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public string Destination { get; set; }
         /// <summary>
-        /// Required. The amount that destination will received.
+        /// The amount that destination will received.
         /// </summary>
+        /// <remarks>
+        /// Required. 
+        /// </remarks>
         public AmountSettings Amount { get; set; }
     }
 }
