@@ -462,37 +462,6 @@ namespace JingTum.Lib
         internal int OfferSequence { get; set; }
     }
 
-    [JsonConverter(typeof(AmountConverter))]
-    public class Amount : IAmount
-    {
-        //TODO string? number? BigInteger
-        [JsonProperty("value")]
-        public string Value { get; set; }
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
-        [JsonProperty("issuer")]
-        public string Issuer { get; set; }
-
-        public override string ToString()
-        {
-            if (Currency == Config.Currency) return Currency;
-            return string.Format("{0}:{1}", Currency, Issuer);
-        }
-
-        public override bool Equals(object obj)
-        {
-            var that = obj as Amount;
-            if (that == null) return false;
-
-            return this.Currency == that.Currency && this.Issuer == that.Issuer && this.Value == that.Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return Currency.GetHashCode() ^ Issuer.GetHashCode() ^ Value.GetHashCode();
-        }
-    }
-
     public class ArgData
     {
         [JsonProperty("Arg")]
@@ -726,14 +695,6 @@ namespace JingTum.Lib
 
         [JsonIgnore]
         public TxResult[] Transactions { get; internal set; }
-    }
-
-    public class Marker
-    {
-        [JsonProperty("ledger")]
-        public long Ledger { get; set; }
-        [JsonProperty("seq")]
-        public long Seq { get; set; }
     }
 
     public class AccountTx

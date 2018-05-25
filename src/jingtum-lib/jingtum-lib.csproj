@@ -56,6 +56,8 @@
     <Compile Include="Account.cs" />
     <Compile Include="AsyncEx.cs" />
     <Compile Include="Core\Utility.cs" />
+    <Compile Include="Design\ExpandableObjectConverterEx.cs" />
+    <Compile Include="Models\Amount.cs" />
     <Compile Include="Remote.cs" />
     <Compile Include="Serialization\DateTimeConverter.cs" />
     <Compile Include="SerializedTypes\Bits.cs" />
@@ -92,7 +94,6 @@
     <Compile Include="Models\TransactionOptions.cs" />
     <Compile Include="OrderBook.cs" />
     <Compile Include="Request.cs" />
-    <Compile Include="Serialization\NoTypeConverterJsonConverter.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />

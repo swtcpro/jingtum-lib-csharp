@@ -332,7 +332,7 @@ namespace TestApp
             var options = new AccountTxOptions();
             options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
             options.Ledger = new LedgerSettings();
-            options.Marker = new MarkerSettings();
+            options.Marker = new Marker();
             pgRequestAccountTxOptions.SelectedObject = options;
         }
 
@@ -351,8 +351,8 @@ namespace TestApp
         private void InitRequestOrderBookOptions()
         {
             var options = new OrderBookOptions();
-            options.Gets = AmountSettings.SWT();
-            options.Pays = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or");
+            options.Gets = Amount.SWT();
+            options.Pays = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or");
             pgRequestOrderBookOptions.SelectedObject = options;
         }
 
@@ -407,12 +407,12 @@ namespace TestApp
             var options = new PaymentTxOptions();
             options.From = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
             options.To = "jDUjqoDZLhzx4DCf6pvSivjkjgtRESY62c";
-            options.Amount = new AmountSettings("SWT", "", "0.5");
+            options.Amount = new Amount("SWT", "", "0.5");
             pgBuildPaymentTxOptions.SelectedObject = options;
 
             var settings = new TxSettings();
             settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgBuildPaymentTxSettings.SelectedObject = settings;
         }
 
@@ -436,12 +436,12 @@ namespace TestApp
             var options = new RelationTxOptions();
             options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
             options.Target = "jDUjqoDZLhzx4DCf6pvSivjkjgtRESY62c";
-            options.Limit = new AmountSettings { Currency = "CCA", Value = "0.01", Issuer = "js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u" };
+            options.Limit = new Amount { Currency = "CCA", Value = "0.01", Issuer = "js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u" };
             pgBuildRelationTxOptions.SelectedObject = options;
 
             var settings = new TxSettings();
             settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgBuildRelationTxSettings.SelectedObject = settings;
         }
 
@@ -469,7 +469,7 @@ namespace TestApp
 
             var settings = new TxSettings();
             settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgBuildAccountSetTxSettings.SelectedObject = settings;
         }
 
@@ -493,13 +493,13 @@ namespace TestApp
             var options = new OfferCreateTxOptions();
             options.Type = OfferType.Sell;
             options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
-            options.TakerGets = new AmountSettings { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", Value = "0.01" };
-            options.TakerPays = new AmountSettings { Currency = "SWT", Issuer = "", Value = "1" };
+            options.TakerGets = new Amount { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", Value = "0.01" };
+            options.TakerPays = new Amount { Currency = "SWT", Issuer = "", Value = "1" };
             pgBuildOfferCreateTxOptions.SelectedObject = options;
 
             var settings = new TxSettings();
             settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgBuildOfferCreateTxSettings.SelectedObject = settings;
         }
 
@@ -527,7 +527,7 @@ namespace TestApp
 
             var settings = new TxSettings();
             settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgBuildOfferCancelTxSettings.SelectedObject = settings;
         }
 
@@ -557,7 +557,7 @@ namespace TestApp
 
             var settings = new TxSettings();
             settings.Secret = "snoPBjXtMeMyMHUVTgbuqAfg1SUTb";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgDeployContractTxSettings.SelectedObject = settings;
         }
 
@@ -587,7 +587,7 @@ namespace TestApp
 
             var settings = new TxSettings();
             settings.Secret = "snoPBjXtMeMyMHUVTgbuqAfg1SUTb";
-            settings.SendMax = new AmountSettings();
+            settings.SendMax = new Amount();
             pgCallContractTxSettings.SelectedObject = settings;
         }
 
@@ -627,7 +627,7 @@ namespace TestApp
             var options = new PathFindOptions();
             options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
             options.Destination = "jDUjqoDZLhzx4DCf6pvSivjkjgtRESY62c";
-            options.Amount = new AmountSettings { Currency = "SWT", Issuer = "", Value = "0.001" };
+            options.Amount = new Amount { Currency = "SWT", Issuer = "", Value = "0.001" };
             pgRequestPathFindOptions.SelectedObject = options;
         }
 

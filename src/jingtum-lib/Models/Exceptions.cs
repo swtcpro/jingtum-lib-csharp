@@ -139,7 +139,7 @@ namespace JingTum.Lib
         /// <param name="name">The name of the option.</param>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">The inner exception.</param>
-        public InvalidAmountException(AmountSettings amount, string name = null, string message = null, Exception innerException = null)
+        public InvalidAmountException(Amount amount, string name = null, string message = null, Exception innerException = null)
             : base(message, innerException)
         {
             Amount = amount;
@@ -154,7 +154,7 @@ namespace JingTum.Lib
         /// <summary>
         /// Gets the amount.
         /// </summary>
-        public AmountSettings Amount { get; private set; }
+        public Amount Amount { get; private set; }
 
         public override string Message => base.Message ?? (Amount == null ? "Amount is null." : "Invalid amount.");
     }

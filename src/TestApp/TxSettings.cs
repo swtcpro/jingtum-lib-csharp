@@ -15,7 +15,7 @@ namespace TestApp
         [Category("Optional")]
         public string Path { get; set; }
         [Category("Optional")]
-        public AmountSettings SendMax { get; set; }
+        public Amount SendMax { get; set; }
         [Category("Optional")]
         public float? TransferRate { get; set; }
         [Category("Optional")]

@@ -225,8 +225,8 @@ namespace UnitTests
             var deferred = new Task(() => { });
             MessageResult<OrderBookResponse> response = null;
             var options = new OrderBookOptions();
-            options.Gets = new AmountSettings("SWT", "", "1");
-            options.Pays = new AmountSettings("abc", "xyz", "def");
+            options.Gets = new Amount("SWT", "", "1");
+            options.Pays = new Amount("abc", "xyz", "def");
             _remote.RequestOrderBook(options).Submit(r =>
             {
                 response = r;
@@ -242,8 +242,8 @@ namespace UnitTests
             deferred = new Task(() => { });
             response = null;
             options = new OrderBookOptions();
-            options.Pays = new AmountSettings { Currency = "SWT", Issuer = "", Value = "1" };
-            options.Gets = new AmountSettings { Currency = "abc", Issuer = "xyz", Value = "def" };
+            options.Pays = new Amount { Currency = "SWT", Issuer = "", Value = "1" };
+            options.Gets = new Amount { Currency = "abc", Issuer = "xyz", Value = "def" };
             _remote.RequestOrderBook(options).Submit(r =>
             {
                 response = r;
@@ -265,7 +265,7 @@ namespace UnitTests
             var options = new PathFindOptions();
             options.Account = "abcxyz";
             options.Destination = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = new AmountSettings { Currency = "ABC", Issuer = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", Value = "1" };
+            options.Amount = new Amount { Currency = "ABC", Issuer = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", Value = "1" };
             _remote.RequestPathFind(options).Submit(r =>
             {
                 response = r;
@@ -283,7 +283,7 @@ namespace UnitTests
             options = new PathFindOptions();
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Destination = "abcxyz";
-            options.Amount = new AmountSettings { Currency = "ABC", Issuer = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", Value = "1" };
+            options.Amount = new Amount { Currency = "ABC", Issuer = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", Value = "1" };
             _remote.RequestPathFind(options).Submit(r =>
             {
                 response = r;
@@ -301,7 +301,7 @@ namespace UnitTests
             options = new PathFindOptions();
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Destination = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = new AmountSettings { Currency = "ABC", Issuer = "abcxyz", Value = "1" };
+            options.Amount = new Amount { Currency = "ABC", Issuer = "abcxyz", Value = "1" };
             _remote.RequestPathFind(options).Submit(r =>
             {
                 response = r;

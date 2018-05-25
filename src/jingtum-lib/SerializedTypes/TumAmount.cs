@@ -59,9 +59,9 @@ namespace JingTum.Lib
             {
                 ParseSwtValue((string)json);
             }
-            else if (json is AmountSettings)
+            else if (json is Amount)
             {
-                var amount = json as AmountSettings;
+                var amount = json as Amount;
                 if(amount.Currency == Config.Currency)
                 {
                     ParseSwtValue(amount.Value.ToString());

@@ -27,7 +27,7 @@ namespace UnitTests
             var options = new PaymentTxOptions();
             options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = AmountSettings.SWT("0.5");
+            options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
@@ -52,7 +52,7 @@ namespace UnitTests
             var options = new PaymentTxOptions();
             options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.Amount = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildPaymentTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
@@ -77,11 +77,11 @@ namespace UnitTests
             var options = new PaymentTxOptions();
             options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = AmountSettings.SWT("0.5");
+            options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
-            tx.SetSendMax(new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33"));
+            tx.SetSendMax(new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33"));
             tx.Sign(r =>
             {
                 blob = r.Result;
@@ -103,13 +103,13 @@ namespace UnitTests
             var options = new PaymentTxOptions();
             options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Amount = AmountSettings.SWT("0.5");
+            options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
             tx.SetFee(20);
             tx.SetFlags(1);
-            tx.SetSendMax(AmountSettings.SWT("1000"));
+            tx.SetSendMax(Amount.SWT("1000"));
             tx.SetTransferRate(0.5f);
             tx.AddMemo("I Love SWTC!我爱祖国。");
             tx.Sign(r =>
@@ -132,8 +132,8 @@ namespace UnitTests
             string blob = null;
             var options = new OfferCreateTxOptions();
             options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            options.TakerPays = AmountSettings.SWT("0.5");
-            options.TakerGets = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.TakerPays = Amount.SWT("0.5");
+            options.TakerGets = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             options.Type = OfferType.Sell;
             var tx = remote.BuildOfferCreateTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
@@ -158,8 +158,8 @@ namespace UnitTests
             string blob = null;
             var options = new OfferCreateTxOptions();
             options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            options.TakerGets = AmountSettings.SWT("0.5");
-            options.TakerPays = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.TakerGets = Amount.SWT("0.5");
+            options.TakerPays = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildOfferCreateTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
@@ -210,7 +210,7 @@ namespace UnitTests
             options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.QualityIn = 1;
             options.QualityOut = 2;
-            options.Limit = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.Limit = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildRelationTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
@@ -236,7 +236,7 @@ namespace UnitTests
             options.Type = RelationType.Freeze;
             options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.Target = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Limit = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.Limit = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildRelationTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
@@ -262,7 +262,7 @@ namespace UnitTests
             options.Type = RelationType.Unfreeze;
             options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.Target = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.Limit = new AmountSettings("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
+            options.Limit = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildRelationTx(options);
             tx.Data.TxnSignature = "3045022100CC48021620B52E3F40F74BA45B3C89089C4580154EAF1027FEED92E6D76705AA0220069112B3017B327245E4B1258A83D7DF8737EFB83716617FDB2337E9CC6490CB";
             tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");

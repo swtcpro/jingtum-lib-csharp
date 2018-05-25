@@ -122,12 +122,12 @@ namespace JingTum.Lib
             _txJson.Fee = fee;
         }
 
-        private object MaxAmount(Amount amount)
-        {
-            return MaxAmount(new AmountSettings(amount.Currency, amount.Issuer, amount.Value));
-        }
+        //private object MaxAmount(Amount amount)
+        //{
+        //    return MaxAmount(new Amount(amount.Currency, amount.Issuer, amount.Value));
+        //}
 
-        private object MaxAmount(AmountSettings amount)
+        private object MaxAmount(Amount amount)
         {
             if (amount.Currency == Config.Currency)
             {
@@ -144,7 +144,7 @@ namespace JingTum.Lib
                 {
                     decimal amountValue = decimal.Parse(amount.Value);
                     amountValue *= new decimal(1.0001);
-                    return new AmountSettings(amount.Currency, amount.Issuer, amountValue.ToString());
+                    return new Amount(amount.Currency, amount.Issuer, amountValue.ToString());
                 }
             }
 
@@ -191,7 +191,7 @@ namespace JingTum.Lib
         /// It is set by <see cref="SetPath(string)"/> default.
         /// </remarks>
         /// <param name="amount">The max amount.</param>
-        public void SetSendMax(AmountSettings amount)
+        public void SetSendMax(Amount amount)
         {
             if (!Utils.IsValidAmount(amount))
             {

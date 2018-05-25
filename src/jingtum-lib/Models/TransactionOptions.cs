@@ -10,7 +10,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for payment transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class PaymentTxOptions
     {
         /// <summary>
@@ -33,7 +33,7 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public AmountSettings Amount { get; set; }
+        public Amount Amount { get; set; }
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for deploy contract transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class DeployContractTxOptions : ContractTxOptions
     {
         /// <summary>
@@ -82,7 +82,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for call contract transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class CallContractTxOptions : ContractTxOptions
     {
         /// <summary>
@@ -104,7 +104,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for sign transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class SignTxOptions
     {
         /// <summary>
@@ -119,7 +119,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for relation transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class RelationTxOptions
     {
         /// <summary>
@@ -149,7 +149,7 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required.
         /// </remarks>
-        public AmountSettings Limit { get; set; }
+        public Amount Limit { get; set; }
         /// <summary>
         /// Reserved.
         /// </summary>
@@ -171,7 +171,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for set account atribute transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class AccountSetTxOptions
     {
         /// <summary>
@@ -214,7 +214,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for offer create transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class OfferCreateTxOptions
     {
         /// <summary>
@@ -237,20 +237,20 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public AmountSettings TakerGets { get; set; }
+        public Amount TakerGets { get; set; }
         /// <summary>
         /// The amount can to exchanged out by taker.
         /// </summary>
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public AmountSettings TakerPays { get; set; }
+        public Amount TakerPays { get; set; }
     }
 
     /// <summary>
     /// Represents the options for offer cancel transaction.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class OfferCancelTxOptions
     {
         /// <summary>

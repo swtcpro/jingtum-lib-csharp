@@ -445,7 +445,7 @@ namespace JingTum.Lib
 
         public static string GetPrice(Amount pays, Amount gets, bool founded)
         {
-            return founded ? AmountRatio(pays, gets) : AmountRatio(gets, pays);
+            return founded ? AmountRatio(gets, pays) : AmountRatio(pays, gets);
         }
 
         private static string[] ParseMemos(Tx tx)

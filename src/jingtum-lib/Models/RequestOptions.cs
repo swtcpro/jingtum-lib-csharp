@@ -71,7 +71,7 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the ledger settings.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
     public class LedgerSettings
     {
         private UInt32? _ledgerIndex;
@@ -323,7 +323,7 @@ namespace JingTum.Lib
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public MarkerSettings Marker { get; set; }
+        public Marker Marker { get; set; }
         /// <summary>
         ///  Whether returns tx records from older to newer.
         /// </summary>
@@ -334,11 +334,10 @@ namespace JingTum.Lib
     }
 
     /// <summary>
-    /// Represents the marker settings.
+    /// Represents the marker.
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    [JsonConverter(typeof(NoTypeConverterJsonConverter<MarkerSettings>))]
-    public class MarkerSettings
+    [TypeConverter(typeof(ExpandableObjectConverterEx))]
+    public class Marker
     {
         /// <summary>
         /// The ledger index.
@@ -368,14 +367,14 @@ namespace JingTum.Lib
         /// <remarks>
         /// Requied. 
         /// </remarks>
-        public AmountSettings Gets { get; set; }
+        public Amount Gets { get; set; }
         /// <summary>
         /// The amount to exchange out.
         /// </summary>
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public AmountSettings Pays { get; set; }
+        public Amount Pays { get; set; }
         /// <summary>
         /// The taker address.
         /// </summary>
@@ -390,86 +389,6 @@ namespace JingTum.Lib
         /// Opitonal. Default is 300.
         /// </remarks>
         public UInt32? Limit { get; set; }
-    }
-
-    internal interface IAmount
-    {
-        string Currency { get; }
-        string Issuer { get; }
-        string Value { get; }
-    }
-
-    /// <summary>
-    /// Represents the amount options for <see cref="Request{T}"/> and <see cref="Transaction{T}"/>.
-    /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    [JsonConverter(typeof(NoTypeConverterJsonConverter<AmountSettings>))]
-    public class AmountSettings : IAmount,ICloneable
-    {
-        /// <summary>
-        /// Creates a new instance of <see cref="AmountSettings"/> object.
-        /// </summary>
-        public AmountSettings()
-        {
-
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="AmountSettings"/> object for SWT currency.
-        /// </summary>
-        /// /// <param name="value">The amount value.</param>
-        /// <returns>The <see cref="AmountSettings"/> object.</returns>
-        public static AmountSettings SWT(string value = null)
-        {
-            return new AmountSettings("SWT", "", value);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="AmountSettings"/> object.
-        /// </summary>
-        /// <param name="currency">The amount currency.</param>
-        /// <param name="issuer">The amount issuer.</param>
-        /// <param name="value">The amount value.</param>
-        public AmountSettings(string currency, string issuer, string value = null)
-        {
-            Currency = currency;
-            Issuer = issuer;
-            Value = value;
-        }
-
-        /// <summary>
-        /// Optional. The value.
-        /// </summary>
-        [JsonProperty("value")]
-        public string Value { get; set; }
-        /// <summary>
-        /// Required. The currency.
-        /// </summary>
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
-        /// <summary>
-        /// Required. The issuer.
-        /// </summary>
-        /// <remarks>
-        /// The issuer is ignored if the currency is "SWT".
-        /// </remarks>
-        [JsonProperty("issuer")]
-        public string Issuer { get; set; }
-
-        public object Clone()
-        {
-            var that = new AmountSettings();
-            that.Value = Value;
-            that.Currency = Currency;
-            that.Issuer = Issuer;
-            return that;
-        }
-
-        public override string ToString()
-        {
-            if (Currency == Config.Currency) return Currency;
-            return string.Format("{0}:{1}", Currency, Issuer);
-        }
     }
 
     /// <summary>
@@ -497,6 +416,6 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public AmountSettings Amount { get; set; }
+        public Amount Amount { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace JingTum.Lib
             return Wallet.IsValidAddress(address);
         }
 
-        public static bool IsValidAmount(IAmount amount)
+        public static bool IsValidAmount(Amount amount)
         {
             // check amount value
             decimal value;
@@ -47,7 +47,7 @@ namespace JingTum.Lib
             return IsValidAmount0(amount);
         }
 
-        public static bool IsValidAmount0(IAmount amount)
+        public static bool IsValidAmount0(Amount amount)
         {
             // check amount currency
             if ( !IsValidCurrency(amount.Currency))
@@ -70,7 +70,7 @@ namespace JingTum.Lib
             return true;
         }
 
-        public static object ToAmount(AmountSettings amount)
+        public static object ToAmount(Amount amount)
         {
             if (amount == null) return null;
 

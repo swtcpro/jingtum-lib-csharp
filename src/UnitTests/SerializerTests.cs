@@ -194,7 +194,7 @@ namespace UnitTests
         {
             var so = new Serializer();
             var st = new SerializedAmount() as ISerializedType;
-            st.Serialize(so, new AmountSettings { Currency = currenty, Issuer = issuer, Value = value });
+            st.Serialize(so, new Amount { Currency = currenty, Issuer = issuer, Value = value });
             Assert.AreEqual(hex, so.ToHex());
         }
 
@@ -317,7 +317,7 @@ namespace UnitTests
 
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.Destination = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            data.Amount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.Amount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200002200000000240000000961D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D41596684000000000000064732102A8D70000DCCDAE1E639E5938559B840FA865F5C5B31ADCCE76EF51A7F71039D58114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47831460B1227191135B3B16CB1D74F2509BD5C5DF985B", so.ToHex());
@@ -337,7 +337,7 @@ namespace UnitTests
             data.Destination = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             data.Amount = "0.05";
 
-            data.SendMax= new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.SendMax= new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200002200000000240000000961400000000000C35068400000000000006469D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D41596732102A8D70000DCCDAE1E639E5938559B840FA865F5C5B31ADCCE76EF51A7F71039D58114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47831460B1227191135B3B16CB1D74F2509BD5C5DF985B", so.ToHex());
@@ -421,7 +421,7 @@ namespace UnitTests
 
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.TakerPays = "0.05";
-            data.TakerGets= new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.TakerGets= new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
             data.Flags = (UInt32)OfferCreateFlags.Sell;
 
             var so = Serializer.Create(data);
@@ -440,7 +440,7 @@ namespace UnitTests
 
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.TakerGets = "0.05";
-            data.TakerPays = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.TakerPays = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200072200000000240000000964D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D4159665400000000000C350684000000000000064732102A8D70000DCCDAE1E639E5938559B840FA865F5C5B31ADCCE76EF51A7F71039D58114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47", so.ToHex());
@@ -476,7 +476,7 @@ namespace UnitTests
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.QualityIn = 1;
             data.QualityOut = 2;
-            data.LimitAmount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.LimitAmount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200142200000000240000000920140000000120150000000263D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D4159668400000000000006473210204B7DE11FDC08FBBC007000BAD727E3F472DCB7BAC7078A69EFB748F242CF6EE8114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47", so.ToHex());
@@ -495,7 +495,7 @@ namespace UnitTests
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.Target = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             data.RelationType = 3; //1->authorize, 3->freeze
-            data.LimitAmount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.LimitAmount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200152200000000240000000920230000000363D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D4159668400000000000006473210204B7DE11FDC08FBBC007000BAD727E3F472DCB7BAC7078A69EFB748F242CF6EE8114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47871460B1227191135B3B16CB1D74F2509BD5C5DF985B", so.ToHex());
@@ -514,7 +514,7 @@ namespace UnitTests
             data.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             data.Target = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             data.RelationType = 1; //1->authorize, 3->freeze
-            data.LimitAmount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
+            data.LimitAmount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "12.33" };
 
             var so = Serializer.Create(data);
             Assert.AreEqual("1200162200000000240000000920230000000163D4C461682F021000000000000000000000000000434E590000000000A582E432BFC48EEDEF852C814EC57F3CD2D4159668400000000000006473210204B7DE11FDC08FBBC007000BAD727E3F472DCB7BAC7078A69EFB748F242CF6EE8114DD1CE7A2B5C266CC3F4E83CFF6B27C1A89A48F47871460B1227191135B3B16CB1D74F2509BD5C5DF985B", so.ToHex());

@@ -11,16 +11,16 @@ namespace JingTum.Lib
     {
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public UInt32 Flags { get; set; }
-        // Amount(long; decimal, string, AmountSettings)
+        // Amount(long; decimal, string, Amount)
         public object Fee { get; set; }
         public string Account { get; set; }
         public PathComputed[][] Paths { get; set; }
-        //Amount(decimal, string, AmountSettings)
+        //Amount(decimal, string, Amount)
         public object SendMax { get; set; }
         public UInt32? TransferRate { get; set; }
         public List<MemoInfo> Memos { get; set; }
         public UInt32? Sequence { get; set; }
-        //Amount(decimal, string, AmountSettings)
+        //Amount(decimal, string, Amount)
         public object Amount { get; set; }
         //string for remote sign, int for local sign
         public object TransactionType { get; set; }
@@ -178,7 +178,7 @@ namespace JingTum.Lib
 
     internal class RelationTxData : TxData
     {
-        public AmountSettings LimitAmount { get; internal set; }
+        public Amount LimitAmount { get; internal set; }
         public UInt32? QualityIn { get; internal set; }
         public UInt32? QualityOut { get; internal set; }
         public string Target { get; internal set; }
@@ -187,7 +187,7 @@ namespace JingTum.Lib
         public override object Clone()
         {
             var that = (RelationTxData)base.Clone();
-            that.LimitAmount = LimitAmount == null ?  null : (AmountSettings)LimitAmount.Clone();
+            that.LimitAmount = LimitAmount == null ?  null : (Amount)LimitAmount.Clone();
             that.QualityIn = QualityIn;
             that.QualityOut = QualityOut;
             that.Target = Target;

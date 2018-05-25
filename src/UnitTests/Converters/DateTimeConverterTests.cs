@@ -22,7 +22,7 @@ namespace UnitTests
             var json = string.Format("{{date: {0}}}", unixTime);
             var model = JsonConvert.DeserializeObject<MockModel>(json);
             Assert.IsNotNull(model);
-            Assert.AreEqual(date, model.Date.ToString("yyyy/MM/dd HH:mm:ss"));
+            Assert.AreEqual(date, model.Date.ToString("yyyy\\/MM\\/dd HH:mm:ss"));
         }
 
         private class MockModel

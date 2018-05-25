@@ -158,7 +158,7 @@ namespace UnitTests
             Assert.AreEqual(true, ledger.Accepted);
             Assert.AreEqual("49424395D2B6AC2A2717CD17C40570951809A59EA96AFFCFAE2D5E704FD2B071", ledger.AccountHash);
             Assert.AreEqual(true, ledger.Closed);
-            Assert.AreEqual("2018/05/12 21:43:30", ledger.CloseTime.ToString("yyyy/MM/dd HH:mm:ss"));
+            Assert.AreEqual("2018/05/12 21:43:30", ledger.CloseTime.ToString("yyyy\\/MM\\/dd HH:mm:ss"));
             Assert.AreEqual("2018-May-12 13:43:30", ledger.CloseTimeHuman);
             Assert.AreEqual(10, ledger.CloseTimeResolution);
             Assert.AreEqual("B405C42D4F5E5BEF1D07CB07235DDADD51A13158F8142649700340C26BE18D2E", ledger.Hash);
@@ -601,8 +601,8 @@ namespace UnitTests
             MessageResult<OrderBookResponse> response = null;
             var deferred = new Task(() => { });
             var options = new OrderBookOptions();
-            options.Gets = AmountSettings.SWT();
-            options.Pays = new AmountSettings ("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or");
+            options.Gets = Amount.SWT();
+            options.Pays = new Amount ("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or");
             remote.RequestOrderBook(options).Submit(r =>
             {
                 response = r;
@@ -636,7 +636,7 @@ namespace UnitTests
             var options = new PathFindOptions();
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Destination = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn";
-            options.Amount = new AmountSettings { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "0.01" };
+            options.Amount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", Value = "0.01" };
             remote.RequestPathFind(options).Submit(r =>
             {
                 response = r;
@@ -670,7 +670,7 @@ namespace UnitTests
             var options = new PaymentTxOptions();
             options.From = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.To = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
-            options.Amount = new AmountSettings { Currency="SWT", Issuer="", Value="0.5" };
+            options.Amount = new Amount { Currency="SWT", Issuer="", Value="0.5" };
             remote.BuildPaymentTx(options).Submit(r =>
             {
                 response = r;
@@ -777,8 +777,8 @@ namespace UnitTests
             var deferred = new Task(() => { });
             var options = new OfferCreateTxOptions();
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
-            options.TakerPays = new AmountSettings { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", Value = "1" };
-            options.TakerGets = new AmountSettings { Currency = "SWT", Issuer = "", Value = "0.02" };
+            options.TakerPays = new Amount { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", Value = "1" };
+            options.TakerGets = new Amount { Currency = "SWT", Issuer = "", Value = "0.02" };
             remote.BuildOfferCreateTx(options).Submit(r =>
             {
                 response = r;
@@ -846,7 +846,7 @@ namespace UnitTests
             var options = new RelationTxOptions();
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Type = RelationType.Trust;
-            options.Limit = new AmountSettings { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
+            options.Limit = new Amount { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
             remote.BuildRelationTx(options).Submit(r =>
             {
                 response = r;
@@ -880,7 +880,7 @@ namespace UnitTests
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Target = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn";
             options.Type = RelationType.Authorize;
-            options.Limit = new AmountSettings { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
+            options.Limit = new Amount { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
             remote.BuildRelationTx(options).Submit(r =>
             {
                 response = r;
@@ -916,7 +916,7 @@ namespace UnitTests
             options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Target = "jDUjqoDZLhzx4DCf6pvSivjkjgtRESY62c";
             options.Type = RelationType.Unfreeze;
-            options.Limit = new AmountSettings { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
+            options.Limit = new Amount { Currency = "CCA", Issuer = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn", Value = "0.01" };
             remote.BuildRelationTx(options).Submit(r =>
             {
                 response = r;
