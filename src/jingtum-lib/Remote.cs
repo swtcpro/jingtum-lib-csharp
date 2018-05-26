@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Threading;
 
 namespace JingTum.Lib
 {
@@ -202,6 +203,11 @@ namespace JingTum.Lib
                     var requestJson = response.Request?.ToString();
                     request.Callback(new MessageResult<object>(data, new ResponseException(message) { Error = response.Error, ErrorCode = response.ErrorCode, Request=requestJson }));
                 }
+
+                if (request.ResetEvent != null)
+                {
+                    request.ResetEvent.Set();
+                }
             }
         }
 
@@ -227,7 +233,7 @@ namespace JingTum.Lib
             OnPathFind(args);
         }
 
-        internal void Submit<T>(string command, dynamic data, Func<object, T> filter, MessageCallback<T> callback, Type responseDataType = null)
+        internal void Submit<T>(string command, dynamic data, Func<object, T> filter, MessageCallback<T> callback, AutoResetEvent resetEvent = null)
         {
             int requestId = _server.SendMessage(command, data);
             if (requestId < 0)
@@ -238,6 +244,7 @@ namespace JingTum.Lib
             var cache = new RequestCache();
             cache.Command = command;
             cache.Data = data;
+            cache.ResetEvent = resetEvent;
 
             cache.Filter = (message =>
             {
