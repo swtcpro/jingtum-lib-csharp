@@ -18,7 +18,7 @@ namespace JingTum.Lib
     /// </summary>
     public class MessageResult<T>
     {
-        internal MessageResult(string message, Exception exception = null, T result = default(T))
+        public MessageResult(string message, Exception exception = null, T result = default(T))
         {
             Message = message;
             Exception = exception;

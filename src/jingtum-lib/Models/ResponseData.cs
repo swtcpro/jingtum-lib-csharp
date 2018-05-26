@@ -653,6 +653,8 @@ namespace JingTum.Lib
         public int LedgerIndex { get; internal set; }
         [JsonProperty("offers")]
         public Offer[] Offers { get; internal set; }
+        [JsonProperty("marker")]
+        public Marker Marker { get; internal set; }
         [JsonProperty("validated")]
         public bool Validated { get; internal set; }
     }

@@ -124,11 +124,6 @@ namespace JingTum.Lib
             _txJson.Fee = fee;
         }
 
-        //private object MaxAmount(Amount amount)
-        //{
-        //    return MaxAmount(new Amount(amount.Currency, amount.Issuer, amount.Value));
-        //}
-
         private object MaxAmount(Amount amount)
         {
             if (amount.Currency == Config.Currency)
@@ -324,16 +319,6 @@ namespace JingTum.Lib
             });
         }
 
-        public async Task SignAsync(MessageCallback<string> callback)
-        {
-            var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
-            var task = req.SubmitAsync(accountInfoResult =>
-            {
-                Sign(accountInfoResult, callback);
-            });
-            await task;
-        }
-
         private void Sign(MessageResult<AccountInfoResponse> accountInfoResult, MessageCallback<string> callback)
         {
             if (accountInfoResult.Exception != null)
@@ -414,42 +399,15 @@ namespace JingTum.Lib
         /// <param name="callback">The callback.</param>
         public void Submit(MessageCallback<T> callback)
         {
-            if(_txJson.Exception != null)
-            {
-                callback?.Invoke(new MessageResult<T>(null, _txJson.Exception));
-                return;
-            }
-
-            if (_type == TransactionType.Signer || _localSigned)//直接将blob传给底层
-            {
-                dynamic data = new ExpandoObject();
-                data.tx_blob = _txJson.Blob;
-                _remote.Submit("submit", data, _filter, callback);
-            }
-            else if (_remote.LocalSign)//签名之后传给底层
-            {
-                Sign(result =>
-                {
-                    if (result.Exception != null)
-                    {
-                        callback?.Invoke(new MessageResult<T>("sign error: ", result.Exception));
-                        return;
-                    }
-
-                    dynamic data = new ExpandoObject();
-                    data.tx_blob = result.Result;
-                    _remote.Submit("submit", data, _filter, callback);
-                });
-            }
-            else//不签名交易传给底层
-            {
-                dynamic data = new ExpandoObject();
-                data.secret = _secret;
-                data.tx_json = _txJson;
-                _remote.Submit("submit", data, _filter, callback);
-            }
+            SubmitAsync(callback);
         }
 
+        /// <summary>
+        /// The async version of <see cref="Submit(MessageCallback{T})"/>.
+        /// </summary>
+        /// <param name="callback">The callback for the request result.</param>
+        /// <param name="timeout">The millisends to wait for the result.</param>
+        /// <returns>The task.</returns>
         public Task SubmitAsync(MessageCallback<T> callback, int timeout = -1)
         {
             if (_txJson.Exception != null)
@@ -474,7 +432,7 @@ namespace JingTum.Lib
             }
             else if (_remote.LocalSign)//签名之后传给底层
             {
-                var t = SignAsync(result =>
+                Sign(result =>
                 {
                     if (result.Exception != null)
                     {

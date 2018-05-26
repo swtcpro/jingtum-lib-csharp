@@ -55,18 +55,15 @@ namespace JingTum.Lib
         /// <param name="callback">The callback for the request result.</param>
         public void Submit(MessageCallback<T> callback = null)
         {
-            foreach(KeyValuePair<string, object> pair in _message)
-            {
-                if (pair.Value is Exception exception)
-                {
-                    callback?.Invoke(new MessageResult<T>(null, exception));
-                    return;
-                }
-            }
-
-            _remote.Submit(_command, _message, _filter, callback);
+            SubmitAsync(callback);
         }
 
+        /// <summary>
+        /// The async version of <see cref="Submit(MessageCallback{T})"/>.
+        /// </summary>
+        /// <param name="callback">The callback for the request result.</param>
+        /// <param name="timeout">The millisends to wait for the result.</param>
+        /// <returns>The task.</returns>
         public Task SubmitAsync(MessageCallback<T> callback = null, int timeout = -1)
         {
             foreach (KeyValuePair<string, object> pair in _message)
@@ -81,7 +78,10 @@ namespace JingTum.Lib
             var resetEvent = new AutoResetEvent(false);
             var task = new Task(() =>
             {
-                resetEvent.WaitOne(timeout);
+                if (!resetEvent.WaitOne(timeout))
+                {
+                    throw new TimeoutException();
+                }
                 resetEvent.Dispose();
             });
             task.Start();

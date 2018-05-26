@@ -156,7 +156,6 @@ namespace JingTum.Lib
         /// <remarks>
         /// Optional. Default is 0.
         /// </remarks>
-        [Category("Optional")]
         public UInt32? QualityIn { get; set; }
         /// <summary>
         /// Reserved.
@@ -164,7 +163,6 @@ namespace JingTum.Lib
         /// <remarks>
         /// Optional. Default is 0.
         /// </remarks>
-        [Category("Optional")]
         public UInt32? QualityOut { get; set; }
     }
 

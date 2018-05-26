@@ -64,7 +64,6 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required.
         /// </remarks>
-        [Category("Required")]
         public string Hash { get; set; }
     }
 
@@ -135,7 +134,7 @@ namespace JingTum.Lib
         string Account { get; set; }
         LedgerSettings Ledger { get; set; }
         UInt32? Limit { get; set; }
-        string Marker { get; set; }
+        Marker Marker { get; set; }
         string Peer { get; set; }
     }
 
@@ -160,7 +159,7 @@ namespace JingTum.Lib
         public LedgerSettings Ledger { get; set; }
 
         UInt32? IAccountOptions.Limit { get; set; }
-        string IAccountOptions.Marker { get; set; }
+        Marker IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
@@ -182,11 +181,10 @@ namespace JingTum.Lib
         /// <remarks>
         /// Optional. Default is the <see cref="LedgerState.Validated"/>.
         /// </remarks>
-        [Category("Optional")]
         public LedgerSettings Ledger { get; set; }
 
         UInt32? IAccountOptions.Limit { get; set; }
-        string IAccountOptions.Marker { get; set; }
+        Marker IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
@@ -224,12 +222,12 @@ namespace JingTum.Lib
         /// </remarks>
         public UInt32? Limit { get; set; }
         /// <summary>
-        /// The marker string.
+        /// The marker settings.
         /// </summary>
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public string Marker { get; set; }
+        public Marker Marker { get; set; }
         /// <summary>
         /// The peer string.
         /// </summary>
@@ -265,8 +263,14 @@ namespace JingTum.Lib
         /// Optional. Min is 200.
         /// </remarks>
         public UInt32? Limit { get; set; }
+        /// <summary>
+        /// The marker settings.
+        /// </summary>
+        /// <remarks>
+        /// Optional.
+        /// </remarks>
+        public Marker Marker { get; set; }
 
-        string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 

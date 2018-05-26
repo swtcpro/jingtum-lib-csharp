@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace JingTum.Lib
 {
-    internal class Utils
+    public static class Utils
     {
         private static Regex CurrencyRegex = new Regex("^([a-zA-Z0-9]{3,6}|[A-F0-9]{40})$", RegexOptions.Compiled);
         public static bool IsValidCurrency(string currency)
@@ -22,7 +22,7 @@ namespace JingTum.Lib
         }
 
         private static Regex HashRegex = new Regex("^[A-F0-9]{64}$", RegexOptions.Compiled);
-        public static bool IsValidHash(string hash)
+        internal static bool IsValidHash(string hash)
         {
             if (string.IsNullOrEmpty(hash)) return false;
 
@@ -93,7 +93,7 @@ namespace JingTum.Lib
             return amount;
         }
 
-        public static string Sha1(string data)
+        internal static string Sha1(string data)
         {
             var hash = System.Security.Cryptography.SHA1.Create();
             var bytes = Encoding.ASCII.GetBytes(data);
@@ -165,7 +165,7 @@ namespace JingTum.Lib
             return bytes;
         }
 
-        public static Nullable<T> TryGetNumber<T>(object value, bool parseString = true) where T : struct
+        internal static Nullable<T> TryGetNumber<T>(object value, bool parseString = true) where T : struct
         {
             if (value == null) return null;
             if (value is string && parseString)
@@ -187,7 +187,7 @@ namespace JingTum.Lib
             return null;
         }
 
-        public static bool IsNumber(object value)
+        internal static bool IsNumber(object value)
         {
             return (value is sbyte
                    || value is byte
@@ -207,7 +207,7 @@ namespace JingTum.Lib
             return Utility.ConvertUnixTime2DateTime(unitTime + 0x386D4380);
         }
 
-        public static bool IsHexString(string test)
+        internal static bool IsHexString(string test)
         {
             // For C-style hex notation (0xFF) you can use @"\A\b(0[xX])?[0-9a-fA-F]+\b\Z"
             return Regex.IsMatch(test, @"\A\b[0-9a-fA-F]+\b\Z");
