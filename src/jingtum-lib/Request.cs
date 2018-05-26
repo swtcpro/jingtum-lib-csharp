@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace JingTum.Lib
 {
@@ -63,6 +65,29 @@ namespace JingTum.Lib
             }
 
             _remote.Submit(_command, _message, _filter, callback);
+        }
+
+        public Task SubmitAsync(MessageCallback<T> callback = null, int timeout = -1)
+        {
+            foreach (KeyValuePair<string, object> pair in _message)
+            {
+                if (pair.Value is Exception exception)
+                {
+                    callback?.Invoke(new MessageResult<T>(null, exception));
+                    return AsyncEx.Complete();
+                }
+            }
+
+            var resetEvent = new AutoResetEvent(false);
+            var task = new Task(() =>
+            {
+                resetEvent.WaitOne(timeout);
+                resetEvent.Dispose();
+            });
+            task.Start();
+
+            _remote.Submit(_command, _message, _filter, callback, resetEvent);
+            return task;
         }
 
         /// <summary>

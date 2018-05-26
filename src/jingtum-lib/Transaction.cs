@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace JingTum.Lib
 {
@@ -318,77 +320,92 @@ namespace JingTum.Lib
             var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
             req.Submit(accountInfoResult =>
             {
-                if (accountInfoResult.Exception != null)
-                {
-                    callback?.Invoke(new MessageResult<string>("sign error: ", accountInfoResult.Exception));
-                    return;
-                }
-
-                const decimal factor = 1000000;
-                var accountInfo = accountInfoResult.Result;
-                _txJson.Sequence = accountInfo.AccountData.Sequence;
-                var fee = Utils.TryGetNumber<decimal>(_txJson.Fee);
-                if (fee == null)
-                {
-                    fee = (decimal)Config.Fee;
-                }
-                _txJson.Fee = fee.Value / factor;
-
-                //payment
-                var amount = Utils.TryGetNumber<decimal>(_txJson.Amount);
-                if (amount.HasValue)
-                {
-                    _txJson.Amount = amount / factor;
-                }
-
-                if (_txJson.Memos != null)
-                {
-                    foreach (var memo in _txJson.Memos)
-                    {
-                        memo.Memo.MemoData = Encoding.UTF8.GetString(Utils.HexToBytes(memo.Memo.MemoData));
-                    }
-                }
-
-                var sendMax = Utils.TryGetNumber<decimal>(_txJson.SendMax);
-                if (sendMax.HasValue) _txJson.SendMax = sendMax / factor;
-
-                // order
-                var offerCreateTxData = _txJson as OfferCreateTxData;
-                if (offerCreateTxData != null)
-                {
-                    var takerPays = Utils.TryGetNumber<decimal>(offerCreateTxData.TakerPays);
-                    if (takerPays.HasValue)
-                    {
-                        offerCreateTxData.TakerPays = takerPays / factor;
-                    }
-
-                    var takerGets = Utils.TryGetNumber<decimal>(offerCreateTxData.TakerGets);
-                    if (takerGets.HasValue)
-                    {
-                        offerCreateTxData.TakerGets = takerGets / factor;
-                    }
-                }
-
-                var wt = Wallet.FromSecret(_secret);
-                var pubKey = Utils.BytesToHex(wt.GetPublicKey().ToByteArray());
-
-                _txJson.SigningPubKey = pubKey;
-
-                // The TxnSignature is different for each Sign with the same hash.
-                // the TxnSignature is set for unit test
-                if (_txJson.TxnSignature == null)
-                {
-                    var so = Serializer.Create(_txJson);
-                    var hash = so.Hash(0x53545800);
-                    _txJson.TxnSignature = wt.Sign(hash);
-                }
-
-                var soTx = Serializer.Create(_txJson);
-                _txJson.Blob = soTx.ToHex();
-                _localSigned = true;
-
-                callback(new MessageResult<string>(null, null, _txJson.Blob));
+                Sign(accountInfoResult, callback);
             });
+        }
+
+        public async Task SignAsync(MessageCallback<string> callback)
+        {
+            var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
+            var task = req.SubmitAsync(accountInfoResult =>
+            {
+                Sign(accountInfoResult, callback);
+            });
+            await task;
+        }
+
+        private void Sign(MessageResult<AccountInfoResponse> accountInfoResult, MessageCallback<string> callback)
+        {
+            if (accountInfoResult.Exception != null)
+            {
+                callback?.Invoke(new MessageResult<string>("sign error: ", accountInfoResult.Exception));
+                return;
+            }
+
+            const decimal factor = 1000000;
+            var accountInfo = accountInfoResult.Result;
+            _txJson.Sequence = accountInfo.AccountData.Sequence;
+            var fee = Utils.TryGetNumber<decimal>(_txJson.Fee);
+            if (fee == null)
+            {
+                fee = (decimal)Config.Fee;
+            }
+            _txJson.Fee = fee.Value / factor;
+
+            //payment
+            var amount = Utils.TryGetNumber<decimal>(_txJson.Amount);
+            if (amount.HasValue)
+            {
+                _txJson.Amount = amount / factor;
+            }
+
+            if (_txJson.Memos != null)
+            {
+                foreach (var memo in _txJson.Memos)
+                {
+                    memo.Memo.MemoData = Encoding.UTF8.GetString(Utils.HexToBytes(memo.Memo.MemoData));
+                }
+            }
+
+            var sendMax = Utils.TryGetNumber<decimal>(_txJson.SendMax);
+            if (sendMax.HasValue) _txJson.SendMax = sendMax / factor;
+
+            // order
+            var offerCreateTxData = _txJson as OfferCreateTxData;
+            if (offerCreateTxData != null)
+            {
+                var takerPays = Utils.TryGetNumber<decimal>(offerCreateTxData.TakerPays);
+                if (takerPays.HasValue)
+                {
+                    offerCreateTxData.TakerPays = takerPays / factor;
+                }
+
+                var takerGets = Utils.TryGetNumber<decimal>(offerCreateTxData.TakerGets);
+                if (takerGets.HasValue)
+                {
+                    offerCreateTxData.TakerGets = takerGets / factor;
+                }
+            }
+
+            var wt = Wallet.FromSecret(_secret);
+            var pubKey = Utils.BytesToHex(wt.GetPublicKey().ToByteArray());
+
+            _txJson.SigningPubKey = pubKey;
+
+            // The TxnSignature is different for each Sign with the same hash.
+            // the TxnSignature is set for unit test
+            if (_txJson.TxnSignature == null)
+            {
+                var so = Serializer.Create(_txJson);
+                var hash = so.Hash(0x53545800);
+                _txJson.TxnSignature = wt.Sign(hash);
+            }
+
+            var soTx = Serializer.Create(_txJson);
+            _txJson.Blob = soTx.ToHex();
+            _localSigned = true;
+
+            callback(new MessageResult<string>(null, null, _txJson.Blob));
         }
 
         /// <summary>
@@ -431,6 +448,54 @@ namespace JingTum.Lib
                 data.tx_json = _txJson;
                 _remote.Submit("submit", data, _filter, callback);
             }
+        }
+
+        public Task SubmitAsync(MessageCallback<T> callback, int timeout = -1)
+        {
+            if (_txJson.Exception != null)
+            {
+                callback?.Invoke(new MessageResult<T>(null, _txJson.Exception));
+                return AsyncEx.Complete();
+            }
+
+            var resetEvent = new AutoResetEvent(false);
+            var task = new Task(() =>
+            {
+                resetEvent.WaitOne(timeout);
+                resetEvent.Dispose();
+            });
+            task.Start();
+
+            if (_type == TransactionType.Signer || _localSigned)//直接将blob传给底层
+            {
+                dynamic data = new ExpandoObject();
+                data.tx_blob = _txJson.Blob;
+                _remote.Submit("submit", data, _filter, callback, resetEvent);
+            }
+            else if (_remote.LocalSign)//签名之后传给底层
+            {
+                var t = SignAsync(result =>
+                {
+                    if (result.Exception != null)
+                    {
+                        callback?.Invoke(new MessageResult<T>("sign error: ", result.Exception));
+                        return;
+                    }
+
+                    dynamic data = new ExpandoObject();
+                    data.tx_blob = result.Result;
+                    _remote.Submit("submit", data, _filter, callback, resetEvent);
+                });
+            }
+            else//不签名交易传给底层
+            {
+                dynamic data = new ExpandoObject();
+                data.secret = _secret;
+                data.tx_json = _txJson;
+                _remote.Submit("submit", data, _filter, callback, resetEvent);
+            }
+
+            return task;
         }
     }
 
