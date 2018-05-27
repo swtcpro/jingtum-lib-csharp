@@ -188,6 +188,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.ovResult = new TestApp.ObjectViewer();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -351,7 +353,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 28);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(443, 429);
+            this.tabGeneral.Size = new System.Drawing.Size(443, 416);
             this.tabGeneral.TabIndex = 2;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -497,7 +499,7 @@
             this.tabRequests.Location = new System.Drawing.Point(4, 28);
             this.tabRequests.Name = "tabRequests";
             this.tabRequests.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequests.Size = new System.Drawing.Size(443, 429);
+            this.tabRequests.Size = new System.Drawing.Size(443, 416);
             this.tabRequests.TabIndex = 0;
             this.tabRequests.Text = "Request";
             this.tabRequests.UseVisualStyleBackColor = true;
@@ -520,7 +522,7 @@
             this.tabControlRequests.Multiline = true;
             this.tabControlRequests.Name = "tabControlRequests";
             this.tabControlRequests.SelectedIndex = 0;
-            this.tabControlRequests.Size = new System.Drawing.Size(437, 423);
+            this.tabControlRequests.Size = new System.Drawing.Size(437, 410);
             this.tabControlRequests.TabIndex = 0;
             // 
             // tabRequestServerInfo
@@ -529,7 +531,7 @@
             this.tabRequestServerInfo.Location = new System.Drawing.Point(4, 73);
             this.tabRequestServerInfo.Name = "tabRequestServerInfo";
             this.tabRequestServerInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestServerInfo.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestServerInfo.Size = new System.Drawing.Size(429, 333);
             this.tabRequestServerInfo.TabIndex = 0;
             this.tabRequestServerInfo.Text = "RequestServerInfo";
             this.tabRequestServerInfo.UseVisualStyleBackColor = true;
@@ -550,7 +552,7 @@
             this.tabRequestLedgerClosed.Location = new System.Drawing.Point(4, 73);
             this.tabRequestLedgerClosed.Name = "tabRequestLedgerClosed";
             this.tabRequestLedgerClosed.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestLedgerClosed.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestLedgerClosed.Size = new System.Drawing.Size(429, 333);
             this.tabRequestLedgerClosed.TabIndex = 1;
             this.tabRequestLedgerClosed.Text = "RequestLedgerClosed";
             this.tabRequestLedgerClosed.UseVisualStyleBackColor = true;
@@ -573,7 +575,7 @@
             this.tabRequestLedger.Location = new System.Drawing.Point(4, 73);
             this.tabRequestLedger.Name = "tabRequestLedger";
             this.tabRequestLedger.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestLedger.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestLedger.Size = new System.Drawing.Size(429, 333);
             this.tabRequestLedger.TabIndex = 2;
             this.tabRequestLedger.Text = "RequestLedger";
             this.tabRequestLedger.UseVisualStyleBackColor = true;
@@ -617,7 +619,7 @@
             this.tabRequestTx.Location = new System.Drawing.Point(4, 73);
             this.tabRequestTx.Name = "tabRequestTx";
             this.tabRequestTx.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestTx.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestTx.Size = new System.Drawing.Size(429, 333);
             this.tabRequestTx.TabIndex = 3;
             this.tabRequestTx.Text = "RequestTx";
             this.tabRequestTx.UseVisualStyleBackColor = true;
@@ -661,7 +663,7 @@
             this.tabRequestAccountInfo.Location = new System.Drawing.Point(4, 73);
             this.tabRequestAccountInfo.Name = "tabRequestAccountInfo";
             this.tabRequestAccountInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestAccountInfo.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestAccountInfo.Size = new System.Drawing.Size(429, 333);
             this.tabRequestAccountInfo.TabIndex = 4;
             this.tabRequestAccountInfo.Text = "RequestAccountInfo";
             this.tabRequestAccountInfo.UseVisualStyleBackColor = true;
@@ -705,7 +707,7 @@
             this.tabRequestAccountTums.Location = new System.Drawing.Point(4, 73);
             this.tabRequestAccountTums.Name = "tabRequestAccountTums";
             this.tabRequestAccountTums.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestAccountTums.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestAccountTums.Size = new System.Drawing.Size(429, 333);
             this.tabRequestAccountTums.TabIndex = 5;
             this.tabRequestAccountTums.Text = "RequestAccountTums";
             this.tabRequestAccountTums.UseVisualStyleBackColor = true;
@@ -749,7 +751,7 @@
             this.tabRequestAccountRelations.Location = new System.Drawing.Point(4, 73);
             this.tabRequestAccountRelations.Name = "tabRequestAccountRelations";
             this.tabRequestAccountRelations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestAccountRelations.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestAccountRelations.Size = new System.Drawing.Size(429, 333);
             this.tabRequestAccountRelations.TabIndex = 6;
             this.tabRequestAccountRelations.Text = "RequestAccountRelations";
             this.tabRequestAccountRelations.UseVisualStyleBackColor = true;
@@ -793,7 +795,7 @@
             this.tabRequestAccountOffers.Location = new System.Drawing.Point(4, 73);
             this.tabRequestAccountOffers.Name = "tabRequestAccountOffers";
             this.tabRequestAccountOffers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestAccountOffers.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestAccountOffers.Size = new System.Drawing.Size(429, 333);
             this.tabRequestAccountOffers.TabIndex = 7;
             this.tabRequestAccountOffers.Text = "RequestAccountOffers";
             this.tabRequestAccountOffers.UseVisualStyleBackColor = true;
@@ -837,7 +839,7 @@
             this.tabRequestAccountTx.Location = new System.Drawing.Point(4, 73);
             this.tabRequestAccountTx.Name = "tabRequestAccountTx";
             this.tabRequestAccountTx.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestAccountTx.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestAccountTx.Size = new System.Drawing.Size(429, 333);
             this.tabRequestAccountTx.TabIndex = 8;
             this.tabRequestAccountTx.Text = "RequestAccountTx";
             this.tabRequestAccountTx.UseVisualStyleBackColor = true;
@@ -881,7 +883,7 @@
             this.tabRequestOrderBook.Location = new System.Drawing.Point(4, 73);
             this.tabRequestOrderBook.Name = "tabRequestOrderBook";
             this.tabRequestOrderBook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestOrderBook.Size = new System.Drawing.Size(429, 346);
+            this.tabRequestOrderBook.Size = new System.Drawing.Size(429, 333);
             this.tabRequestOrderBook.TabIndex = 9;
             this.tabRequestOrderBook.Text = "RequestOrderBook";
             this.tabRequestOrderBook.UseVisualStyleBackColor = true;
@@ -923,7 +925,7 @@
             this.tabPathFindRequest.Location = new System.Drawing.Point(4, 28);
             this.tabPathFindRequest.Name = "tabPathFindRequest";
             this.tabPathFindRequest.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPathFindRequest.Size = new System.Drawing.Size(443, 429);
+            this.tabPathFindRequest.Size = new System.Drawing.Size(443, 416);
             this.tabPathFindRequest.TabIndex = 3;
             this.tabPathFindRequest.Text = "PathFindRequest";
             this.tabPathFindRequest.UseVisualStyleBackColor = true;
@@ -936,7 +938,7 @@
             this.tabControlPathFindRequest.Location = new System.Drawing.Point(3, 3);
             this.tabControlPathFindRequest.Name = "tabControlPathFindRequest";
             this.tabControlPathFindRequest.SelectedIndex = 0;
-            this.tabControlPathFindRequest.Size = new System.Drawing.Size(437, 423);
+            this.tabControlPathFindRequest.Size = new System.Drawing.Size(437, 410);
             this.tabControlPathFindRequest.TabIndex = 0;
             // 
             // tabRequestPathFind
@@ -947,7 +949,7 @@
             this.tabRequestPathFind.Location = new System.Drawing.Point(4, 25);
             this.tabRequestPathFind.Name = "tabRequestPathFind";
             this.tabRequestPathFind.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequestPathFind.Size = new System.Drawing.Size(429, 394);
+            this.tabRequestPathFind.Size = new System.Drawing.Size(429, 381);
             this.tabRequestPathFind.TabIndex = 0;
             this.tabRequestPathFind.Text = "RequestPathFind";
             this.tabRequestPathFind.UseVisualStyleBackColor = true;
@@ -959,7 +961,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgRequestPathFindOptions.Location = new System.Drawing.Point(6, 53);
             this.pgRequestPathFindOptions.Name = "pgRequestPathFindOptions";
-            this.pgRequestPathFindOptions.Size = new System.Drawing.Size(417, 326);
+            this.pgRequestPathFindOptions.Size = new System.Drawing.Size(417, 313);
             this.pgRequestPathFindOptions.TabIndex = 2;
             // 
             // btnResetRequestPathFindOptions
@@ -1375,6 +1377,7 @@
             // 
             // DeployContractTx
             // 
+            this.DeployContractTx.Controls.Add(this.label13);
             this.DeployContractTx.Controls.Add(this.splitContainer4);
             this.DeployContractTx.Controls.Add(this.btnResetDeployContractTxOptions);
             this.DeployContractTx.Controls.Add(this.btnDeployContractTx);
@@ -1447,6 +1450,7 @@
             // 
             // tabCallContractTx
             // 
+            this.tabCallContractTx.Controls.Add(this.label12);
             this.tabCallContractTx.Controls.Add(this.splitContainer12);
             this.tabCallContractTx.Controls.Add(this.btnResetCallContractTxOptions);
             this.tabCallContractTx.Controls.Add(this.btnCallContractTx);
@@ -1613,7 +1617,7 @@
             this.tabTransactionsEvent.Location = new System.Drawing.Point(4, 25);
             this.tabTransactionsEvent.Name = "tabTransactionsEvent";
             this.tabTransactionsEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTransactionsEvent.Size = new System.Drawing.Size(429, 394);
+            this.tabTransactionsEvent.Size = new System.Drawing.Size(429, 381);
             this.tabTransactionsEvent.TabIndex = 0;
             this.tabTransactionsEvent.Text = "Transactions";
             this.tabTransactionsEvent.UseVisualStyleBackColor = true;
@@ -1625,7 +1629,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ovTransactionsMessage.Location = new System.Drawing.Point(7, 232);
             this.ovTransactionsMessage.Name = "ovTransactionsMessage";
-            this.ovTransactionsMessage.Size = new System.Drawing.Size(416, 156);
+            this.ovTransactionsMessage.Size = new System.Drawing.Size(416, 143);
             this.ovTransactionsMessage.TabIndex = 5;
             // 
             // jtvTransactionsMessage
@@ -1698,7 +1702,7 @@
             this.tabLedgerClosedEvent.Location = new System.Drawing.Point(4, 25);
             this.tabLedgerClosedEvent.Name = "tabLedgerClosedEvent";
             this.tabLedgerClosedEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLedgerClosedEvent.Size = new System.Drawing.Size(429, 394);
+            this.tabLedgerClosedEvent.Size = new System.Drawing.Size(429, 381);
             this.tabLedgerClosedEvent.TabIndex = 1;
             this.tabLedgerClosedEvent.Text = "LedgerClosed";
             this.tabLedgerClosedEvent.UseVisualStyleBackColor = true;
@@ -1719,8 +1723,8 @@
             // splitContainer11.Panel2
             // 
             this.splitContainer11.Panel2.Controls.Add(this.ovLedgerClosedMessage);
-            this.splitContainer11.Size = new System.Drawing.Size(408, 315);
-            this.splitContainer11.SplitterDistance = 155;
+            this.splitContainer11.Size = new System.Drawing.Size(408, 302);
+            this.splitContainer11.SplitterDistance = 148;
             this.splitContainer11.TabIndex = 10;
             // 
             // jtvLedgerClosedMessage
@@ -1728,7 +1732,7 @@
             this.jtvLedgerClosedMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.jtvLedgerClosedMessage.Location = new System.Drawing.Point(0, 0);
             this.jtvLedgerClosedMessage.Name = "jtvLedgerClosedMessage";
-            this.jtvLedgerClosedMessage.Size = new System.Drawing.Size(408, 155);
+            this.jtvLedgerClosedMessage.Size = new System.Drawing.Size(408, 148);
             this.jtvLedgerClosedMessage.TabIndex = 9;
             // 
             // ovLedgerClosedMessage
@@ -1736,7 +1740,7 @@
             this.ovLedgerClosedMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ovLedgerClosedMessage.Location = new System.Drawing.Point(0, 0);
             this.ovLedgerClosedMessage.Name = "ovLedgerClosedMessage";
-            this.ovLedgerClosedMessage.Size = new System.Drawing.Size(408, 156);
+            this.ovLedgerClosedMessage.Size = new System.Drawing.Size(408, 150);
             this.ovLedgerClosedMessage.TabIndex = 0;
             // 
             // chkRefreshLedgerClosed
@@ -1797,7 +1801,7 @@
             this.tabOrderBooksStub.Location = new System.Drawing.Point(4, 25);
             this.tabOrderBooksStub.Name = "tabOrderBooksStub";
             this.tabOrderBooksStub.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderBooksStub.Size = new System.Drawing.Size(429, 394);
+            this.tabOrderBooksStub.Size = new System.Drawing.Size(429, 381);
             this.tabOrderBooksStub.TabIndex = 2;
             this.tabOrderBooksStub.Text = "OrderBooksStub";
             this.tabOrderBooksStub.UseVisualStyleBackColor = true;
@@ -1812,7 +1816,7 @@
             this.tabCreateOrderBooksStub.Location = new System.Drawing.Point(12, 50);
             this.tabCreateOrderBooksStub.Name = "tabCreateOrderBooksStub";
             this.tabCreateOrderBooksStub.SelectedIndex = 0;
-            this.tabCreateOrderBooksStub.Size = new System.Drawing.Size(411, 338);
+            this.tabCreateOrderBooksStub.Size = new System.Drawing.Size(411, 325);
             this.tabCreateOrderBooksStub.TabIndex = 4;
             // 
             // tabCNYSWT
@@ -1824,7 +1828,7 @@
             this.tabCNYSWT.Location = new System.Drawing.Point(4, 22);
             this.tabCNYSWT.Name = "tabCNYSWT";
             this.tabCNYSWT.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCNYSWT.Size = new System.Drawing.Size(403, 312);
+            this.tabCNYSWT.Size = new System.Drawing.Size(403, 299);
             this.tabCNYSWT.TabIndex = 0;
             this.tabCNYSWT.Text = "CNY/SWT";
             this.tabCNYSWT.UseVisualStyleBackColor = true;
@@ -1836,7 +1840,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ovCnySwt.Location = new System.Drawing.Point(6, 156);
             this.ovCnySwt.Name = "ovCnySwt";
-            this.ovCnySwt.Size = new System.Drawing.Size(391, 150);
+            this.ovCnySwt.Size = new System.Drawing.Size(391, 137);
             this.ovCnySwt.TabIndex = 3;
             // 
             // jtvCnySwt
@@ -1875,7 +1879,7 @@
             this.tabSWTCNY.Location = new System.Drawing.Point(4, 22);
             this.tabSWTCNY.Name = "tabSWTCNY";
             this.tabSWTCNY.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSWTCNY.Size = new System.Drawing.Size(403, 251);
+            this.tabSWTCNY.Size = new System.Drawing.Size(403, 299);
             this.tabSWTCNY.TabIndex = 1;
             this.tabSWTCNY.Text = "SWT/CNY";
             this.tabSWTCNY.UseVisualStyleBackColor = true;
@@ -1887,7 +1891,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ovSwtCny.Location = new System.Drawing.Point(6, 167);
             this.ovSwtCny.Name = "ovSwtCny";
-            this.ovSwtCny.Size = new System.Drawing.Size(391, 78);
+            this.ovSwtCny.Size = new System.Drawing.Size(391, 139);
             this.ovSwtCny.TabIndex = 3;
             // 
             // jtvSwtCny
@@ -2112,6 +2116,24 @@
             this.ovResult.Size = new System.Drawing.Size(400, 134);
             this.ovResult.TabIndex = 0;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(142, 6);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(185, 24);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(141, 7);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(185, 24);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2173,11 +2195,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer9)).EndInit();
             this.splitContainer9.ResumeLayout(false);
             this.DeployContractTx.ResumeLayout(false);
+            this.DeployContractTx.PerformLayout();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
             this.tabCallContractTx.ResumeLayout(false);
+            this.tabCallContractTx.PerformLayout();
             this.splitContainer12.Panel1.ResumeLayout(false);
             this.splitContainer12.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).EndInit();
@@ -2381,6 +2405,8 @@
         private System.Windows.Forms.TextBox txtAccountStubAccount;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnCreateAccountStub;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
     }
 }
 
