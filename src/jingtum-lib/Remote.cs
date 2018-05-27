@@ -724,7 +724,7 @@ namespace JingTum.Lib
                 {
                     foreach(var offer in result.Offers)
                     {
-                        offer.Price = ResponseParser.GetPrice(offer.TakerGets, offer.TakerPays, false);
+                        offer.Price = ResponseParser.GetPrice(offer.TakerGets, offer.TakerPays, offer.IsSell);
                     }
                 }
                 return result;

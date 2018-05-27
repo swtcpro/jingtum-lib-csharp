@@ -9,23 +9,24 @@ namespace JingTum.Api
 {
     public class Balances
     {
-        public Task GetBalance(Remote remote, Options options, MessageCallback<Response> callback = null)
+        public static Task GetBalance(Remote remote, Options options, MessageCallback<Response> callback = null)
         {
-            Action<Exception> onException = (ex =>
+            Func<Exception, Task> onException = (ex =>
             {
                 callback(new MessageResult<Response>(null, ex));
+                return Task.FromResult(0);
             });
 
-            if (remote == null || !remote.IsConnected) onException(new ArgumentException("Remote is disconnected."));
-            if (options == null) onException(new ArgumentNullException("options"));
-            if (!Utils.IsValidAddress(options.Account)) onException(new Exception("Invalid account address."));
+            if (remote == null || !remote.IsConnected) return onException(new ArgumentException("Remote is disconnected."));
+            if (options == null) return onException(new ArgumentNullException("options"));
+            if (!Utils.IsValidAddress(options.Account)) return onException(new Exception("Invalid account address."));
 
             var condition = new Amount();
             if (options.Currency != null)
             {
                 if (!Utils.IsValidCurrency(options.Currency))
                 {
-                    onException(new Exception("Invalid currency."));
+                    return onException(new Exception("Invalid currency."));
                 }
 
                 condition.Currency = options.Currency;
@@ -35,7 +36,7 @@ namespace JingTum.Api
             {
                 if (!Utils.IsValidAddress(options.Issuer))
                 {
-                    onException(new Exception("Invalid issuer address."));
+                    return onException(new Exception("Invalid issuer address."));
                 }
 
                 condition.Issuer = options.Issuer;
@@ -75,7 +76,7 @@ namespace JingTum.Api
             Func<Task> getOffers = null;
             getOffers = () =>
             {
-                var task = remote.RequestAccountOffers(opt4).SubmitAsync(r4 =>
+                var t4 = remote.RequestAccountOffers(opt4).SubmitAsync(r4 =>
                 {
                     if (r4.Exception != null)
                         results.Exception = r4.Exception;
@@ -95,14 +96,14 @@ namespace JingTum.Api
                     }
                 });
 
-                return task;
+                return t4;
             };
 
-            var t4 = getOffers();
+            var t5 = getOffers();
 
-            var t = new Task(() =>
+            var task = new Task(() =>
             {
-                if (!Task.WaitAll(new Task[] { t1, t2, t3, t4 }, 1000 * 60))
+                if (!Task.WaitAll(new Task[] { t1, t2, t3, t5 }, Config.Timeout))
                 {
                     onException(new Exception("Time out."));
                     return;
@@ -114,21 +115,82 @@ namespace JingTum.Api
                     return;
                 }
 
-                var response = ProcessBalance(results, condition);
+                var balances = ProcessBalance(results, condition);
+                var response = new Response { Balances=balances, Sequence=results.Native.AccountData.Sequence };
                 callback(new MessageResult<Response>(null, null, response));
                 return;
             });
-            t.Start();
-            return t;
+
+            task.Start();
+            return task;
         }
 
-        private Response ProcessBalance(Results results, Amount condition = null)
+        private static Balance[] ProcessBalance(Results data, Amount condition)
         {
-            return null;
+            var swtValue = data.Native.AccountData.Balance.Value;
+            var freezedCount = (data.Lines.Lines == null ? 0 : data.Lines.Lines.Length) + data.Offers.Length;
+            var freeze0 = Config.FreezedReserved + freezedCount * Config.FreezedEachFreezed;
+            var swt = new Balance { Currency = Config.Currency, Issuer = "", Value = swtValue, Freezed = freeze0.ToString(Config.AmountFormat) };
+
+            var balances = new List<Balance>();
+            if((condition.Currency==null && condition.Issuer==null) || condition.Currency == Config.Currency){
+                balances.Add(swt);
+            }
+
+            if (condition.Currency == Config.Currency)
+            {
+                return balances.ToArray();
+            }
+
+            foreach (var trustLine in data.Lines.Lines)
+            {
+                var currency = trustLine.Currency;
+                var issuer = trustLine.Issuer ?? trustLine.Account;
+
+                if ((condition.Currency != null && condition.Currency != currency)
+                    || (condition.Issuer != null && condition.Issuer != issuer))
+                {
+                    continue;
+                }
+
+                var balance = new Balance { Currency = currency, Issuer = issuer, Value = trustLine.Balance };
+                var freezed = 0d;
+                foreach (var offer in data.Offers)
+                {
+                    var takerGets = offer.TakerGets;
+                    if (takerGets.Currency == swt.Currency && takerGets.Issuer == swt.Issuer)
+                    {
+                        var tmpFreezed = double.Parse(swt.Freezed) + double.Parse(takerGets.Value);
+                        swt.Freezed = tmpFreezed.ToString();
+                    }
+                    else if (takerGets.Currency == balance.Currency && takerGets.Issuer == balance.Issuer)
+                    {
+                        freezed += double.Parse(takerGets.Value);
+                    }
+                }
+
+                foreach (var freezeLine in data.Lines2.Lines)
+                {
+                    if (freezeLine.Currency == balance.Currency && freezeLine.Issuer == balance.Issuer)
+                    {
+                        freezed += double.Parse(freezeLine.Limit);
+                    }
+                }
+
+                balance.Freezed = freezed.ToString("0.######");
+                balances.Add(balance);
+            }
+
+            return balances.ToArray();
         }
 
         private class Results
         {
+            public Results()
+            {
+                Offers = new Offer[0];
+            }
+
             public Exception Exception { get; set; }
             public AccountInfoResponse Native { get; set; }
             public AccountRelationsResponse Lines { get; set; }
@@ -151,7 +213,7 @@ namespace JingTum.Api
 
         public class Balance : Amount
         {
-            public string Freeze { get; internal set; }
+            public string Freezed { get; internal set; }
         }
     }
 }
