@@ -112,7 +112,7 @@ namespace UnitTests
             remote.Connect(r =>
             {
                 var options = new PaymentTxOptions();
-                options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
                 options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
                 options.Amount = Amount.SWT("0.5");
                 var tx = remote.BuildPaymentTx(options);
@@ -139,7 +139,7 @@ namespace UnitTests
             remote.Connect(r =>
             {
                 var options = new PaymentTxOptions();
-                options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
                 options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
                 options.Amount = Amount.SWT("0.5");
                 var tx = remote.BuildPaymentTx(options);

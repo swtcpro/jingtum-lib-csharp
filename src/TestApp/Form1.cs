@@ -405,7 +405,7 @@ namespace TestApp
         private void InitBuildPaymentTxOptions()
         {
             var options = new PaymentTxOptions();
-            options.From = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
+            options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
             options.To = "jDUjqoDZLhzx4DCf6pvSivjkjgtRESY62c";
             options.Amount = new Amount("SWT", "", "0.5");
             pgBuildPaymentTxOptions.SelectedObject = options;

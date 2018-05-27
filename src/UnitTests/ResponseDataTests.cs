@@ -665,10 +665,10 @@ namespace UnitTests
             var remote = new Remote("");
             remote.SetMockServer(new MockServer(remote, "BuildPaymentTx.json"));
 
-            MessageResult<PaymentResponse> response = null;
+            MessageResult<PaymentTxResponse> response = null;
             var deferred = new Task(() => { });
             var options = new PaymentTxOptions();
-            options.From = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
+            options.Account = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.To = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.Amount = new Amount { Currency="SWT", Issuer="", Value="0.5" };
             remote.BuildPaymentTx(options).Submit(r =>

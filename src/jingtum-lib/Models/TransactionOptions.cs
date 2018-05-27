@@ -19,7 +19,7 @@ namespace JingTum.Lib
         /// <remarks>
         /// Required. 
         /// </remarks>
-        public string From { get; set; }
+        public string Account { get; set; }
         /// <summary>
         /// The destination account address.
         /// </summary>

@@ -25,7 +25,7 @@ namespace UnitTests
             var deferred = new Task(() => { });
             string blob = null;
             var options = new PaymentTxOptions();
-            options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);
@@ -50,7 +50,7 @@ namespace UnitTests
             var deferred = new Task(() => { });
             string blob = null;
             var options = new PaymentTxOptions();
-            options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Amount = new Amount("CNY", "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or", "12.33");
             var tx = remote.BuildPaymentTx(options);
@@ -75,7 +75,7 @@ namespace UnitTests
             var deferred = new Task(() => { });
             string blob = null;
             var options = new PaymentTxOptions();
-            options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);
@@ -101,7 +101,7 @@ namespace UnitTests
             var deferred = new Task(() => { });
             string blob = null;
             var options = new PaymentTxOptions();
-            options.From = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.To = "jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr";
             options.Amount = Amount.SWT("0.5");
             var tx = remote.BuildPaymentTx(options);

@@ -1189,7 +1189,7 @@ namespace JingTum.Lib
     #endregion
 
     #region BuildPaymentTx
-    public class PaymentResponse : GeneralTxResponse
+    public class PaymentTxResponse : GeneralTxResponse
     {
         [JsonProperty("tx_json")]
         public PaymentTxJson TxJson { get; internal set; }

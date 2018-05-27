@@ -861,11 +861,11 @@ namespace JingTum.Lib
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
         /// <returns>A <see cref=Transaction{T}"/> object.</returns>
-        public Transaction<PaymentResponse> BuildPaymentTx(PaymentTxOptions options)
+        public Transaction<PaymentTxResponse> BuildPaymentTx(PaymentTxOptions options)
         {
-            var tx = new InnerTransaction<PaymentTxData, PaymentResponse>(this);
+            var tx = new InnerTransaction<PaymentTxData, PaymentTxResponse>(this);
 
-            if (!Utils.IsValidAddress(options.From))
+            if (!Utils.IsValidAddress(options.Account))
             {
                 tx.TxJson.Exception = new Exception("Invalid source address.");
                 return tx;
@@ -884,7 +884,7 @@ namespace JingTum.Lib
             }
 
             tx.TransactionType = TransactionType.Payment;
-            tx.TxJson.Account = options.From;
+            tx.TxJson.Account = options.Account;
             tx.TxJson.Amount = Utils.ToAmount(options.Amount);
             tx.TxJson.Destination = options.To;
 
