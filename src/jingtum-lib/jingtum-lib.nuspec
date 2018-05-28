@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>JingTum.Lib</id>
+        <version>1.0.0</version>
+        <title>JingTum lib for .NET</title>
+        <authors>JINGTUM TECH</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <projectUrl>https://github.com/swtcpro/jingtum-lib-csharp</projectUrl>
+        <iconUrl>https://avatars2.githubusercontent.com/u/38529544</iconUrl>
+        <description>JingTum lib for .NET.</description>
+        <copyright>Copyright ©2018 www.jingtum.com Inc. All rights reserved</copyright>
+        <language>en-US</language>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Newtonsoft.Json" version="11.0.2" />
+                <dependency id="Portable.BouncyCastle" version="1.8.2" />
+				<dependency id="SuperSocket.ClientEngine.Core" version="0.10.0" />
+				<dependency id="WebSocket4Net" version="0.15.2" />
+            </group>
+        </dependencies>
+    </metadata>
+  <files>
+    <file src="JingTum.Lib.dll" target="lib\net45\JingTum.Lib.dll" />
+    <file src="JingTum.Lib.xml" target="lib\net45\JingTum.Lib.xml" />
+  </files>
+</package>
