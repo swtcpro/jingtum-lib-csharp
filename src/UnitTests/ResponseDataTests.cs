@@ -67,7 +67,7 @@ namespace UnitTests
             Assert.AreEqual(10, result.FeeRef);
             Assert.AreEqual("iZ2848appwoZ", result.HostId);
             Assert.AreEqual("EA11FCEE992292106808E2D3B124EF6C63B7EDE4E094177F96785F8D6AC8344B", result.LedgerHash);
-            Assert.AreEqual(1640880, result.LedgerIndex);
+            Assert.AreEqual((uint)1640880, result.LedgerIndex);
             Assert.AreEqual(Utils.UnitTimeToDateTime(579432630), result.LedgerTime);
             Assert.AreEqual(256, result.LoadBase);
             Assert.AreEqual(256, result.LoadFactor);
@@ -163,7 +163,7 @@ namespace UnitTests
             Assert.AreEqual(10, ledger.CloseTimeResolution);
             Assert.AreEqual("B405C42D4F5E5BEF1D07CB07235DDADD51A13158F8142649700340C26BE18D2E", ledger.Hash);
             Assert.AreEqual("B405C42D4F5E5BEF1D07CB07235DDADD51A13158F8142649700340C26BE18D2E", ledger.LedgerHash);
-            Assert.AreEqual(1642398, ledger.LedgerIndex);
+            Assert.AreEqual((uint)1642398, ledger.LedgerIndex);
             Assert.AreEqual("F34A4D87C2440F8AE44F7556D16646140CD5132585AA966D5537ACA25176B3C5", ledger.ParentHash);
             Assert.AreEqual("1642398", ledger.SeqNum);
             Assert.AreEqual("600000000000000000", ledger.TotalCoins);
@@ -304,7 +304,7 @@ namespace UnitTests
             var state0 = ledger.AccountStates[0] as LedgerHashesAccountState;
             Assert.IsNotNull(state0);
             Assert.IsTrue(state0.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.LedgerHashes, state0.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.LedgerHashes, state0.LedgerEntryType);
             Assert.AreEqual("01FB2F8725836F327FB22483523B443B6AA3027B993CA69D8F158CC28613C4FE", state0.Index);
             Assert.IsNotNull(state0.Hashes);
             Assert.IsTrue(state0.Hashes.Length > 0);
@@ -312,7 +312,7 @@ namespace UnitTests
             var state1 = ledger.AccountStates[1] as AccountRootAccountState;
             Assert.IsNotNull(state1);
             Assert.IsTrue(state1.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.AccountRoot, state1.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.AccountRoot, state1.LedgerEntryType);
             Assert.AreEqual("021184D175172280FF9475E60B266F946F4F2611D61EF2731A627CFAD7A96471", state1.Index);
             Assert.AreEqual("jBQEaLcymFvEtXx6KFNsUWER95JBKfvo54", state1.Account);
             Assert.AreEqual("10", state1.Balance.Value);
@@ -320,19 +320,19 @@ namespace UnitTests
             var state2 = ledger.AccountStates[2] as StateAccountState;
             Assert.IsNotNull(state2);
             Assert.IsTrue(state2.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.State, state2.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.State, state2.LedgerEntryType);
             Assert.AreEqual("099C71F7CD6576D9C990D7921CAF5782629113F426F6680FFB2757323C65BB61", state2.Index);
 
             var state3 = ledger.AccountStates[3] as FeeSettingsAccountState;
             Assert.IsNotNull(state3);
             Assert.IsTrue(state3.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.FeeSettings, state3.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.FeeSettings, state3.LedgerEntryType);
             Assert.AreEqual("4BC50C9B0D8515D3EAAE1E74B29A95804346C491EE1A95BF25E4AAB854A6A651", state3.Index);
 
             var state4 = ledger.AccountStates[4] as DirectoryNodeAccountState;
             Assert.IsNotNull(state4);
             Assert.IsTrue(state4.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.DirectoryNode, state4.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.DirectoryNode, state4.LedgerEntryType);
             Assert.AreEqual("90B6ADE38D0E124E8F4DB570FA5CDA58431910DCB501B633456D8BA81EE8AC13", state4.Index);
             Assert.AreEqual("jJbpadnWHeqBN7aK6wcDj71FuW27bu6Gk5", state4.Owner);
             Assert.IsNotNull(state4.Indexes);
@@ -340,7 +340,7 @@ namespace UnitTests
             var state5 = ledger.AccountStates[5] as SkywellStateAccountState;
             Assert.IsNotNull(state5);
             Assert.IsTrue(state5.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.SkywellState, state5.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.SkywellState, state5.LedgerEntryType);
             Assert.AreEqual("A02189187F1A6403A2AA64EEE7C30D2C69A3AA19F9ED6624695A15C94CB0B655", state5.Index);
             Assert.IsNotNull(state5.Balance);
             Assert.IsNotNull(state5.HighLimit);
@@ -349,7 +349,7 @@ namespace UnitTests
             var state6 = ledger.AccountStates[6] as ManageIssuerAccountState;
             Assert.IsNotNull(state6);
             Assert.IsTrue(state6.IsExpanded);
-            Assert.AreEqual(AccountStateLedgerEntryType.ManageIssuer, state6.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.ManageIssuer, state6.LedgerEntryType);
             Assert.AreEqual("E58282F5EF495989A8F66991B26162B8FA9B9D393EC64E232DAAB454D69C6507", state6.Index);
             Assert.AreEqual("j9cZ5oHbdL4Z9Mar6TdnfAos35nVzYuNds", state6.IssuerAccountID);
         }
@@ -420,7 +420,7 @@ namespace UnitTests
             Assert.AreEqual(new Amount { Currency = "SWT", Issuer = "", Value = "1015.641623" }, data.Balance);
             Assert.AreEqual((uint)5, data.Sequence);
             Assert.AreEqual("8532904D645677129310E09C74A0F4CF371ED569B49B78CC4D0F3F2D3C377986", data.Index);
-            Assert.AreEqual(AccountStateLedgerEntryType.AccountRoot, data.LedgerEntryType);
+            Assert.AreEqual(LedgerEntryType.AccountRoot, data.LedgerEntryType);
         }
 
         [TestMethod]
@@ -446,11 +446,11 @@ namespace UnitTests
             Assert.IsNotNull(result);
 
             Assert.AreEqual("62F993679853F86A6193CBFC017F307A60A78B74D1E57C50676D74816B0CCFC6", result.LedgerHash);
-            Assert.AreEqual(9646172, result.LedgerIndex);
+            Assert.AreEqual((uint)9646172, result.LedgerIndex);
 
-            Assert.IsNotNull(result.ReceivCurrencies);
-            Assert.AreEqual(1, result.ReceivCurrencies.Length);
-            Assert.AreEqual("CNY", result.ReceivCurrencies[0]);
+            Assert.IsNotNull(result.ReceiveCurrencies);
+            Assert.AreEqual(1, result.ReceiveCurrencies.Length);
+            Assert.AreEqual("CNY", result.ReceiveCurrencies[0]);
 
             Assert.IsNotNull(result.SendCurrencies);
             Assert.AreEqual(1, result.SendCurrencies.Length);
@@ -481,7 +481,7 @@ namespace UnitTests
 
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", result.Account);
             Assert.AreEqual("A7C9D84B7FAD0AE7DA7A835AA74FAAF02CF69042735E32EA13EEB30C00CD972E", result.LedgerHash);
-            Assert.AreEqual(9646353, result.LedgerIndex);
+            Assert.AreEqual((uint)9646353, result.LedgerIndex);
             Assert.IsNotNull(result.Lines);
             Assert.AreEqual(3, result.Lines.Length);
 
@@ -500,14 +500,14 @@ namespace UnitTests
             Assert.AreEqual("js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u", line1.Issuer);
             Assert.AreEqual("0.01", line1.Limit);
             Assert.AreEqual("jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT", line1.LimitPeer);
-            Assert.AreEqual("1", line1.RelationType);
+            Assert.AreEqual(1, line1.RelationType);
 
             var line2 = result.Lines[2];
             Assert.AreEqual("CCA", line2.Currency);
             Assert.AreEqual("js7M6x28mYDiZVJJtfJ84ydrv2PthY9W9u", line2.Issuer);
             Assert.AreEqual("0.02", line2.Limit);
             Assert.AreEqual("jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT", line2.LimitPeer);
-            Assert.AreEqual("3", line2.RelationType);
+            Assert.AreEqual(3, line2.RelationType);
         }
 
         [TestMethod]
@@ -534,7 +534,7 @@ namespace UnitTests
 
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", result.Account);
             Assert.AreEqual("39210701654A5DCDA1B01EF636B0A4FFA5159342B75F082B81B58E92DDCB24B1", result.LedgerHash);
-            Assert.AreEqual(9646438, result.LedgerIndex);
+            Assert.AreEqual((uint)9646438, result.LedgerIndex);
             Assert.IsNotNull(result.Offers);
             Assert.AreEqual(1, result.Offers.Length);
 
@@ -569,8 +569,8 @@ namespace UnitTests
             Assert.IsNotNull(result);
 
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", result.Account);
-            Assert.AreEqual(1439816, result.LedgerIndexMin);
-            Assert.AreEqual(1667467, result.LedgerIndexMax);
+            Assert.AreEqual((uint)1439816, result.LedgerIndexMin);
+            Assert.AreEqual((uint)1667467, result.LedgerIndexMax);
             Assert.IsNotNull(result.Transactions);
             Assert.AreEqual(3, result.Transactions.Length);
 

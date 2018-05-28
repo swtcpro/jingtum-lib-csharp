@@ -48,7 +48,7 @@ namespace UnitTests.Converters
         private class MockModel
         {
             [JsonProperty("transactions")]
-            public LedgerTransaction[] Transactions { get; internal set; }
+            public TransactionState[] Transactions { get; internal set; }
         }
     }
 }

@@ -233,8 +233,13 @@ namespace JingTum.Lib
         Operation,
     }
 
-    internal enum LedgerEntryType : UInt32
+    public enum LedgerEntryType : UInt32
     {
+        Unknown,
+
+        State,
+        ManageIssuer,
+
         AccountRoot = 97,
         Contract = 99,
         DirectoryNode = 100,

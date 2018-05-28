@@ -12,7 +12,7 @@ namespace JingTum.Lib
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(LedgerTransaction);
+            return objectType == typeof(TransactionState);
         }
 
         public override bool CanWrite => false;
@@ -29,14 +29,14 @@ namespace JingTum.Lib
                 var value = reader.Value as string;
                 if (value == null) return null;
 
-                var tx = new LedgerTransaction();
+                var tx = new TransactionState();
                 tx.Hash = value;
                 return tx;
             }
             else if(reader.TokenType == JsonToken.StartObject)
             {
                 var txObject = JObject.Load(reader);
-                var tx = new LedgerTransaction();
+                var tx = new TransactionState();
                 serializer.Populate(txObject.CreateReader(), tx);
                 tx.RawData = txObject.ToString();
                 tx.IsExpanded = true;
