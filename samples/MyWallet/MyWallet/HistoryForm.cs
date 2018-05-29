@@ -57,7 +57,7 @@ namespace MyWallet
                 {
                     case TxResultType.OfferNew:
                         var offerNew = transaction as OfferNewTxResult;
-                        if (offerNew.OfferType == "sell")
+                        if (offerNew.OfferType == OfferType.Sell)
                         {
                             amount = offerNew.Gets.Value;
                             currency = offerNew.Gets.Currency;
