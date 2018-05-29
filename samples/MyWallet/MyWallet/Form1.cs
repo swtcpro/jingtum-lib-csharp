@@ -69,6 +69,7 @@ namespace MyWallet
 
         private void GlobalConfigRefreshed(object sender, EventArgs e)
         {
+            label4.Text = "Current account: " + Global.Account;
             var req = Global.Remote.RequestAccountInfo(new AccountInfoOptions { Account = Global.Account });
             req.Submit(result =>{
                 RefreshBalances();

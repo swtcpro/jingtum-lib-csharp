@@ -1,5 +1,6 @@
 ﻿using JingTum.Lib;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -107,6 +108,41 @@ namespace MyWallet
 
         private void ConfigForm_Load(object sender, EventArgs e)
         {
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var list = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>(@"ws://123.57.219.57:5020", @"test"),
+                new KeyValuePair<string, string>(@"ws://ts5.jingtum.com:5020", @"test"),
+                new KeyValuePair<string, string>(@"wws://139.129.194.175:5020", @"test contract"),
+                new KeyValuePair<string, string>(@"wss://s.jingtum.com:5020", @"real"),
+                new KeyValuePair<string, string>(@"wss://c05.jingtum.com:5020", @"real"),
+            };
+
+            var selectForm = new SelectForm();
+            if(selectForm.ShowDialog(list) == DialogResult.OK)
+            {
+                textBox1.Text = selectForm.SelectedValue;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var list = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>(@"j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", @"test"),
+                new KeyValuePair<string, string>(@"jaEuc5ito3DyhnYoSSJev6G5Gm6CU71gC4", @"real"),
+                new KeyValuePair<string, string>(@"jB9eHCFeCaoxw6d9V9pBx5hiKUGW9K2fbs", @"real"),
+            };
+
+            var selectForm = new SelectForm();
+            if (selectForm.ShowDialog(list) == DialogResult.OK)
+            {
+                textBox3.Text = selectForm.SelectedValue;
+            }
+
         }
     }
 }
