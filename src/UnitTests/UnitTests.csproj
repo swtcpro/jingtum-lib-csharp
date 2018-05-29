@@ -58,6 +58,7 @@
     <Compile Include="Converters\HexToUtf8ConverterTests.cs" />
     <Compile Include="Converters\HexToStringConverterTests.cs" />
     <Compile Include="Converters\LedgerTransactionConverterTests.cs" />
+    <Compile Include="ErrorsTests.cs" />
     <Compile Include="MultithreadTests.cs" />
     <Compile Include="RemoteParameterTests.cs" />
     <Compile Include="RemoteTests.cs" />

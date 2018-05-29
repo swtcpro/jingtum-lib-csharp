@@ -60,6 +60,7 @@
     <Compile Include="Core\Utility.cs" />
     <Compile Include="Design\ExpandableObjectConverterEx.cs" />
     <Compile Include="Models\Amount.cs" />
+    <Compile Include="Models\Errors.cs" />
     <Compile Include="Remote.cs" />
     <Compile Include="Serialization\DateTimeConverter.cs" />
     <Compile Include="SerializedTypes\Bits.cs" />
