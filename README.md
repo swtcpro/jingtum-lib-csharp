@@ -25,8 +25,8 @@ by the callback function.
     });  
 
 4) Close the connection.
-  
-  remote.Disconnect();
+
+    remote.Disconnect();
 
 ## Remote class
 Main handler for backend system. It creates a handle with jingtum, makes request to jingtum, 
