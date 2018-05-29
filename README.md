@@ -47,16 +47,16 @@ You can listen events of the server.
 * Listening all events for specific account. (Remote.CreateAccountStub method)
 * Listening all events for specific orderbook pair. (Remote.CreateOrderBooksStub method)
 
-Source Code
+Source Code:
 Source Code is in "src/jingtum-lib" folder. 
-* src/jingtum-lib
+* src/jingtum-lib:
 The main classes are defined in this folder, like: Remote class, Request class, Transaction<T> 
 class and so on.
-* src/jingtum-lib/Core
+* src/jingtum-lib/Core:
 The implementation of encryption algorithm of local sign.
-* src/jingtum-lib/Models
+* src/jingtum-lib/Models:
 The models which are used for requests and responses of calling jingtum APIs.
-* src/jingtum-lib/Serialization
+* src/jingtum-lib/Serialization:
 The JSON converters for JSON serialization and deserialization.
-* src/jingtum-lib/SerializedTypes
+* src/jingtum-lib/SerializedTypes:
 The blob serialization which is used for transaction local sign.
