@@ -499,7 +499,7 @@ namespace JingTum.Lib
                 case TxResultType.OfferNew:
                     {
                         var result = new OfferNewTxResult();
-                        result.OfferType = tx.Flags == (long)OfferCreateFlags.Sell ? "sell" : "buy";
+                        result.OfferType = tx.Flags == (long)OfferCreateFlags.Sell ? OfferType.Sell : OfferType.Buy;
                         result.Gets = tx.TakerGets;
                         result.Pays = tx.TakerPays;
                         result.Seq = tx.Sequence;

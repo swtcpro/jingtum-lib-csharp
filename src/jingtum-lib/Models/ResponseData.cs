@@ -1648,307 +1648,620 @@ namespace JingTum.Lib
         public Amount Amount { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result for Convert transaction.
+    /// </summary>
     public class ConvertTxResult : TxResult
     {
-        public ConvertTxResult():base(TxResultType.Convert)
+        internal ConvertTxResult():base(TxResultType.Convert)
         {
 
         }
+
+        /// <summary>
+        /// Gets the amount of spent.
+        /// </summary>
         public Amount Spent { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount to convert.
+        /// </summary>
         public Amount Amount { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of OfferNew transaction.
+    /// </summary>
     public class OfferNewTxResult : TxResult
     {
-        public OfferNewTxResult() : base(TxResultType.OfferNew)
+        internal OfferNewTxResult() : base(TxResultType.OfferNew)
         {
         }
 
-        public string OfferType { get; internal set; }
+        /// <summary>
+        /// Gets the type of offer.
+        /// </summary>
+        public OfferType OfferType { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of gets.
+        /// </summary>
         public Amount Gets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of pays.
+        /// </summary>
         public Amount Pays { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequence of the offer.
+        /// </summary>
         public int Seq { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of OfferCancel transaction.
+    /// </summary>
     public class OfferCancelTxResult : TxResult
     {
-       public OfferCancelTxResult() : base(TxResultType.OfferCancel)
+        internal OfferCancelTxResult() : base(TxResultType.OfferCancel)
         {
 
         }
 
+        /// <summary>
+        /// Gets the sequence of the offer.
+        /// </summary>
         public int OfferSeq { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of gets.
+        /// </summary>
         public Amount Gets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of pays.
+        /// </summary>
         public Amount Pays { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of RelationSet transaction.
+    /// </summary>
     public class RelationSetTxResult : TxResult
     {
-        public RelationSetTxResult() : base(TxResultType.RelationSet)
+        internal RelationSetTxResult() : base(TxResultType.RelationSet)
         {
-
         }
 
+        /// <summary>
+        /// Gets the address of counter party.
+        /// </summary>
         public string CounterParty { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount for the relation.
+        /// </summary>
         public Amount Amount { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of relation.
+        /// </summary>
         public RelationType RelationType { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the relation is active.
+        /// </summary>
         public bool IsActive { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of RelationDel transaction.
+    /// </summary>
     public class RelationDelTxResult : TxResult
     {
-        public RelationDelTxResult() : base(TxResultType.RelationDel)
+        internal RelationDelTxResult() : base(TxResultType.RelationDel)
         {
-
         }
 
+        /// <summary>
+        /// Gets the address of the counter party.
+        /// </summary>
         public string CounterParty { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount for the relation.
+        /// </summary>
         public Amount Amount { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of the relation.
+        /// </summary>
         public RelationType? RelationType { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the relation is active.
+        /// </summary>
         public bool IsActive { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of set account property transaction.
+    /// </summary>
     public class AccountSetTxResult : TxResult
     {
-        public AccountSetTxResult() : base(TxResultType.AccountSet)
+        internal AccountSetTxResult() : base(TxResultType.AccountSet)
         {
-
         }
 
+        /// <summary>
+        /// Gets the flag (<see cref="SetClearFlags"/>) to clear.
+        /// </summary>
         public long ClearFlag { get; internal set; }
+
+        /// <summary>
+        /// Gets the flag (<see cref="SetClearFlags"/>) to set.
+        /// </summary>
         public long SetFlag { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of set account delegate transaction.
+    /// </summary>
     public class SetRegularKeyTxResult : TxResult
     {
-        public SetRegularKeyTxResult() : base(TxResultType.SetRegularKey)
+        internal SetRegularKeyTxResult() : base(TxResultType.SetRegularKey)
         {
-
         }
 
+        /// <summary>
+        /// Gets the address of the delegate key.
+        /// </summary>
         public string RegularKey { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of set account signer transaction.
+    /// </summary>
     public class SignSetTxResult : TxResult
     {
-        public SignSetTxResult() : base(TxResultType.SignSet)
+        internal SignSetTxResult() : base(TxResultType.SignSet)
         {
-
         }
     }
 
+    /// <summary>
+    /// Represents the result of Operation transaction.
+    /// </summary>
     public class OperationTxResult : TxResult
     {
-        public OperationTxResult() : base(TxResultType.Operation)
+        internal OperationTxResult() : base(TxResultType.Operation)
         {
-
         }
     }
 
+    /// <summary>
+    /// Represents the result of effect by other transaction.
+    /// </summary>
     public class OfferEffectTxResult : TxResult
     {
-        public OfferEffectTxResult() : base(TxResultType.OfferEffect)
+        internal OfferEffectTxResult() : base(TxResultType.OfferEffect)
         {
-
         }
     }
 
+    /// <summary>
+    /// Indicates the method of the ConfigContract transaction.
+    /// </summary>
     public enum ContractMethod
     {
+        /// <summary>
+        /// Depoly a contract.
+        /// </summary>
         Deploy,
+        /// <summary>
+        /// Call a contract.
+        /// </summary>
         Call
     }
 
+    /// <summary>
+    /// Represents the result of deploy of call contract transaction.
+    /// </summary>
     public abstract class ConfigContractTxResult : TxResult
     {
-        protected ConfigContractTxResult(ContractMethod method) : base(TxResultType.ConfigContract)
+        internal ConfigContractTxResult(ContractMethod method) : base(TxResultType.ConfigContract)
         {
             Method = method;
         }
 
+        /// <summary>
+        /// Gets the list of parameters.
+        /// </summary>
         public string[] Params { get; internal set; }
+
+        /// <summary>
+        /// Gets the method of the ConfigContract transaction.
+        /// </summary>
         public ContractMethod Method { get; private set; }
     }
 
+    /// <summary>
+    /// Represents the result of deploy contract transaction.
+    /// </summary>
     public class DeployContractTxResult : ConfigContractTxResult
     {
-        public DeployContractTxResult() : base(ContractMethod.Deploy)
+        internal DeployContractTxResult() : base(ContractMethod.Deploy)
         {
-
         }
 
+        /// <summary>
+        /// Gets the payload of the contract to deploy.
+        /// </summary>
         public string Payload { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of call contract transaction.
+    /// </summary>
     public class CallContractTxResult : ConfigContractTxResult
     {
-        public CallContractTxResult() : base(ContractMethod.Call)
+        internal CallContractTxResult() : base(ContractMethod.Call)
         {
-
         }
 
+        /// <summary>
+        /// Gets address of the contract to call.
+        /// </summary>
         public string Destination { get; internal set; }
+
+        /// <summary>
+        /// Gets the function name to call.
+        /// </summary>
         public string Foo { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the result of a transaction which type is unknown.
+    /// </summary>
     public class UnknownTxResult : TxResult
     {
-        public UnknownTxResult():base(TxResultType.Unknown)
+        internal UnknownTxResult():base(TxResultType.Unknown)
         {
-
         }
     }
     #endregion
 
     #region NodeEffect
+    /// <summary>
+    /// Indicates the type of transaction effect.
+    /// </summary>
     public enum EffectType
     {
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown,
+        /// <summary>
+        /// Offer is partially funded, and has remained to offer.
+        /// </summary>
         OfferPartiallyFunded,
+        /// <summary>
+        /// Offer is funded and finished.
+        /// </summary>
         OfferFunded,
+        /// <summary>
+        /// Offer is created but not funded.
+        /// </summary>
         OfferCreated,
+        /// <summary>
+        /// Offer is cancelled.
+        /// </summary>
         OfferCancelled,
+        /// <summary>
+        /// Offer is bought on creating.
+        /// </summary>
         OfferBought,
+        /// <summary>
+        /// Is delegated with other account.
+        /// </summary>
         SetRegularKey
     }
 
+    /// <summary>
+    /// Represents the effect of a Node.
+    /// </summary>
     public abstract class NodeEffect
     {
-        protected NodeEffect(EffectType effect)
+        internal NodeEffect(EffectType effect)
         {
             Effect = effect;
         }
+
+        /// <summary>
+        /// Gets the type of the effect.
+        /// </summary>
         public EffectType Effect { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the node is deleted.
+        /// </summary>
         public bool Deleted { get; internal set; }
 
     }
 
+    /// <summary>
+    /// Represents the info a the counter party.
+    /// </summary>
     public class CounterParty
     {
+        /// <summary>
+        /// Gets the address of the counter party.
+        /// </summary>
         public string Account { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequence of the counter party's transaction.
+        /// </summary>
         public int Seq { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of the counter party's transaction.
+        /// </summary>
         public string Hash { get; internal set; }
     }
 
+    /// <summary>
+    /// Indicates the type of the offer effect.
+    /// </summary>
     public enum OfferEffectType
     {
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown,
+        /// <summary>
+        /// Sell offer.
+        /// </summary>
         Sell,
+        /// <summary>
+        /// Buy offer.
+        /// </summary>
         Buy,
+        /// <summary>
+        /// Offer is sold.
+        /// </summary>
         Sold,
+        /// <summary>
+        /// Offer is bought.
+        /// </summary>
         Bought
     }
 
+    /// <summary>
+    /// Represents the effect of offers.
+    /// </summary>
     public abstract class OfferEffect : NodeEffect
     {
-        protected OfferEffect(EffectType effect) : base(effect)
+        internal OfferEffect(EffectType effect) : base(effect)
         {
         }
 
+        /// <summary>
+        /// Gets the type of the offer effect.
+        /// </summary>
         public OfferEffectType Type { get; internal set; }
+
+        /// <summary>
+        /// Gets the price of the offer.
+        /// </summary>
         public string Price { get; internal set; }
 
         internal abstract Amount GotOrPays { get; }
         internal abstract Amount PaidOrGets { get; }
     }
 
+    /// <summary>
+    /// Represents the effet of offer partially funded.
+    /// </summary>
     public class OfferPartiallyFundedEffect : OfferEffect
     {
-        public OfferPartiallyFundedEffect() : base(EffectType.OfferPartiallyFunded)
+        internal OfferPartiallyFundedEffect() : base(EffectType.OfferPartiallyFunded)
         {
-            
         }
 
+        /// <summary>
+        /// Gets the counter party info.
+        /// </summary>
         public CounterParty CounterParty { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the offer is not finished.
+        /// </summary>
         public bool Remaining { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the offer is cancelled.
+        /// </summary>
         public bool Cancelled { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of gets for the offer.
+        /// </summary>
         public Amount Gets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of pays for the offer.
+        /// </summary>
         public Amount Pays { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of got for this effect.
+        /// </summary>
         public Amount Got { get; internal set; }
+
+        /// <summary>
+        /// gets the amount of paid for this effect.
+        /// </summary>
         public Amount Paid { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequnce of the offer.
+        /// </summary>
         public int Seq { get; internal set; }
 
         internal override Amount GotOrPays => Got ?? Pays;
         internal override Amount PaidOrGets => Paid ?? Gets;
     }
 
+    /// <summary>
+    /// Represents the effect of offer funded.
+    /// </summary>
     public class OfferFundedEffect : OfferEffect
     {
-        public OfferFundedEffect() : base(EffectType.OfferFunded)
+        internal OfferFundedEffect() : base(EffectType.OfferFunded)
         {
-
         }
 
+        /// <summary>
+        /// Gets the counter party info.
+        /// </summary>
         public CounterParty CounterParty { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of got for this effect.
+        /// </summary>
         public Amount Got { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of paid for this effect.
+        /// </summary>
         public Amount Paid { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequnce of the offer.
+        /// </summary>
         public int Seq { get; internal set; }
 
         internal override Amount GotOrPays => Got;
         internal override Amount PaidOrGets => Paid;
     }
 
+    /// <summary>
+    /// Represents the effect of offer created.
+    /// </summary>
     public class OfferCreatedEffect : OfferEffect
     {
-        public OfferCreatedEffect():base(EffectType.OfferCreated)
+        internal  OfferCreatedEffect():base(EffectType.OfferCreated)
         {
-
         }
 
+        /// <summary>
+        /// Gets the amount of gets for the offer.
+        /// </summary>
         public Amount Gets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of pays for the offer.
+        /// </summary>
         public Amount Pays { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequnce of the offfer.
+        /// </summary>
         public int Seq { get; internal set; }
 
         internal override Amount GotOrPays => Pays;
         internal override Amount PaidOrGets => Gets;
     }
 
+    /// <summary>
+    /// Represents the effect of offer cancelled.
+    /// </summary>
     public class OfferCancelledEffect : OfferEffect
     {
-        public OfferCancelledEffect() : base(EffectType.OfferCancelled)
+        internal OfferCancelledEffect() : base(EffectType.OfferCancelled)
         {
-
         }
 
-        public string Hash { get; internal set; }
+        /// <summary>
+        /// Gets the amount of gets for the offer.
+        /// </summary>
         public Amount Gets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of pays for the offer.
+        /// </summary>
         public Amount Pays { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequence of the offer.
+        /// </summary>
         public int Seq { get; internal set; }
 
         internal override Amount GotOrPays => Pays;
         internal override Amount PaidOrGets => Gets;
     }
 
+    /// <summary>
+    /// Represents the effect of offer bought.
+    /// </summary>
     public class OfferBoughtEffect : OfferEffect
     {
-        public OfferBoughtEffect() : base(EffectType.OfferBought)
+        internal OfferBoughtEffect() : base(EffectType.OfferBought)
         {
-
         }
 
+        /// <summary>
+        /// Gets the counter party info.
+        /// </summary>
         public CounterParty CounterParty { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of got for the offer.
+        /// </summary>
         public Amount Got { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of paid for the offer.
+        /// </summary>
         public Amount Paid { get; internal set; }
 
         internal override Amount GotOrPays => Got;
         internal override Amount PaidOrGets => Paid;
     }
 
+    /// <summary>
+    /// Represents the effect of set delegate key.
+    /// </summary>
     public class SetRegularKeyEffect : NodeEffect
     {
-        public SetRegularKeyEffect() : base(EffectType.SetRegularKey)
+        internal SetRegularKeyEffect() : base(EffectType.SetRegularKey)
         {
-
         }
 
+        /// <summary>
+        /// Gets the type of the transaction.
+        /// </summary>
         public string Type { get; internal set; }
+
+        /// <summary>
+        /// Gets the wallet address.
+        /// </summary>
         public string Account { get; internal set; }
+
+        /// <summary>
+        /// Gets the address of delegate.
+        /// </summary>
         public string RegularKey { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the effect which is unknown.
+    /// </summary>
     public class UnknownEffect : NodeEffect
     {
-        public UnknownEffect() : base(EffectType.Unknown)
+        internal UnknownEffect() : base(EffectType.Unknown)
         {
 
         }
@@ -1956,45 +2269,119 @@ namespace JingTum.Lib
     #endregion
 
     #region RequestOrderBook
+    /// <summary>
+    /// Represents the response of <see cref="Remote.RequestOrderBook(OrderBookOptions)"/> method.
+    /// </summary>
     public class OrderBookResponse
     {
+        /// <summary>
+        /// Gets the index of the current ledger.
+        /// </summary>
         [JsonProperty("ledger_current_index")]
-        public string LedgerCurrentIndex { get; internal set; }
+        public UInt32 LedgerCurrentIndex { get; internal set; }
+
+        /// <summary>
+        /// Represents the list of offers.
+        /// </summary>
         [JsonProperty("offers")]
         public OrderBookOffer[] Offers { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the offer of order book.
+    /// </summary>
     public class OrderBookOffer
     {
+        /// <summary>
+        /// Gets the wallet address.
+        /// </summary>
         [JsonProperty("Account")]
         public string Account { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of book directory.
+        /// </summary>
         [JsonProperty("BookDirectory")]
         public string BookDirectory { get; internal set; }
+
+        /// <summary>
+        /// Ges the book node.
+        /// </summary>
         [JsonProperty("BookNode")]
         public string BookNode { get; internal set; }
+
+        /// <summary>
+        /// Gets the flags of bug or sell.
+        /// </summary>
+        /// <remarks>
+        /// 0x20000 means sell.
+        /// </remarks>
         [JsonProperty("Flags")]
-        public long Flags { get; internal set; }
+        public UInt32 Flags { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of ledger entry.
+        /// </summary>
         [JsonProperty("LedgerEntryType")]
         public string LedgerEntryType { get; internal set; }
+
+        /// <summary>
+        /// Gets the count of offers and freeze lines.
+        /// </summary>
         [JsonProperty("OwnerNode")]
         public string OwnerNode { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of previous transaction.
+        /// </summary>
         [JsonProperty ("PreviousTxnID")]
         public string PreviousTxnID { get; internal set; }
+
+        /// <summary>
+        /// Gets the ledger index which contains the previous transaction.
+        /// </summary>
         [JsonProperty("PreviousTxnLgrSeq")]
         public int PreviousTxnLgrSeq { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequence of the offer.
+        /// </summary>
         [JsonProperty("Sequence")]
         public int Sequence { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of taker gets.
+        /// </summary>
         [JsonProperty("TakerGets")]
         public Amount TakerGets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of taker pays.
+        /// </summary>
         [JsonProperty("TakerPays")]
         public Amount TakerPays { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of the index for the data.
+        /// </summary>
         [JsonProperty("index")]
         public string Index { get; internal set; }
+
+        /// <summary>
+        /// Gets the swt balance of the account.
+        /// </summary>
         [JsonProperty("owner_funds")]
         public string OwnerFunds { get; internal set; }
+
+        /// <summary>
+        /// Gets the price of the reciprocal value of price.
+        /// </summary>
         [JsonProperty("quality")]
         public string Quality { get; internal set; }
 
+        /// <summary>
+        /// Gets a boolean value indicating whether the offer is sell.
+        /// </summary>
         [JsonIgnore]
         public bool IsSell
         {
@@ -2004,173 +2391,387 @@ namespace JingTum.Lib
             }
         }
 
+        /// <summary>
+        /// Gets the price for each sell of taker gets or buy of taker pays.
+        /// </summary>
         [JsonIgnore]
         public string Price { get; internal set; }
     }
     #endregion
 
     #region Transaction response base
+    /// <summary>
+    /// Represents the response for transaction submits.
+    /// </summary>
     public class GeneralTxResponse
     {
+        /// <summary>
+        /// Ges the result of the submit.
+        /// </summary>
+        /// <remarks>
+        /// "tesSUCCESS" means transaction is applied successfully.
+        /// </remarks>
         [JsonProperty("engine_result")]
         public string EngineResult { get; internal set; }
+
+        /// <summary>
+        /// Gets the result code of the submit.
+        /// </summary>
         [JsonProperty("engine_result_code")]
         public int EngineResultCode { get; internal set; }
+
+        /// <summary>
+        /// Gets the result message of the submit.
+        /// </summary>
         [JsonProperty("engine_result_message")]
         public string EngineResultMessage { get; internal set; }
+
+        /// <summary>
+        /// Gets the blob after signing for the transaciton.
+        /// </summary>
         [JsonProperty("tx_blob")]
         public string TxBlob { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for the transaction.
+    /// </summary>
     public class GeneralTxJson
     {
+        /// <summary>
+        /// Gets the wallet address.
+        /// </summary>
         [JsonProperty("Account")]
         public string Account { get; internal set; }
+
+        /// <summary>
+        /// Gets the transaction fee.
+        /// </summary>
         [JsonProperty("Fee")]
         public string Fee { get; internal set; }
+
+        /// <summary>
+        /// Gets the flags for the transaction.
+        /// </summary>
         [JsonProperty("Flags")]
-        public long Flags { get; internal set; }
+        public UInt32 Flags { get; internal set; }
+
+        /// <summary>
+        /// Gets the list of memos.
+        /// </summary>
         [JsonProperty("Memos")]
         public MemoData[] Memos { get; internal set; }
+
+        /// <summary>
+        /// Gets the sequence of the transaction.
+        /// </summary>
         [JsonProperty("Sequence")]
         public int Sequence { get; internal set; }
+
+        /// <summary>
+        /// Gets the public key for signing.
+        /// </summary>
         [JsonProperty("SigningPubKey")]
         public string SigningPubKey { get; internal set; }
+
+        /// <summary>
+        /// Gets the timestamp of the transaction.
+        /// </summary>
         [JsonProperty("Timestamp")]
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime Timestamp { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of the transaction.
+        /// </summary>
         [JsonProperty("TransactionType")]
         [JsonConverter(typeof(EnumConverter<TransactionType>))]
         public TransactionType TransactionType { get; internal set; }
+
+        /// <summary>
+        /// Gets the signature of the transaction.
+        /// </summary>
         [JsonProperty("TxnSignature")]
         public string TxnSignature { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of the transaction.
+        /// </summary>
         [JsonProperty("hash")]
         public string Hash { get; internal set; }
     }
     #endregion
 
     #region BuildPaymentTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildPaymentTx(PaymentTxOptions)"/> method.
+    /// </summary>
     public class PaymentTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public PaymentTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for payment transaction.
+    /// </summary>
     public class PaymentTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the amount of payment.
+        /// </summary>
         [JsonProperty("amount")]
         public Amount Amount { get; internal set; }
+
+        /// <summary>
+        /// Gets the address of counter party.
+        /// </summary>
         [JsonProperty("Destination")]
         public string Destination { get; internal set; }
     }
     #endregion
 
     #region BuildRelationTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildRelationTx(RelationTxOptions)"/> method.
+    /// </summary>
     public class RelationTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public RelationTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for relation type of transactions.
+    /// </summary>
     public class RelationTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the amount of limit for the relation.
+        /// </summary>
         [JsonProperty("LimitAmount")]
         public Amount LimitAmount { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of relation.
+        /// </summary>
         [JsonProperty("RelationType")]
         [JsonConverter(typeof(NullableEnumConverter<RelationType>))]
         public RelationType? RelationType { get; internal set; }
+
+        /// <summary>
+        /// Ges the address of relation target.
+        /// </summary>
         [JsonProperty("Target")]
         public string Target { get; internal set; }
     }
     #endregion
 
     #region BuildAccountSetTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildAccountSetTx(AccountSetTxOptions)"/> method.
+    /// </summary>
     public class AccountSetTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public AccountSetTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for type of account set transactions.
+    /// </summary>
     public class AccountSetTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the flag for set if exists.
+        /// </summary>
         [JsonProperty("SetFlag")]
         [JsonConverter(typeof(NullableEnumConverter<SetClearFlags>))]
         public SetClearFlags? SetFlag { get; internal set; }
+
+        /// <summary>
+        /// Gets the flag for clear if exists.
+        /// </summary>
         [JsonProperty("ClearFlag")]
         [JsonConverter(typeof(NullableEnumConverter<SetClearFlags>))]
         public SetClearFlags? ClearFlag { get; internal set; }
+
+        /// <summary>
+        /// Gets the address the delegate key.
+        /// </summary>
         [JsonProperty("RegularKey")]
         public string RegularKey { get; internal set; }
     }
     #endregion
 
     #region BuildOfferCreateTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildOfferCreateTx(OfferCreateTxOptions)"/> method.
+    /// </summary>
     public class OfferCreateTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public OfferCreateTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for offer create transaction.
+    /// </summary>
     public class OfferCreateTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the amount taker gets.
+        /// </summary>
         [JsonProperty("TakerGets")]
         public Amount TakerGets { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of taker pays.
+        /// </summary>
         [JsonProperty("TakerPays")]
         public Amount TakerPays { get; internal set; }
     }
     #endregion
 
     #region DeployContractTx CallContractTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.DeployContractTx(DeployContractTxOptions)"/> method.
+    /// </summary>
     public class DeployContractTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the state of the contract.
+        /// </summary>
+        /// <remarks>
+        /// It's the address of the contract.
+        /// </remarks>
         [JsonProperty("ContractState")]
         public string ContractState { get; internal set; }
+
+        /// <summary>
+        /// Gets json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public DeployContractTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for deploy contract transaction.
+    /// </summary>
     public class DeployContractTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the method of the ConfigContract transaction.
+        /// </summary>
+        /// <remarks>
+        /// 0 for deploy contract, 1 for call contract.
+        /// </remarks>
         [JsonProperty("Method")]
         public int Method { get; internal set; }
+
+        /// <summary>
+        /// Gets the payload of the contract.
+        /// </summary>
         [JsonProperty("Payload")]
         [JsonConverter(typeof(HexToStringConverter))]
         public string Payload { get; internal set; }
+
+        /// <summary>
+        /// Gets the list of the parameters.
+        /// </summary>
         [JsonProperty("Args")]
         public ArgData[] Args { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount to active the contract address.
+        /// </summary>
+        /// <remarks>
+        /// At least 35 SWT.
+        /// </remarks>
         [JsonProperty("Amount")]
         public Amount Amount { get; internal set; }
     }
     #endregion
 
     #region CallContractTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.CallContractTx(CallContractTxOptions)"/> method.
+    /// </summary>
     public class CallContractTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the state of the contract.
+        /// </summary>
+        /// <remarks>
+        /// It's the result of contract calling.
+        /// </remarks>
         [JsonProperty("ContractState")]
         public string ContractState { get; internal set; }
+
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public CallContractTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for call contract transaction.
+    /// </summary>
     public class CallContractTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the method of the ConfigContract transaction.
+        /// </summary>
+        /// <remarks>
+        /// 0 for deploy contract, 1 for call contract.
+        /// </remarks>
         [JsonProperty("Method")]
         public int Method { get; internal set; }
+
+        /// <summary>
+        /// Gets the function name to call.
+        /// </summary>
         [JsonProperty("ContractMethod")]
         [JsonConverter(typeof(HexToStringConverter))]
         public string ContractMethod { get; internal set; }
+
+        /// <summary>
+        /// Gets the list of parameters.
+        /// </summary>
         [JsonProperty("Args")]
         public ArgData[] Args { get; internal set; }
     }
     #endregion
 
     #region BuildSignTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildSignTx(SignTxOptions)"/> method.
+    /// </summary>
     public class SignTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public SignTxJsonResult TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for signer transaciton.
+    /// </summary>
     public class SignTxJsonResult : GeneralTxJson
     {
 
@@ -2178,14 +2779,26 @@ namespace JingTum.Lib
     #endregion
 
     #region BuildOfferCancelTx
+    /// <summary>
+    /// Represents the response of <see cref="Remote.BuildOfferCancelTx(OfferCancelTxOptions)"/> method.
+    /// </summary>
     public class OfferCancelTxResponse : GeneralTxResponse
     {
+        /// <summary>
+        /// Gets the json data for this transaction.
+        /// </summary>
         [JsonProperty("tx_json")]
         public OfferCancelTxJson TxJson { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the json data for offer cancel transaction.
+    /// </summary>
     public class OfferCancelTxJson : GeneralTxJson
     {
+        /// <summary>
+        /// Gets the sequence of the offer.
+        /// </summary>
         [JsonProperty("OfferSequence")]
         public int OfferSequence { get; internal set; }
     }
@@ -2193,32 +2806,51 @@ namespace JingTum.Lib
     #endregion
 
     #region RequestPathFind
+    /// <summary>
+    /// Represents the response of <see cref="Remote.RequestPathFind(PathFindOptions)"/> method.
+    /// </summary>
     public class PathFindResponse
     {
+        /// <summary>
+        /// Gets the wallet address.
+        /// </summary>
         [JsonProperty("source_account")]
         public string Source { get; internal set; }
+
+        /// <summary>
+        /// Gets the address of counter party.
+        /// </summary>
         [JsonProperty("destination_account")]
         public string Destination { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of payment.
+        /// </summary>
         [JsonProperty("destination_amount")]
         public Amount Amount { get; internal set; }
+
         [JsonProperty("alternatives")]
         internal PathFindAlternative[] RawAlternatives { get; set; }
 
+        /// <summary>
+        /// Gets the list of alternatives.
+        /// </summary>
         [JsonIgnore]
         public PathFind[] Alternatives { get; internal set; }
     }
 
     /// <summary>
-    /// Represents a path find.
+    /// Represents a path find for payment.
     /// </summary>
     public class PathFind
     {
         /// <summary>
-        /// The key of the path find.
+        /// Gets the key of the path find.
         /// </summary>
         public string Key { get; internal set; }
+
         /// <summary>
-        /// The choice amount of the path find.
+        /// Gets the amount of choice for this path find.
         /// </summary>
         public Amount Choice { get; internal set; }
     }
@@ -2247,29 +2879,77 @@ namespace JingTum.Lib
     #endregion
 
     #region Transactions event
+    /// <summary>
+    /// Represents the response for the <see cref="Remote.Transactions"/> event.
+    /// </summary>
     public class TransactionResponse
     {
+        /// <summary>
+        /// Gets the result of the transaction.
+        /// </summary>
+        /// <remarks>
+        /// "tesSUCCESS" means transaction is applied successfully.
+        /// </remarks>
         [JsonProperty("engine_result")]
         public string EngineResult { get; internal set; }
+
+        /// <summary>
+        /// Gets the result code of the submit.
+        /// </summary>
         [JsonProperty("engine_result_code")]
         public int EngineResultCode { get; internal set; }
+
+        /// <summary>
+        /// Gets the result message of the submit.
+        /// </summary>
         [JsonProperty("engine_result_message")]
         public string EngineResultMessage { get; internal set; }
+
+        /// <summary>
+        /// Gets the hash of the ledger.
+        /// </summary>
         [JsonProperty("ledger_hash")]
         public string LedgerHash { get; internal set; }
+
+        /// <summary>
+        /// Gets the index of the ledger.
+        /// </summary>
         [JsonProperty("ledger_index")]
-        public long LedgerIndex { get; internal set; }
+        public UInt32 LedgerIndex { get; internal set; }
+
+        /// <summary>
+        /// Gets the status of the transaction.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of transaciton.
+        /// </summary>
         [JsonProperty("type")]
         public string Type { get; internal set; }
+
+        /// <summary>
+        /// Gets a boolean value indicating whether the transaction is validated.
+        /// </summary>
         [JsonProperty("validated")]
         public bool Validated { get; internal set; }
+
+        /// <summary>
+        /// Gets the transaction data.
+        /// </summary>
         [JsonProperty("transaction")]
         public Tx Transaction { get; internal set; }
+
+        /// <summary>
+        /// Gets the meta data.
+        /// </summary>
         [JsonProperty("meta")]
         public Meta Meta { get; internal set; }
 
+        /// <summary>
+        /// Gets the parsed result of the transaction.
+        /// </summary>
         [JsonIgnore]
         public TxResult TxResult { get; internal set; }
     }
