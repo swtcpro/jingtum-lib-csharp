@@ -1,0 +1,4327 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JingTum.Lib</name>
+    </assembly>
+    <members>
+        <member name="T:JingTum.Lib.Account">
+            <summary>
+            Represents the account stub used to subscribe events of account.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Account.Subscribe(System.String,JingTum.Lib.MessageCallback{JingTum.Lib.TxResult})">
+            <summary>
+            Subscrible the event for specific account.
+            </summary>
+            <param name="account">The account address.</param>
+            <param name="callback">The callback delegate.</param>
+        </member>
+        <member name="M:JingTum.Lib.Account.Unsubscribe(System.String)">
+            <summary>
+            Unsubscribe the event for specific account.
+            </summary>
+            <param name="account">The acount address.</param>
+        </member>
+        <member name="M:JingTum.Lib.Core.Utility.ValidateKeyPair(System.String,System.String)">
+            <summary>
+            Validate the address and secret pair.
+            </summary>
+            <param name="address"></param>
+            <param name="secret"></param>
+            <returns>true if the address and secret is valid.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Core.HashUtils.SHA256_RIPEMD160(System.Byte[])">
+            <summary>
+            Calculates the SHA-256 hash of the given byte range, and then hashes the resulting hash again.
+            That is standard procedure in Bitcoin. The resulting hash is in big endian form. 
+            </summary>
+            <param name="input">Input byte array to be hashed.</param>
+            <returns>Hash of the input byte in Big Endian form.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Core.Crypto.Ecdsa.ECDSASignature.#ctor(Org.BouncyCastle.Math.BigInteger,Org.BouncyCastle.Math.BigInteger)">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.Core.Crypto.Ecdsa.ECDSASignature"/> object with the given components.
+            </summary>
+            <param name="r">The r component.</param>
+            <param name="s">The s component.</param>
+        </member>
+        <member name="P:JingTum.Lib.Core.Crypto.Ecdsa.ECDSASignature.R">
+            <summary>
+            Gets the R component of the signature.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Core.Crypto.Ecdsa.ECDSASignature.S">
+            <summary>
+            Gets the S component of the signature.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Core.Crypto.Ecdsa.ECDSASignature.EncodeToDER">
+            <summary>
+            Encodes the signature to DER.
+            </summary>
+            <remarks>
+            DER is an international standard for serializing data structures which is widely used in cryptography.
+            It's somewhat like protocol buffers but less convenient. This method returns a standard DER encoding
+            of the signature, as recognized by OpenSSL and other libraries.
+            </remarks>
+            <returns>A byte buffer as a standard DER encoding of the signature.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Core.Crypto.Ecdsa.Seed.GetPublic(Org.BouncyCastle.Math.BigInteger)">
+            <summary>
+            Gets the public key from the sceret key. 
+            </summary>
+            <param name="secretKey">Secret point on the curve as BigInteger.</param>
+            <returns>Corresponding public point.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Core.Crypto.Ecdsa.Seed.ComputePublicGenerator(Org.BouncyCastle.Math.BigInteger)">
+            <summary>
+            Computes the public key from the private key.
+            </summary>
+            <param name="privateGen">Secret point on the curve as BigInteger.</param>
+            <returns>
+            The corresponding public key is the public generator (aka public root key, master public key).
+            Return as byte[] for convenience.
+            </returns>
+        </member>
+        <member name="M:JingTum.Lib.Core.B58.EncodeToBytes(System.Byte[])">
+            <summary>
+            Encodes the given bytes in base58. No checksum is appended.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JingTum.Lib.Amount">
+            <summary>
+            Represents the tum amount.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Amount.#ctor">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.Amount"/> object.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Amount.SWT(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.Amount"/> object for SWT currency.
+            </summary>
+            /// <param name="value">The amount value.</param>
+            <returns>The <see cref="T:JingTum.Lib.Amount"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Amount.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.Amount"/> object.
+            </summary>
+            <param name="currency">The amount currency.</param>
+            <param name="issuer">The amount issuer.</param>
+            <param name="value">The amount value.</param>
+        </member>
+        <member name="P:JingTum.Lib.Amount.Value">
+            <summary>
+            Optional. The value.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Amount.Currency">
+            <summary>
+            Required. The currency.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Amount.Issuer">
+            <summary>
+            Required. The issuer.
+            </summary>
+            <remarks>
+            The issuer is ignored if the currency is "SWT".
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.Errors">
+            <summary>
+            Represents the errors from jingtum system.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Errors.GetErrorMessage(System.String)">
+            <summary>
+            Gets the error message.
+            </summary>
+            <param name="errorKey">The error key.</param>
+            <returns>The error message string. null if the key is not found.</returns>
+        </member>
+        <member name="P:JingTum.Lib.Errors.ErrorMessages">
+            <summary>
+            Gets the dictionary of the error messages.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Remote">
+            <summary>
+            Main handler for backend system.
+            </summary>
+            <remarks>
+            It creates a handle with jingtum, makes request to jingtum, subscribes event to jingtum, and gets info from jingtum.
+            </remarks>
+        </member>
+        <member name="M:JingTum.Lib.Remote.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.Remote"/> object.
+            </summary>
+            <param name="url">The jingtum websocket server url.</param>
+            <param name="localSign">Whether sign transaction in local.</param>
+        </member>
+        <member name="M:JingTum.Lib.Remote.SetMockServer(JingTum.Lib.Server)">
+            <summary>
+            For unit test.
+            </summary>
+            <param name="server"></param>
+        </member>
+        <member name="P:JingTum.Lib.Remote.Url">
+            <summary>
+            Gets the jingtum websocket server url.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Remote.LocalSign">
+            <summary>
+            Gets or sets a value indicating whether sign transaction in local.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Remote.Paths">
+            <summary>
+            Gets the path alternatives which is requested by <see cref="M:JingTum.Lib.Remote.RequestPathFind(JingTum.Lib.PathFindOptions)"/> method.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Remote.Connect(JingTum.Lib.MessageCallback{JingTum.Lib.ConnectResponse})">
+            <summary>
+            Connects to jingtum.
+            </summary>
+            <remarks>
+            Each remote object should connect jingtum first.
+            Now jingtum should connect manual, only then you can send request to backend.
+            </remarks>
+            <param name="callback">The callback.</param>
+        </member>
+        <member name="M:JingTum.Lib.Remote.Disconnect">
+            <summary>
+            Disconnects to jingtum.
+            </summary>
+            <remarks>
+            Remote object can be disconnected manual, and no parameters are required.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.Remote.IsConnected">
+            <summary>
+            Gets a value indicating whether it's conected to jingtum.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.Transactions">
+            <summary>
+            Occurs when transactions occur in the system.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.LedgerClosed">
+            <summary>
+            Occurs when last ledger closed in the system.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.ServerStatusChanged">
+            <summary>
+            Occurs when server status changed in the system.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.PathFind">
+            <summary>
+            Occurs when path find in the system.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.Disconnected">
+            <summary>
+            Occurs when the connection is closed.
+            </summary>
+        </member>
+        <member name="E:JingTum.Lib.Remote.Reconnected">
+            <summary>
+            Occurs when the connection is reconnected.
+            </summary>
+            <remarks>
+            It will try to reconnect to server automatically when the connection is closed.
+            </remarks>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestServerInfo">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets server info from jingtum.
+            </summary>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestLedgerClosed">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets last closed ledger in system.
+            </summary>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestLedger(JingTum.Lib.LedgerOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets the ledger in system.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestTx(JingTum.Lib.TxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets one transaction information.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestAccountInfo(JingTum.Lib.AccountInfoOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets account info.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestAccountTums(JingTum.Lib.AccountTumsOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets the received and sent jingtum tunms held by the account.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestAccountRelations(JingTum.Lib.AccountRelationsOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets relations connected to the account.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestAccountOffers(JingTum.Lib.AccountOffersOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets account's current offer that is suspended on jingtum system and will be filled by other accounts.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestAccountTx(JingTum.Lib.AccountTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets account transactions.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestOrderBook(JingTum.Lib.OrderBookOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets order book info.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.RequestPathFind(JingTum.Lib.PathFindOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Request`1"/> object and gets path from one currency to another.
+            </summary>
+            <param name="options">The options for this request.</param>
+            <returns>A <see cref="T:JingTum.Lib.Request`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.CreateAccountStub">
+            <summary>
+            Creates the account stub to subscribe events of account.
+            </summary>
+            <returns>A <see cref="T:JingTum.Lib.Account"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.CreateOrderBooksStub">
+            <summary>
+            Creates the order book stub to subscribe events of order book.
+            </summary>
+            <returns>A <see cref="T:JingTum.Lib.OrderBook"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildPaymentTx(JingTum.Lib.PaymentTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds normal payment transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.DeployContractTx(JingTum.Lib.DeployContractTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the deploy contract transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.CallContractTx(JingTum.Lib.CallContractTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the call contract transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildSignTx(JingTum.Lib.SignTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the sign transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildRelationTx(JingTum.Lib.RelationTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the relation transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildAccountSetTx(JingTum.Lib.AccountSetTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the set account attribute transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildOfferCreateTx(JingTum.Lib.OfferCreateTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the offer create transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.BuildOfferCancelTx(JingTum.Lib.OfferCancelTxOptions)">
+            <summary>
+            Creates the <see cref="T:JingTum.Lib.Transaction`1"/> object and builds the offer cancel transaction.
+            </summary>
+            <param name="options">The options for this transaction.</param>
+            <remarks>
+            The order can be cancel by order sequence. 
+            The sequence can be get when order is submitted or from offer query operation.
+            </remarks>
+            <returns>A <see cref="T:JingTum.Lib.Transaction`1"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Remote.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Transaction`1">
+            <summary>
+            Posts request to server with account secret.
+            </summary>
+            <typeparam name="T">The type of the parsed response message.</typeparam>
+            <remarks>
+            Transaction is used to make transaction and collect transaction parameter. 
+            Each transaction is secret required, and transaction can be signed local or remote. 
+            All transactions are asynchronized and should provide a callback. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.Transaction`1.Account">
+            <summary>
+            Gets the account which builds the transaction.
+            </summary>
+            <remarks>
+            Account can be master account, delegate account or operation account.
+            </remarks>
+            <returns>The account for this transaction.</returns>
+        </member>
+        <member name="P:JingTum.Lib.Transaction`1.TransactionType">
+            <summary>
+            Gets the transaction type.
+            </summary>
+            <returns>A <see cref="P:JingTum.Lib.Transaction`1.TransactionType"/> enum value.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetSecret(System.String)">
+            <summary>
+            Sets the transaction secret.
+            </summary>
+            <remarks>
+            It is required before transaction submit.
+            </remarks>
+            <param name="secret">The secret address.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.AddMemo(System.String)">
+            <summary>
+            Adds one memo to the transaction.
+            </summary>
+            <remarks>
+            Memo is string and is limited to 2k.
+            </remarks>
+            <param name="data">The memo string.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetFee(System.UInt32)">
+            <summary>
+            Sets the fee.
+            </summary>
+            <param name="fee">The fee.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetPath(System.String)">
+            <summary>
+            Sets the payment path for one transaction.
+            </summary>
+            <remarks>
+            The key parameter is request by <see cref="M:JingTum.Lib.Remote.RequestPathFind(JingTum.Lib.PathFindOptions)"/>. 
+            When the key is set, "SendMax" parameter is also set.
+            </remarks>
+            <param name="key">The key of the path.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetSendMax(JingTum.Lib.Amount)">
+            <summary>
+            Sets the payment transaction max amount when needed. 
+            </summary>
+            <remarks>
+            It is set by <see cref="M:JingTum.Lib.Transaction`1.SetPath(System.String)"/> default.
+            </remarks>
+            <param name="amount">The max amount.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetTransferRate(System.Single)">
+            <summary>
+            Sets the transaction transfer rate.
+            </summary>
+            <remarks>
+             It should be checked with fee.
+            </remarks>
+            <param name="rate">The transfer rate.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetFlags(System.UInt32)">
+            <summary>
+            Sets the transaction flags.
+            </summary>
+            <remarks>
+            <para>It is used to set Offer type mainly.</para>
+            The flags depends on the transaction type.
+            <para>There are following flags for specific transaction type.</para>
+            <list type="bullet">
+            <item><see cref="T:JingTum.Lib.AccountSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.TrustSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.OfferCreateFlags"/></item>
+            <item><see cref="T:JingTum.Lib.PaymentFlags"/></item>
+            <item><see cref="T:JingTum.Lib.RelationSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.UniversalFlags"/> Apply to any transaction type.</item>
+            </list>
+            </remarks>
+            <param name="flags">The flags value.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SetFlags(System.String[])">
+            <summary>
+            Sets the transaction flags.
+            </summary>
+            <remarks>
+            <para>It is used to set Offer type mainly.</para>
+            The flags depends on the TransactionType.
+            <para>There are following flags for specific transaction type.</para>
+            <list type="bullet">
+            <item><see cref="T:JingTum.Lib.AccountSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.TrustSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.OfferCreateFlags"/></item>
+            <item><see cref="T:JingTum.Lib.PaymentFlags"/></item>
+            <item><see cref="T:JingTum.Lib.RelationSetFlags"/></item>
+            <item><see cref="T:JingTum.Lib.UniversalFlags"/> Apply to any transaction type.</item>
+            </list>
+            </remarks>
+            <param name="flags">The flags name.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.Sign(JingTum.Lib.MessageCallback{System.String})">
+            <summary>
+            Sign the transaction.
+            </summary>
+            <param name="callback">The callback for the blob of sign result.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.Submit(JingTum.Lib.MessageCallback{`0})">
+            <summary>
+            Submits entry for transaction.
+            </summary>
+            <param name="callback">The callback.</param>
+        </member>
+        <member name="M:JingTum.Lib.Transaction`1.SubmitAsync(JingTum.Lib.MessageCallback{`0},System.Int32)">
+            <summary>
+            The async version of <see cref="M:JingTum.Lib.Transaction`1.Submit(JingTum.Lib.MessageCallback{`0})"/>.
+            </summary>
+            <param name="callback">The callback for the request result.</param>
+            <param name="timeout">The millisends to wait for the result.</param>
+            <returns>The task.</returns>
+        </member>
+        <member name="T:JingTum.Lib.InnerTransaction`2">
+            <summary>
+            The inner wrapper class of <see cref="T:JingTum.Lib.Transaction`1"/>
+            </summary>
+            <typeparam name="V">The type of transaction data.</typeparam>
+            <typeparam name="T">The type of the response data.</typeparam>
+        </member>
+        <member name="T:JingTum.Lib.MessageEventsArgs">
+            <summary>
+            Represents the event args for event with raw message.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.MessageEventsArgs.Message">
+            <summary>
+            Gets the raw json message received from server.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TransactionsEventArgs">
+            <summary>
+            Represents the event args for <see cref="E:JingTum.Lib.Remote.Transactions"/> event.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionsEventArgs.Result">
+            <summary>
+            Gets the parsed response result of the transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerClosedEventArgs">
+            <summary>
+            Represents the event args for <see cref="E:JingTum.Lib.Remote.LedgerClosed"/> event.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedEventArgs.LedgerClosed">
+            <summary>
+            Gets the info of the closed ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ServerStatusEventArgs">
+            <summary>
+            Represents the event args for <see cref="E:JingTum.Lib.Remote.ServerStatusChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatusEventArgs.Status">
+            <summary>
+            Gets the server status.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PathFindEventArgs">
+            <summary>
+            Represents the event args for <see cref="E:JingTum.Lib.Remote.PathFind"/> event.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ResponseException">
+            <summary>
+            Represents the exception for the request.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.ResponseException.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:JingTum.Lib.ResponseException"/> object.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="P:JingTum.Lib.ResponseException.Error">
+            <summary>
+            Gets the error string.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ResponseException.ErrorCode">
+            <summary>
+            Gets the error code.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ResponseException.Request">
+            <summary>
+            Gets the request json data.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.InvalidSecretException">
+            <summary>
+            Represents the exception for invalid secret.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.InvalidSecretException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new <see cref="T:JingTum.Lib.InvalidSecretException"/> object.
+            </summary>
+            <param name="secret">The secret.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:JingTum.Lib.InvalidSecretException.Secret">
+            <summary>
+            Gets the secret string.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.InvalidAddressException">
+            <summary>
+            Represents the exception for invalid address.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.InvalidAddressException.#ctor(System.String,System.String,System.String,System.Exception)">
+            <summary>
+            Creates a new <see cref="T:JingTum.Lib.InvalidAddressException"/> object.
+            </summary>
+            <param name="address">The address.</param>
+            <param name="name">The name for the option.</param>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:JingTum.Lib.InvalidAddressException.Name">
+            <summary>
+            Gets the options name.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.InvalidAddressException.Address">
+            <summary>
+            Gets the address string.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.InvalidHashException">
+            <summary>
+            Represents the exception for invalid hash.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.InvalidHashException.#ctor(System.String,System.String,System.String,System.Exception)">
+            <summary>
+            Creates a new <see cref="T:JingTum.Lib.InvalidHashException"/> object.
+            </summary>
+            <param name="hash">The hash.</param>
+            <param name="name">The name of the option.</param>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:JingTum.Lib.InvalidHashException.Name">
+            <summary>
+            Gets the option name.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.InvalidHashException.Hash">
+            <summary>
+            Gets the hash string.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.InvalidAmountException">
+            <summary>
+            Represents the exception for invalid amount.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.InvalidAmountException.#ctor(JingTum.Lib.Amount,System.String,System.String,System.Exception)">
+            <summary>
+            Creates a new <see cref="T:JingTum.Lib.InvalidAmountException"/> object.
+            </summary>
+            <param name="amount">The amount.</param>
+            <param name="name">The name of the option.</param>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:JingTum.Lib.InvalidAmountException.Name">
+            <summary>
+            Gets the option name.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.InvalidAmountException.Amount">
+            <summary>
+            Gets the amount.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ConnectResponse">
+            <summary>
+            Represents the response for <see cref="M:JingTum.Lib.Remote.Connect(JingTum.Lib.MessageCallback{JingTum.Lib.ConnectResponse})"/> method callback.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConnectResponse.HostId">
+            <summary>
+            Gets the host id.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConnectResponse.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConnectResponse.ValidatedLedgers">
+            <summary>
+            Gets the completed ledgers.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ServerInfoResponse">
+            <summary>
+            Represents the response for <see cref="M:JingTum.Lib.Remote.RequestServerInfo"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfoResponse.Info">
+            <summary>
+            Gets the info of the server.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ServerInfo">
+            <summary>
+            Represents the server info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfo.HostId">
+            <summary>
+            Gets the host id.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfo.Version">
+            <summary>
+            Gets the current jingtum version.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfo.Ledgers">
+            <summary>
+            Gets the completed ledgers in system.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfo.Node">
+            <summary>
+            Gets the publick key of the node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerInfo.State">
+            <summary>
+            Gets the current jingtum node state.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerClosedResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestLedgerClosed"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedResponse.LedgerIndex">
+            <summary>
+            Gets the index of last closed ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedResponse.LedgerHash">
+            <summary>
+            Gets the hash of last closed ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerClosedInfo">
+            <summary>
+            Represents the info of the closed ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.LedgerIndex">
+            <summary>
+            Gets the index of last closed ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.LedgerHash">
+            <summary>
+            Gets the hash of last closed ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.LedgerTime">
+            <summary>
+            Gets the closed time of the ledger. (in UTC+8)
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.FeeBase">
+            <summary>
+            Gets the base fee for calculation formula factor.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.FeeRef">
+            <summary>
+            Gets the reference fee for calculation formula factor.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.ReserveBase">
+            <summary>
+            Gets the retention swt value for each Account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.ReserveInc">
+            <summary>
+             Gets the freezed swt value for each offer or trust relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerClosedInfo.TxnCount">
+            <summary>
+            Gets the count of the transactions in the ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerResponse">
+            <summary>
+            Represents the response of the <see cref="M:JingTum.Lib.Remote.RequestLedger(JingTum.Lib.LedgerOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerResponse.Ledger">
+            <summary>
+            Gets the info of the ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerInfo">
+            <summary>
+            Represents the ledger info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.Accepted">
+            <summary>
+            Gets a boolean value indicating whether the ledger is accepted.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.AccountHash">
+            <summary>
+            Gets the root of the state hash.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.ParentHash">
+            <summary>
+            Gets the hash of the previous ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.CloseTime">
+            <summary>
+            Gets the closed time of the ledger. (in UTC+8)
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.CloseTimeHuman">
+            <summary>
+            Gets the closed time of the ledger. (human readable string)
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.CloseTimeResolution">
+            <summary>
+            Gets the time span to close the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.Closed">
+            <summary>
+            Gets a boolean value indicating whether the ledger is closed.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.Hash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.SeqNum">
+            <summary>
+            Gets the height of ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.TotalCoins">
+            <summary>
+            Gets the total swt in system.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.TransactionHash">
+            <summary>
+            Gets the root hash for the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.AccountStates">
+            <summary>
+            For internal used. Gets the accounts list in this ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerInfo.Transactions">
+            <summary>
+            Gets the transactions list in this ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TransactionState">
+            <summary>
+            Represents the transaction state in the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionState.Meta">
+            <summary>
+            Gets the meta data which contains affect nodes.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionState.TxResult">
+            <summary>
+            Gets the result of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionState.RawData">
+            <summary>
+            Gets the raw json string for this transaction state.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionState.IsExpanded">
+            <summary>
+            Gets a whether indicating whether this state has expanded info.
+            </summary>
+            <remarks>
+            If this property is false, only the <see cref="P:JingTum.Lib.Tx.Hash"/> property is valid.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountState">
+            <summary>
+            Represents the account state.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountState.LedgerEntryType">
+            <summary>
+            Gets the type of the ledger entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountState.Flags">
+            <summary>
+            Flags.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountState.Index">
+            <summary>
+            Gets the index hash.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountState.RawData">
+            <summary>
+            Gets the raw json string for this account state.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountState.IsExpanded">
+            <summary>
+            Gets a boolean value indicating whether the account state has expanded info.
+            </summary>
+            <remarks>
+            Only the <see cref="P:JingTum.Lib.AccountState.Index"/> is valid if this property is false.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.SimpleAccountState">
+            <summary>
+            Represents the account state which is not expanded.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SimpleAccountState.IsExpanded">
+            <summary>
+            Gets a boolean value indicating whether the account state has expanded info.
+            </summary>
+            <remarks>
+            Only the <see cref="P:JingTum.Lib.AccountState.Index"/> is valid if this property is false.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.LedgerHashesAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.LedgerHashes"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerHashesAccountState.Hashes">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerHashesAccountState.LastLedgerSequence">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountRootAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.AccountRoot"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.Balance">
+            <summary>
+            Gets the amount of swt.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.OwnerCount">
+            <summary>
+            Gets the count of offers and trust lines.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.Payload">
+            <summary>
+            Gets the payload if it's a contract address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.PreviousTxnID">
+             <summary>
+            Gets the hash of previous transaction.
+             </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.PreviousTxnLgrSeq">
+            <summary>
+            Gets the ledger index for the previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.Sequence">
+            <summary>
+            Gets the current sequence of the account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.Domain">
+            <summary>
+            Gets the domain info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.MessageKey">
+            <summary>
+            Gets the public key used to send encrypted message to this account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.RegularKey">
+            <summary>
+            Gets the address of the delegate key.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRootAccountState.TransferRate">
+            <summary>
+            Gets the rate of transfer fee.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.StateAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.State"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.StateAccountState.Info">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.FeeSettingsAccountState">
+            <summary>
+            Represents the account state for the <see cref="F:JingTum.Lib.LedgerEntryType.FeeSettings"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.FeeSettingsAccountState.BaseFee">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.FeeSettingsAccountState.ReferenceFeeUnits">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.FeeSettingsAccountState.ReserveBase">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.FeeSettingsAccountState.ReserveIncrement">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.DirectoryNodeAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.DirectoryNode"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DirectoryNodeAccountState.Indexes">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DirectoryNodeAccountState.Owner">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DirectoryNodeAccountState.RootIndex">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SkywellStateAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.SkywellState"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.Balance">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.HighLimit">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.HighNode">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.LowLimit">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.LowNode">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.PreviousTxnID">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SkywellStateAccountState.PreviousTxnLgrSeq">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ManageIssuerAccountState">
+            <summary>
+            Represents the account state for <see cref="F:JingTum.Lib.LedgerEntryType.ManageIssuer"/> entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ManageIssuerAccountState.IssuerAccountID">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.UnknownAccountState">
+            <summary>
+            Represents the account state which is an unknown enty.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.UnknownAccountState.RawLedgerEntryType">
+            <summary>
+            Gets the raw string of the ledger entry type.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TxResponse">
+            <summary>
+            Represents the response for <see cref="M:JingTum.Lib.Remote.RequestTx(JingTum.Lib.TxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResponse.Meta">
+            <summary>
+            Gets the meta data which contains affect nodes.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the transaction is validated.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResponse.TxResult">
+            <summary>
+            Gets the parsed result of the transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Tx">
+            <summary>
+            Represents the data for a transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Amount">
+            <summary>
+            Gets the transaction amount.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Destination">
+            <summary>
+            Gets the counter party address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Fee">
+            <summary>
+            Gets the transaction fee.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Flags">
+            <summary>
+            Gets the transaction flags.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Memos">
+            <summary>
+            Gets the list of memos.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Sequence">
+            <summary>
+            Gets the transaction sequence of account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.SigningPubKey">
+            <summary>
+            Gets public key for signing.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Timestamp">
+            <summary>
+            Gets the timestamp of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.TransactionType">
+            <summary>
+            Gets the type of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.TxnSignature">
+            <summary>
+            Gets the signature of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Date">
+            <summary>
+            Gets the date of validated in the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Hash">
+            <summary>
+            Gets the hash of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.InLedger">
+            <summary>
+            Gets the index of the ledger which contains this transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Target">
+            <summary>
+            Gets the address of relation target.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.LimitAmount">
+            <summary>
+            Gets the amount of limit for relation set.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.SendMax">
+            <summary>
+            Gets the max amount for send.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.TakerGets">
+            <summary>
+            Gets the amount of taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.TakerPays">
+            <summary>
+            Gets the amount of taker pays.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.RelationType">
+            <summary>
+            Gets the type of the relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Args">
+            <summary>
+            Gets the parameters list for contract.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Method">
+            <summary>
+            Gets the method of contract config. 0 for deploy, 1 for call.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.Payload">
+            <summary>
+            Gets the payload of the contract.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.ContractMethod">
+            <summary>
+            Gets the function name of the contract to call.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.ClearFlag">
+            <summary>
+            Gets the clear flag for account set.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.SetFlag">
+            <summary>
+            Gets the set flag for account set.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.RegularKey">
+            <summary>
+            Gets the address for delegate account set.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Tx.OfferSequence">
+            <summary>
+            Gets the sequence of the offer to cancel.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ArgData">
+            <summary>
+            Represents the data wrapper for the contract parameter.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ArgData.Arg">
+            <summary>
+            Gets the parameter data.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Arg">
+            <summary>
+            Represents the data for contract parameter.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Arg.Parameter">
+            <summary>
+            Gets the parameter for contract.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.MemoData">
+            <summary>
+            Represents the data wrapper for the memo.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.MemoData.Memo">
+            <summary>
+            Gets the memo data.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Memo">
+            <summary>
+            Represents the data for memo.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Memo.MemoData">
+            <summary>
+            Gets the memo data for the transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Meta">
+            <summary>
+            Represents the meta data which contains affect nodes.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Meta.AffectedNodes">
+            <summary>
+            Gets the affect nodes.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Meta.TransactionIndex">
+            <summary>
+            Gets the index of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Meta.TransactionResult">
+            <summary>
+            Gets the result of the transaction.
+            </summary>
+            <remarks>
+            "tesSUCCESS" means transaction is applied successfully.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.DiffType">
+            <summary>
+            Indicates the type of the difference node which is contained in the affect node.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.DiffType.Unknown">
+            <summary>
+            It's unknown.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.DiffType.ModifiedNode">
+            <summary>
+            Contains the <see cref="P:JingTum.Lib.AffectedNode.ModifiedNode"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.DiffType.DeletedNode">
+            <summary>
+            Contains the <see cref="P:JingTum.Lib.AffectedNode.DeletedNode"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.DiffType.CreatedNode">
+            <summary>
+            Contains the <see cref="F:JingTum.Lib.DiffType.CreatedNode"/>.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AffectedNode">
+            <summary>
+            Represents the affect node of one transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AffectedNode.ModifiedNode">
+            <summary>
+            Gets the modified node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AffectedNode.DeletedNode">
+            <summary>
+            Gets the deleted node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AffectedNode.CreatedNode">
+            <summary>
+            Gets the created node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AffectedNode.DiffType">
+            <summary>
+            Gets the type of the difference node which is contained in this affect node.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Node">
+            <summary>
+            Represents the difference node which is containd in the affect node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.LedgerEntryType">
+            <summary>
+            Gets the type of the ledger entry. Refer to <see cref="P:JingTum.Lib.Node.LedgerEntryType"/>.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.LedgerIndex">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.PreviousTxnID">
+            <summary>
+            Gets the hash of the previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.PreviousTxnLgrSeq">
+            <summary>
+            Gets the ledger sequence for the previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.FinalFields">
+            <summary>
+            Gets the fields of the final state.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.PreviousFields">
+            <summary>
+            Gets the fields of previous state.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Node.NewFields">
+            <summary>
+            Gets the new created fields.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Fields">
+            <summary>
+            Represents the affect node fields.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.Account">
+            <summary>
+            Gets the the account address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.Balance">
+            <summary>
+            Gets the amount of balance.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.Flags">
+            <summary>
+            Gets the flags for offer sell or buy.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.OwnerCount">
+            <summary>
+            Gets the count of offers and trust lines.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.Sequence">
+            <summary>
+            Gets sequence of the account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.TakerGets">
+            <summary>
+            Gets the amount of taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.TakerPays">
+            <summary>
+            Gets the amount of taker pays.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.PreviousTxnID">
+            <summary>
+            Gets the hash of previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Fields.RegularKey">
+            <summary>
+            Gets the address the delegate key.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountInfoResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestAccountInfo(JingTum.Lib.AccountInfoOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoResponse.AccountData">
+            <summary>
+            Gets account state for the account root.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoResponse.LedgerHash">
+            <summary>
+            Gets the hash in the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoResponse.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the ledger is validated.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountTumsResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestAccountTums(JingTum.Lib.AccountTumsOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsResponse.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsResponse.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsResponse.ReceiveCurrencies">
+            <summary>
+            Gets the list of receive currencies.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsResponse.SendCurrencies">
+            <summary>
+            Gets the list of send currencies.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the ledger is validated.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountRelationsResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestAccountRelations(JingTum.Lib.AccountRelationsOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.Marker">
+            <summary>
+            Gets the marker string for next request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.Lines">
+            <summary>
+            Gets the trust lines of this account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the ledger is validated.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Line">
+            <summary>
+            Represents the relation line.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.Balance">
+            <summary>
+            Gets the amount of balance.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.Currency">
+            <summary>
+            Gets the kind of currency.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.Issuer">
+            <summary>
+            Gets the address of the issuer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.Limit">
+            <summary>
+            Gets the limit amount of trusting.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.LimitPeer">
+            <summary>
+            Gets the limit amount which is set by counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.RelationType">
+            <summary>
+            Gets the type of the relation.
+            </summary>
+            <remarks>
+            1-Authorize, 3-Freeze
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.Line.NoSkywell">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.QualityIn">
+            <summary>
+            Reserved. Gets the exchange rate.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Line.QualityOut">
+            <summary>
+            Reserved. Gets the exchange rate.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountOffersResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestAccountOffers(JingTum.Lib.AccountOffersOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.Offers">
+            <summary>
+            Gets the list of offers.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.Marker">
+            <summary>
+            Gets the marker for next request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the ledger is validated.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Offer">
+            <summary>
+            Represents the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Offer.Flags">
+            <summary>
+            Gets the type of the offer.
+            </summary>
+            <remarks>
+            131072 for buy, otherwise for sell.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.Offer.Seq">
+            <summary>
+            Gets the sequence of the offfer transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Offer.TakerGets">
+            <summary>
+            Gets the amount of taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Offer.TakerPays">
+            <summary>
+            Gets the amount of taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Offer.IsSell">
+            <summary>
+            Gets a boolean value indicating whether it's a sell offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestAccountTx(JingTum.Lib.AccountTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.LedgerIndexMax">
+            <summary>
+            Gets the index of max ledger in current node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.LedgerIndexMin">
+            <summary>
+            Gets the index of min ledger in current node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.Marker">
+            <summary>
+            Gets the marker for next request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.RawTransactions">
+            <summary>
+            Gets the list of transactions.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxResponse.Transactions">
+            <summary>
+            Gets the list of parsed transaction results.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountTx">
+            <summary>
+            Reprecents the info for account transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTx.Meta">
+            <summary>
+            Gets the meta data.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTx.Tx">
+            <summary>
+            Gets the transaction data.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTx.Validated">
+            <summary>
+            Gets a boolean value indicating whether it's validated in the ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TxResultType">
+            <summary>
+            Indicates the type of the transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Unknown">
+            <summary>
+            Unknown.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Sent">
+            <summary>
+            Send to counter party.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Received">
+            <summary>
+            Received from counter party.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Trusted">
+            <summary>
+            Trusted with counter party.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Trusting">
+            <summary>
+            Trusting with counter party.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Convert">
+            <summary>
+            Convert.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.OfferNew">
+            <summary>
+            Create new offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.OfferCancel">
+            <summary>
+            Offer is cancelled.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.RelationSet">
+            <summary>
+            Set relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.RelationDel">
+            <summary>
+            Delete relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.AccountSet">
+            <summary>
+            Set account property.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.SetRegularKey">
+            <summary>
+            Set delegate key.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.SignSet">
+            <summary>
+            SignSet.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.Operation">
+            <summary>
+            Operation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.OfferEffect">
+            <summary>
+            Effect by other's offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TxResultType.ConfigContract">
+            <summary>
+            Deploy or call contract.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TxResult">
+            <summary>
+            Represents the result of one transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Type">
+            <summary>
+            Gets the type of the transaction result.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Date">
+            <summary>
+            Gets the timestamp of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Hash">
+            <summary>
+            Gets the hash of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Fee">
+            <summary>
+            Gets the fee of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Result">
+            <summary>
+            Gets the result of the transaciton.
+            </summary>
+            <remarks>
+            "tesSUCCESS" means the transaction is applied successfully.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Memos">
+            <summary>
+            Gets the list of memos.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxResult.Effects">
+            <summary>
+            Gets the list of effects.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SentTxResult">
+            <summary>
+            Represents the transaction result for send to counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SentTxResult.CounterParty">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SentTxResult.Amount">
+            <summary>
+            Gets the amount of the payment.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ReceivedTxResult">
+            <summary>
+            Represents the transaction result for received from counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ReceivedTxResult.CounterParty">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ReceivedTxResult.Amount">
+            <summary>
+            Gets the amount of payment.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TrustedTxResult">
+            <summary>
+            Represents the result for trusted transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TrustedTxResult.CounterParty">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TrustedTxResult.Amount">
+            <summary>
+            Gets the amount for trusting.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TrustingTxResult">
+            <summary>
+            Represents the result for trusting transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TrustingTxResult.CounterParty">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TrustingTxResult.Amount">
+            <summary>
+            Gets the amount for trusting.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ConvertTxResult">
+            <summary>
+            Represents the result for Convert transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConvertTxResult.Spent">
+            <summary>
+            Gets the amount of spent.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConvertTxResult.Amount">
+            <summary>
+            Gets the amount to convert.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferNewTxResult">
+            <summary>
+            Represents the result of OfferNew transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferNewTxResult.OfferType">
+            <summary>
+            Gets the type of offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferNewTxResult.Gets">
+            <summary>
+            Gets the amount of gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferNewTxResult.Pays">
+            <summary>
+            Gets the amount of pays.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferNewTxResult.Seq">
+            <summary>
+            Gets the sequence of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCancelTxResult">
+            <summary>
+            Represents the result of OfferCancel transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxResult.OfferSeq">
+            <summary>
+            Gets the sequence of the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxResult.Gets">
+            <summary>
+            Gets the amount of gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxResult.Pays">
+            <summary>
+            Gets the amount of pays.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationSetTxResult">
+            <summary>
+            Represents the result of RelationSet transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationSetTxResult.CounterParty">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationSetTxResult.Amount">
+            <summary>
+            Gets the amount for the relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationSetTxResult.RelationType">
+            <summary>
+            Gets the type of relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationSetTxResult.IsActive">
+            <summary>
+            Gets a boolean value indicating whether the relation is active.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationDelTxResult">
+            <summary>
+            Represents the result of RelationDel transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationDelTxResult.CounterParty">
+            <summary>
+            Gets the address of the counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationDelTxResult.Amount">
+            <summary>
+            Gets the amount for the relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationDelTxResult.RelationType">
+            <summary>
+            Gets the type of the relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationDelTxResult.IsActive">
+            <summary>
+            Gets a boolean value indicating whether the relation is active.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetTxResult">
+            <summary>
+            Represents the result of set account property transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxResult.ClearFlag">
+            <summary>
+            Gets the flag (<see cref="T:JingTum.Lib.SetClearFlags"/>) to clear.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxResult.SetFlag">
+            <summary>
+            Gets the flag (<see cref="T:JingTum.Lib.SetClearFlags"/>) to set.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SetRegularKeyTxResult">
+            <summary>
+            Represents the result of set account delegate transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SetRegularKeyTxResult.RegularKey">
+            <summary>
+            Gets the address of the delegate key.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SignSetTxResult">
+            <summary>
+            Represents the result of set account signer transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OperationTxResult">
+            <summary>
+            Represents the result of Operation transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferEffectTxResult">
+            <summary>
+            Represents the result of effect by other transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ContractMethod">
+            <summary>
+            Indicates the method of the ConfigContract transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.ContractMethod.Deploy">
+            <summary>
+            Depoly a contract.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.ContractMethod.Call">
+            <summary>
+            Call a contract.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ConfigContractTxResult">
+            <summary>
+            Represents the result of deploy of call contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConfigContractTxResult.Params">
+            <summary>
+            Gets the list of parameters.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ConfigContractTxResult.Method">
+            <summary>
+            Gets the method of the ConfigContract transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.DeployContractTxResult">
+            <summary>
+            Represents the result of deploy contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxResult.Payload">
+            <summary>
+            Gets the payload of the contract to deploy.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.CallContractTxResult">
+            <summary>
+            Represents the result of call contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxResult.Destination">
+            <summary>
+            Gets address of the contract to call.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxResult.Foo">
+            <summary>
+            Gets the function name to call.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.UnknownTxResult">
+            <summary>
+            Represents the result of a transaction which type is unknown.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.EffectType">
+            <summary>
+            Indicates the type of transaction effect.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.Unknown">
+            <summary>
+            Unknown.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.OfferPartiallyFunded">
+            <summary>
+            Offer is partially funded, and has remained to offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.OfferFunded">
+            <summary>
+            Offer is funded and finished.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.OfferCreated">
+            <summary>
+            Offer is created but not funded.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.OfferCancelled">
+            <summary>
+            Offer is cancelled.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.OfferBought">
+            <summary>
+            Offer is bought on creating.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.EffectType.SetRegularKey">
+            <summary>
+            Is delegated with other account.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.NodeEffect">
+            <summary>
+            Represents the effect of a Node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.NodeEffect.Effect">
+            <summary>
+            Gets the type of the effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.NodeEffect.Deleted">
+            <summary>
+            Gets a boolean value indicating whether the node is deleted.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.CounterParty">
+            <summary>
+            Represents the info a the counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CounterParty.Account">
+            <summary>
+            Gets the address of the counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CounterParty.Seq">
+            <summary>
+            Gets the sequence of the counter party's transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CounterParty.Hash">
+            <summary>
+            Gets the hash of the counter party's transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferEffectType">
+            <summary>
+            Indicates the type of the offer effect.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferEffectType.Unknown">
+            <summary>
+            Unknown.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferEffectType.Sell">
+            <summary>
+            Sell offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferEffectType.Buy">
+            <summary>
+            Buy offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferEffectType.Sold">
+            <summary>
+            Offer is sold.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferEffectType.Bought">
+            <summary>
+            Offer is bought.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferEffect">
+            <summary>
+            Represents the effect of offers.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferEffect.Type">
+            <summary>
+            Gets the type of the offer effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferEffect.Price">
+            <summary>
+            Gets the price of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferPartiallyFundedEffect">
+            <summary>
+            Represents the effet of offer partially funded.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.CounterParty">
+            <summary>
+            Gets the counter party info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Remaining">
+            <summary>
+            Gets a boolean value indicating whether the offer is not finished.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Cancelled">
+            <summary>
+            Gets a boolean value indicating whether the offer is cancelled.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Gets">
+            <summary>
+            Gets the amount of gets for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Pays">
+            <summary>
+            Gets the amount of pays for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Got">
+            <summary>
+            Gets the amount of got for this effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Paid">
+            <summary>
+            gets the amount of paid for this effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferPartiallyFundedEffect.Seq">
+            <summary>
+            Gets the sequnce of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferFundedEffect">
+            <summary>
+            Represents the effect of offer funded.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferFundedEffect.CounterParty">
+            <summary>
+            Gets the counter party info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferFundedEffect.Got">
+            <summary>
+            Gets the amount of got for this effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferFundedEffect.Paid">
+            <summary>
+            Gets the amount of paid for this effect.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferFundedEffect.Seq">
+            <summary>
+            Gets the sequnce of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCreatedEffect">
+            <summary>
+            Represents the effect of offer created.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreatedEffect.Gets">
+            <summary>
+            Gets the amount of gets for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreatedEffect.Pays">
+            <summary>
+            Gets the amount of pays for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreatedEffect.Seq">
+            <summary>
+            Gets the sequnce of the offfer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCancelledEffect">
+            <summary>
+            Represents the effect of offer cancelled.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelledEffect.Gets">
+            <summary>
+            Gets the amount of gets for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelledEffect.Pays">
+            <summary>
+            Gets the amount of pays for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelledEffect.Seq">
+            <summary>
+            Gets the sequence of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferBoughtEffect">
+            <summary>
+            Represents the effect of offer bought.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferBoughtEffect.CounterParty">
+            <summary>
+            Gets the counter party info.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferBoughtEffect.Got">
+            <summary>
+            Gets the amount of got for the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferBoughtEffect.Paid">
+            <summary>
+            Gets the amount of paid for the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SetRegularKeyEffect">
+            <summary>
+            Represents the effect of set delegate key.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SetRegularKeyEffect.Type">
+            <summary>
+            Gets the type of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SetRegularKeyEffect.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SetRegularKeyEffect.RegularKey">
+            <summary>
+            Gets the address of delegate.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.UnknownEffect">
+            <summary>
+            Represents the effect which is unknown.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OrderBookResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestOrderBook(JingTum.Lib.OrderBookOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookResponse.LedgerCurrentIndex">
+            <summary>
+            Gets the index of the current ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookResponse.Offers">
+            <summary>
+            Represents the list of offers.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OrderBookOffer">
+            <summary>
+            Represents the offer of order book.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.BookDirectory">
+            <summary>
+            Gets the hash of book directory.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.BookNode">
+            <summary>
+            Ges the book node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Flags">
+            <summary>
+            Gets the flags of bug or sell.
+            </summary>
+            <remarks>
+            0x20000 means sell.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.LedgerEntryType">
+            <summary>
+            Gets the type of ledger entry.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.OwnerNode">
+            <summary>
+            Gets the count of offers and freeze lines.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.PreviousTxnID">
+            <summary>
+            Gets the hash of previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.PreviousTxnLgrSeq">
+            <summary>
+            Gets the ledger index which contains the previous transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Sequence">
+            <summary>
+            Gets the sequence of the offer.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.TakerGets">
+            <summary>
+            Gets the amount of taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.TakerPays">
+            <summary>
+            Gets the amount of taker pays.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Index">
+            <summary>
+            Gets the hash of the index for the data.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.OwnerFunds">
+            <summary>
+            Gets the swt balance of the account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Quality">
+            <summary>
+            Gets the price of the reciprocal value of price.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.IsSell">
+            <summary>
+            Gets a boolean value indicating whether the offer is sell.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOffer.Price">
+            <summary>
+            Gets the price for each sell of taker gets or buy of taker pays.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.GeneralTxResponse">
+            <summary>
+            Represents the response for transaction submits.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxResponse.EngineResult">
+            <summary>
+            Ges the result of the submit.
+            </summary>
+            <remarks>
+            "tesSUCCESS" means transaction is applied successfully.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxResponse.EngineResultCode">
+            <summary>
+            Gets the result code of the submit.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxResponse.EngineResultMessage">
+            <summary>
+            Gets the result message of the submit.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxResponse.TxBlob">
+            <summary>
+            Gets the blob after signing for the transaciton.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.GeneralTxJson">
+            <summary>
+            Represents the json data for the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Account">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Fee">
+            <summary>
+            Gets the transaction fee.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Flags">
+            <summary>
+            Gets the flags for the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Memos">
+            <summary>
+            Gets the list of memos.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Sequence">
+            <summary>
+            Gets the sequence of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.SigningPubKey">
+            <summary>
+            Gets the public key for signing.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Timestamp">
+            <summary>
+            Gets the timestamp of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.TransactionType">
+            <summary>
+            Gets the type of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.TxnSignature">
+            <summary>
+            Gets the signature of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.GeneralTxJson.Hash">
+            <summary>
+            Gets the hash of the transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PaymentTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildPaymentTx(JingTum.Lib.PaymentTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PaymentTxJson">
+            <summary>
+            Represents the json data for payment transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxJson.Amount">
+            <summary>
+            Gets the amount of payment.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxJson.Destination">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildRelationTx(JingTum.Lib.RelationTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationTxJson">
+            <summary>
+            Represents the json data for relation type of transactions.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxJson.LimitAmount">
+            <summary>
+            Gets the amount of limit for the relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxJson.RelationType">
+            <summary>
+            Gets the type of relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxJson.Target">
+            <summary>
+            Ges the address of relation target.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildAccountSetTx(JingTum.Lib.AccountSetTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetTxJson">
+            <summary>
+            Represents the json data for type of account set transactions.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxJson.SetFlag">
+            <summary>
+            Gets the flag for set if exists.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxJson.ClearFlag">
+            <summary>
+            Gets the flag for clear if exists.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxJson.RegularKey">
+            <summary>
+            Gets the address the delegate key.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCreateTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildOfferCreateTx(JingTum.Lib.OfferCreateTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCreateTxJson">
+            <summary>
+            Represents the json data for offer create transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxJson.TakerGets">
+            <summary>
+            Gets the amount taker gets.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxJson.TakerPays">
+            <summary>
+            Gets the amount of taker pays.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.DeployContractTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.DeployContractTx(JingTum.Lib.DeployContractTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxResponse.ContractState">
+            <summary>
+            Gets the state of the contract.
+            </summary>
+            <remarks>
+            It's the address of the contract.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxResponse.TxJson">
+            <summary>
+            Gets json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.DeployContractTxJson">
+            <summary>
+            Represents the json data for deploy contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxJson.Method">
+            <summary>
+            Gets the method of the ConfigContract transaction.
+            </summary>
+            <remarks>
+            0 for deploy contract, 1 for call contract.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxJson.Payload">
+            <summary>
+            Gets the payload of the contract.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxJson.Args">
+            <summary>
+            Gets the list of the parameters.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxJson.Amount">
+            <summary>
+            Gets the amount to active the contract address.
+            </summary>
+            <remarks>
+            At least 35 SWT.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.CallContractTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.CallContractTx(JingTum.Lib.CallContractTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxResponse.ContractState">
+            <summary>
+            Gets the state of the contract.
+            </summary>
+            <remarks>
+            It's the result of contract calling.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.CallContractTxJson">
+            <summary>
+            Represents the json data for call contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxJson.Method">
+            <summary>
+            Gets the method of the ConfigContract transaction.
+            </summary>
+            <remarks>
+            0 for deploy contract, 1 for call contract.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxJson.ContractMethod">
+            <summary>
+            Gets the function name to call.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxJson.Args">
+            <summary>
+            Gets the list of parameters.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SignTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildSignTx(JingTum.Lib.SignTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SignTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SignTxJsonResult">
+            <summary>
+            Represents the json data for signer transaciton.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCancelTxResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.BuildOfferCancelTx(JingTum.Lib.OfferCancelTxOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxResponse.TxJson">
+            <summary>
+            Gets the json data for this transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCancelTxJson">
+            <summary>
+            Represents the json data for offer cancel transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxJson.OfferSequence">
+            <summary>
+            Gets the sequence of the offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PathFindResponse">
+            <summary>
+            Represents the response of <see cref="M:JingTum.Lib.Remote.RequestPathFind(JingTum.Lib.PathFindOptions)"/> method.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFindResponse.Source">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFindResponse.Destination">
+            <summary>
+            Gets the address of counter party.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFindResponse.Amount">
+            <summary>
+            Gets the amount of payment.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFindResponse.Alternatives">
+            <summary>
+            Gets the list of alternatives.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PathFind">
+            <summary>
+            Represents a path find for payment.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFind.Key">
+            <summary>
+            Gets the key of the path find.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFind.Choice">
+            <summary>
+            Gets the amount of choice for this path find.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TransactionResponse">
+            <summary>
+            Represents the response for the <see cref="E:JingTum.Lib.Remote.Transactions"/> event.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.EngineResult">
+            <summary>
+            Gets the result of the transaction.
+            </summary>
+            <remarks>
+            "tesSUCCESS" means transaction is applied successfully.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.EngineResultCode">
+            <summary>
+            Gets the result code of the submit.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.EngineResultMessage">
+            <summary>
+            Gets the result message of the submit.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.LedgerHash">
+            <summary>
+            Gets the hash of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.Status">
+            <summary>
+            Gets the status of the transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.Type">
+            <summary>
+            Gets the type of transaciton.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.Validated">
+            <summary>
+            Gets a boolean value indicating whether the transaction is validated.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.Transaction">
+            <summary>
+            Gets the transaction data.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.Meta">
+            <summary>
+            Gets the meta data.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TransactionResponse.TxResult">
+            <summary>
+            Gets the parsed result of the transaction.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.Wallet">
+            <summary>
+            Represents the wallet.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Wallet.Address">
+            <summary>
+            Gets the wallet address.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Wallet.Secret">
+            <summary>
+            Gets the wallet secret.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Wallet.Generate">
+            <summary>
+            Generates a new instance of <see cref="T:JingTum.Lib.Wallet"/> object.
+            </summary>
+            <returns>A <see cref="T:JingTum.Lib.Wallet"/> object.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Wallet.FromSecret(System.String)">
+            <summary>
+            Constructs the <see cref="T:JingTum.Lib.Wallet"/> instance from a scerect.
+            </summary>
+            <param name="secret">The secret.</param>
+            <returns>A <see cref="T:JingTum.Lib.Wallet"/> object.</returns>
+            <exception cref="T:System.ArgumentNullException">secret is null.</exception>
+            <exception cref="T:JingTum.Lib.InvalidSecretException">secret is invalid.</exception>
+        </member>
+        <member name="T:JingTum.Lib.LedgerState">
+            <summary>
+            Indicates the ledger state.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerState.Current">
+            <summary>
+            The current ledger.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerState.Closed">
+            <summary>
+            The closed ledger.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerState.Validated">
+            <summary>
+            The validated ledger.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationType">
+            <summary>
+            Indicates the type of relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationType.Trust">
+            <summary>
+            The turst relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationType.Authorize">
+            <summary>
+            The authorize relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationType.Freeze">
+            <summary>
+            The freeze relation.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationType.Unfreeze">
+            <summary>
+            The unfreeze relation.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetType">
+            <summary>
+            Indicates the type of account attribute.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetType.Property">
+            <summary>
+            Used to set normal account info.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetType.Delegate">
+            <summary>
+            Used to set delegate account for this account.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetType.Signer">
+            <summary>
+            Used to set signer for this account.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferType">
+            <summary>
+            Indicates the type of offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferType.Buy">
+            <summary>
+            Buy offer.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferType.Sell">
+            <summary>
+            Sell offer.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.SetClearFlags">
+            <summary>
+            Indicates the flags for acount set transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.RequireDest">
+            <summary>
+            Require a destination tag for payments.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.RequireAuth">
+            <summary>
+            Require an authorization to hold IOUs.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.DisallowSWT">
+            <summary>
+            Disallow sending SWT.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.DisableMaster">
+            <summary>
+            Force regular key.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.NoFreeze">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.SetClearFlags.GlobalFreeze">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.UniversalFlags">
+            <summary>
+            Indicates the flags for any transaction type.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.UniversalFlags.FullyCanonicalSig">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetFlags">
+            <summary>
+            Indicates the flags for <see cref="F:JingTum.Lib.TransactionType.AccountSet"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.RequireDestTag">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.OptionalDestTag">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.RequireAuth">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.OptionalAuth">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.DisallowSWT">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.AccountSetFlags.AllowSWT">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TrustSetFlags">
+            <summary>
+            Indicates the flags for <see cref="F:JingTum.Lib.TransactionType.TrustSet"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.SetAuth">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.NoSkywell">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.SetNoSkywell">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.ClearNoSkywell">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.SetFreeze">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TrustSetFlags.ClearFreeze">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OfferCreateFlags">
+            <summary>
+            Indicates the flags for <see cref="F:JingTum.Lib.TransactionType.OfferCreate"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferCreateFlags.Passive">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferCreateFlags.ImmediateOrCancel">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferCreateFlags.FillOrKill">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.OfferCreateFlags.Sell">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PaymentFlags">
+            <summary>
+            Indicates the flags for <see cref="F:JingTum.Lib.TransactionType.Payment"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.PaymentFlags.NoSkywellDirect">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.PaymentFlags.PartialPayment">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.PaymentFlags.LimitQuality">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.RelationSetFlags">
+            <summary>
+            Indicates the flags for <see cref="F:JingTum.Lib.TransactionType.RelationSet"/>.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationSetFlags.Authorize">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.RelationSetFlags.Freeze">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.TransactionType">
+            <summary>
+            Indicates the transaction type.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.Payment">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildPaymentTx(JingTum.Lib.PaymentTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.AccountSet">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildAccountSetTx(JingTum.Lib.AccountSetTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.SetRegularKey">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildAccountSetTx(JingTum.Lib.AccountSetTxOptions)"/> transaction with <see cref="F:JingTum.Lib.AccountSetType.Delegate"/> attruibute.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.OfferCreate">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildOfferCreateTx(JingTum.Lib.OfferCreateTxOptions)"/> transaciton.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.OfferCancel">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildOfferCancelTx(JingTum.Lib.OfferCancelTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.Contract">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.RemoveContract">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.TrustSet">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildRelationTx(JingTum.Lib.RelationTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.RelationSet">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildRelationTx(JingTum.Lib.RelationTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.RelationDel">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildRelationTx(JingTum.Lib.RelationTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.ConfigContract">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.DeployContractTx(JingTum.Lib.DeployContractTxOptions)"/> transaction and <see cref="M:JingTum.Lib.Remote.CallContractTx(JingTum.Lib.CallContractTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.EnableFeature">
+            <summary>
+            For <see cref="M:JingTum.Lib.Remote.BuildSignTx(JingTum.Lib.SignTxOptions)"/> transaction.
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.SetFee">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.Signer">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.SignSet">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.TransactionType.Operation">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerEntryType">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.Unknown">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.State">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.ManageIssuer">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.AccountRoot">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.Contract">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.DirectoryNode">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.EnabledFeatures">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.GeneratorMap">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.LedgerHashes">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.Nickname">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.Offer">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.SkywellState">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="F:JingTum.Lib.LedgerEntryType.FeeSettings">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.ServerState">
+            <summary>
+            Indicates the the connection state.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OnlineState">
+            <summary>
+            Indicates the the online state of the server.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.MessageCallback`1">
+            <summary>
+            The delegate for <see cref="T:JingTum.Lib.Request`1"/> and <see cref="T:JingTum.Lib.Transaction`1"/> callback.
+            </summary>
+            <param name="result">Result of the <see cref="T:JingTum.Lib.Request`1"/> and <see cref="T:JingTum.Lib.Transaction`1"/> submit.</param>
+        </member>
+        <member name="T:JingTum.Lib.MessageResult`1">
+            <summary>
+            Represents the callback result of the <see cref="T:JingTum.Lib.Request`1"/> and <see cref="T:JingTum.Lib.Transaction`1"/> submit.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.MessageResult`1.#ctor(System.String,System.Exception,`0)">
+            <summary>
+            Creates new instances of <see cref="T:JingTum.Lib.MessageResult`1"/> object.
+            </summary>
+            <param name="message">The json message string.</param>
+            <param name="exception">The exception.</param>
+            <param name="result">The parsed result.</param>
+        </member>
+        <member name="P:JingTum.Lib.MessageResult`1.Message">
+            <summary>
+            Gets the raw message in json which is received from server.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.MessageResult`1.Exception">
+            <summary>
+            Gets the <see cref="P:JingTum.Lib.MessageResult`1.Exception"/> object if has error.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.MessageResult`1.Result">
+            <summary>
+            Gets the parsed result.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.LedgerOptions">
+            <summary>
+            Represents the options for ledger request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.LedgerIndex">
+            <summary>
+            The ledger index to return.
+            </summary>
+            <remarks>
+            Opitonal. If <see cref="P:JingTum.Lib.LedgerOptions.LedgerIndex"/> and <see cref="P:JingTum.Lib.LedgerOptions.LedgerHash"/> are not provided, then last closed ledger is returned.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.LedgerHash">
+            <summary>
+            The ledger hash to return.
+            </summary>
+            <remarks>
+            Optional. If <see cref="P:JingTum.Lib.LedgerOptions.LedgerIndex"/> and <see cref="P:JingTum.Lib.LedgerOptions.LedgerHash"/> are not provided, then last closed ledger is returned.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.Full">
+            <summary>
+            Whether gets expanded info of both transactions and accounts.
+            </summary>
+            <remarks>
+            Optional. Default is false.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.Expand">
+            <summary>
+            Whether gets expanded info the transactions or accounts.
+            </summary>
+            <remarks>
+            Optional. Default is false.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.Transactions">
+            <summary>
+            Whether gets the transactions hash list in the ledger.
+            </summary>
+            <remarks>
+            Optional. Default is false.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerOptions.Accounts">
+            <summary>
+            Whether gets the accounts list in the ledger.
+            </summary>
+            <remarks>
+            Optional. Default is false.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.TxOptions">
+            <summary>
+            Represents the options for transaction request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.TxOptions.Hash">
+            <summary>
+            The transaction hash.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.LedgerSettings">
+            <summary>
+            Represents the ledger settings.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.LedgerSettings.LedgerHash">
+            <summary>
+            The ledger hash.
+            </summary>
+            <remarks>
+            Optional. It will be reset if <see cref="P:JingTum.Lib.LedgerSettings.LedgerIndex"/> or <see cref="P:JingTum.Lib.LedgerSettings.LedgerState"/> is set.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerSettings.LedgerIndex">
+            <summary>
+            The ledger index.
+            </summary>
+            <remarks>
+            Optional. It will be reset if <see cref="P:JingTum.Lib.LedgerSettings.LedgerHash"/> or <see cref="P:JingTum.Lib.LedgerSettings.LedgerState"/> is set.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.LedgerSettings.LedgerState">
+            <summary>
+            The ledger state.
+            </summary>
+            <remarks>
+            Optional. It will be reset if <see cref="P:JingTum.Lib.LedgerSettings.LedgerIndex"/> or <see cref="P:JingTum.Lib.LedgerSettings.LedgerHash"/> is set.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountInfoOptions">
+            <summary>
+            Represents the options the account info request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountInfoOptions.Ledger">
+            <summary>
+            The ledger option.
+            </summary>
+            <remarks>
+            Optional. Default is the <see cref="F:JingTum.Lib.LedgerState.Validated"/>.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountTumsOptions">
+            <summary>
+            Represents the options for the account tums request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTumsOptions.Ledger">
+            <summary>
+            The ledger option.
+            </summary>
+            <remarks>
+            Optional. Default is the <see cref="F:JingTum.Lib.LedgerState.Validated"/>.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountRelationsOptions">
+            <summary>
+            Represents the options for account relations request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Type">
+            <summary>
+            The relation type.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Ledger">
+            <summary>
+            The ledger option.
+            </summary>
+            <remarks>
+            Optional. Default is the <see cref="F:JingTum.Lib.LedgerState.Validated"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Limit">
+            <summary>
+             Limit output tx record.
+            </summary>
+            <remarks>
+            Optional. Default is 200.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Marker">
+            <summary>
+            The marker for this reqeust.
+            </summary>
+            <remarks>
+            Optional. It's from the previous reqeust with limit.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountRelationsOptions.Peer">
+            <summary>
+            The peer string.
+            </summary>
+            <remarks>
+            Optional.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountOffersOptions">
+            <summary>
+            Gets the options for account offers request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersOptions.Ledger">
+            <summary>
+            The ledger option.
+            </summary>
+            <remarks>
+             Optional. Default is the <see cref="F:JingTum.Lib.LedgerState.Validated"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersOptions.Limit">
+            <summary>
+            Limit output tx record.
+            </summary>
+            <remarks>
+            Optional. Min is 200.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountOffersOptions.Marker">
+            <summary>
+            The marker for this request.
+            </summary>
+            <remarks>
+            Optional. It's from the previous reqeust with limit.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountTxOptions">
+            <summary>
+            Represents the options for account tx request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Account">
+            <summary>
+            The accound address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Ledger">
+            <summary>
+            The ledger option.
+            </summary>
+            <remarks>
+            Optional. Default is the <see cref="F:JingTum.Lib.LedgerState.Validated"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.LedgerMin">
+            <summary>
+            The min of the ledger range.
+            </summary>
+            <remarks>
+             Optional. Default is 0.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.LedgerMax">
+            <summary>
+            The max of the ledger range.
+            </summary>
+            <remarks>
+            Optional. Default is -1.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Limit">
+            <summary>
+            Limit output tx record.
+            </summary>
+            <remarks>
+            Optional. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Offset">
+            <summary>
+            The offset.
+            </summary>
+            <remarks>
+            Opitonal.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Marker">
+            <summary>
+            The marker settings for this request.
+            </summary>
+            <remarks>
+            Optional. It's from the previous reqeust with limit.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountTxOptions.Forward">
+            <summary>
+             Whether returns tx records from older to newer.
+            </summary>
+            <remarks>
+            Optional. Default is false.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.Marker">
+            <summary>
+            Represents the marker.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Marker.Ledger">
+            <summary>
+            The ledger index.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.Marker.Seq">
+            <summary>
+            The sequence.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.OrderBookOptions">
+            <summary>
+            Represents the options for order book request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOptions.Gets">
+            <summary>
+            The amount to get.
+            </summary>
+            <remarks>
+            Requied. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOptions.Pays">
+            <summary>
+            The amount to exchange out.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOptions.Taker">
+            <summary>
+            The taker address.
+            </summary>
+            <remarks>
+             Optional.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OrderBookOptions.Limit">
+            <summary>
+            The limit of the records.
+            </summary>
+            <remarks>
+            Opitonal. Default is 300.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.PathFindOptions">
+            <summary>
+            Represents the options for path find request.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PathFindOptions.Account">
+            <summary>
+            Account to find path.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.PathFindOptions.Destination">
+            <summary>
+            Destination account.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.PathFindOptions.Amount">
+            <summary>
+            The amount that destination will received.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.ServerStatus">
+            <summary>
+            Represents the server status.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.FeeBase">
+            <summary>
+            Gets the base fee for calculation formula factor.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.FeeRef">
+            <summary>
+            Gets the reference fee for calculation formula factor.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.LedgerIndex">
+            <summary>
+            Gets the index of the ledger.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.LedgerTime">
+            <summary>
+            Gets the time of ledger closed. (in UTC+8)
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.PubkeyNode">
+            <summary>
+            Gets the public key of the node.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.LoadBase">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.LoadFactor">
+            <summary>
+            todo:
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.ReserveBase">
+            <summary>
+            Gets the retention swt value for each Account.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.ReserveInc">
+            <summary>
+            Gets the freezed swt value for each offer or trust relation.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ServerStatus.Status">
+            <summary>
+            Gets the status of the server.
+            </summary>
+        </member>
+        <member name="T:JingTum.Lib.PaymentTxOptions">
+            <summary>
+            Represents the options for payment transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxOptions.Account">
+            <summary>
+            The source account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxOptions.To">
+            <summary>
+            The destination account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.PaymentTxOptions.Amount">
+            <summary>
+            The payment amount.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.ContractTxOptions">
+            <summary>
+            The options for contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.ContractTxOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.ContractTxOptions.Params">
+            <summary>
+            The array of parameters.
+            </summary>
+            <remarks>
+            Optional.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.DeployContractTxOptions">
+            <summary>
+            Represents the options for deploy contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxOptions.Amount">
+            <summary>
+            The amount to active the contract address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.DeployContractTxOptions.Payload">
+            <summary>
+            The content of the contract.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.CallContractTxOptions">
+            <summary>
+            Represents the options for call contract transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxOptions.Destination">
+            <summary>
+            The contract address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.CallContractTxOptions.Foo">
+            <summary>
+            The function name to call.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.SignTxOptions">
+            <summary>
+            Represents the options for sign transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.SignTxOptions.Blob">
+            <summary>
+            The blob of the sign result.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.RelationTxOptions">
+            <summary>
+            Represents the options for relation transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.Target">
+            <summary>
+            The destination address.
+            </summary>
+            <remarks>
+            Required for the relation types except <see cref="F:JingTum.Lib.RelationType.Trust"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.Type">
+            <summary>
+            The type of the relation.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.Limit">
+            <summary>
+            The limit amount.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.QualityIn">
+            <summary>
+            Reserved.
+            </summary>
+            <remarks>
+            Optional. Default is 0.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.RelationTxOptions.QualityOut">
+            <summary>
+            Reserved.
+            </summary>
+            <remarks>
+            Optional. Default is 0.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.AccountSetTxOptions">
+            <summary>
+            Represents the options for set account atribute transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxOptions.Type">
+            <summary>
+            The type of the account attribute.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxOptions.SetFlag">
+            <summary>
+            The flags to set.
+            </summary>
+            <remarks>
+            Optional for type of <see cref="F:JingTum.Lib.AccountSetType.Property"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxOptions.ClearFlag">
+            <summary>
+            The flags to clear.
+            </summary>
+            <remarks>
+            Optional for type of <see cref="F:JingTum.Lib.AccountSetType.Property"/>.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.AccountSetTxOptions.DelegateKey">
+            <summary>
+            The regular key.
+            </summary>
+            <remarks>
+            Required for type of <see cref="F:JingTum.Lib.AccountSetType.Delegate"/>.
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.OfferCreateTxOptions">
+            <summary>
+            Represents the options for offer create transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxOptions.Type">
+            <summary>
+             The type of the order.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxOptions.Account">
+            <summary>
+             The account address.
+            </summary>
+            <remarks>
+            Required.
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxOptions.TakerGets">
+            <summary>
+            The amount to get by taker.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OfferCreateTxOptions.TakerPays">
+            <summary>
+            The amount can to exchanged out by taker.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.OfferCancelTxOptions">
+            <summary>
+            Represents the options for offer cancel transaction.
+            </summary>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxOptions.Account">
+            <summary>
+            The account address.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="P:JingTum.Lib.OfferCancelTxOptions.Sequence">
+            <summary>
+            The order sequence.
+            </summary>
+            <remarks>
+            Required. 
+            </remarks>
+        </member>
+        <member name="T:JingTum.Lib.OrderBook">
+            <summary>
+            Represents the order book stub for order book events.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.OrderBook.RegisterListener(JingTum.Lib.Amount,JingTum.Lib.Amount,JingTum.Lib.MessageCallback{JingTum.Lib.TxResult})">
+            <summary>
+            Registers the listener for given order book pair.
+            </summary>
+            <param name="gets">The amount of gets.</param>
+            <param name="pays">The amount of pays.</param>
+            <param name="callback">The callback.</param>
+        </member>
+        <member name="M:JingTum.Lib.OrderBook.UnregisterListener(JingTum.Lib.Amount,JingTum.Lib.Amount)">
+            <summary>
+            Unregisters the listener for given order book pair.
+            </summary>
+            <param name="gets">The gets.</param>
+            <param name="pays">The pays.</param>
+        </member>
+        <member name="T:JingTum.Lib.Request`1">
+            <summary>
+            Requests server and account info without secret.
+            </summary>
+            <typeparam name="T">The type of the parsed response message.</typeparam>
+            <remarks>
+            Request is used to get server, account, orderbook and path info.
+            Request is not secret required, and will be public to every one.
+            All requests are asynchronized and should provide a callback.
+            </remarks>
+        </member>
+        <member name="M:JingTum.Lib.Request`1.Submit(JingTum.Lib.MessageCallback{`0})">
+            <summary>
+            Callback entry for request.
+            </summary>
+            <param name="callback">The callback for the request result.</param>
+        </member>
+        <member name="M:JingTum.Lib.Request`1.SubmitAsync(JingTum.Lib.MessageCallback{`0},System.Int32)">
+            <summary>
+            The async version of <see cref="M:JingTum.Lib.Request`1.Submit(JingTum.Lib.MessageCallback{`0})"/>.
+            </summary>
+            <param name="callback">The callback for the request result.</param>
+            <param name="timeout">The millisends to wait for the result.</param>
+            <returns>The task.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Request`1.SelectLedger(JingTum.Lib.LedgerState)">
+            <summary>
+            Selects ledger for current request.
+            </summary>
+            <param name="state">The ledger state.</param>
+        </member>
+        <member name="M:JingTum.Lib.Request`1.SelectLedger(System.UInt32)">
+            <summary>
+            Selects ledger for current request.
+            </summary>
+            <param name="index">The ledger index.</param>
+        </member>
+        <member name="M:JingTum.Lib.Request`1.SelectLedger(System.String)">
+            <summary>
+            Selects ledger for current request.
+            </summary>
+            <param name="hash">The ledger hash.</param>
+        </member>
+        <member name="T:JingTum.Lib.Utils">
+            <summary>
+            Represents the util class which offers utility methods.
+            </summary>
+        </member>
+        <member name="M:JingTum.Lib.Utils.IsValidCurrency(System.String)">
+            <summary>
+            Checks whether the currency is valid.
+            </summary>
+            <remarks>
+            The valid currency is 3 to 6 length string, or 40 length wallet address.
+            </remarks>
+            <param name="currency">The currency string.</param>
+            <returns>true if the currency is valid; false for invalie currencty.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.IsValidAddress(System.String)">
+            <summary>
+            Checks whether the wallet address is valid.
+            </summary>
+            <param name="address">The wallet address.</param>
+            <returns>true if the address is valid; false for invalid address.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.IsValidAmount(JingTum.Lib.Amount)">
+            <summary>
+            Checks whether the amount is valid.
+            </summary>
+            <param name="amount">The amount to check.</param>
+            <returns>true if the amount is valid; false for invalid amount.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.IsValidAmount0(JingTum.Lib.Amount)">
+            <summary>
+            Checks whether the amount is valid, ignore the <see cref="P:JingTum.Lib.Amount.Value"/>.
+            </summary>
+            <param name="amount">The amount to check.</param>
+            <returns>true if the amount is valid; false for invalid amount.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.StringToHex(System.String)">
+            <summary>
+            Converts the string to hex format.
+            </summary>
+            <param name="s">The string to convert.</param>
+            <returns>The hex string after convert.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.HexToString(System.String)">
+            <summary>
+            Converts the hex string to string.
+            </summary>
+            <param name="hex">The string in hex format.</param>
+            <returns>The string after convert.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.BytesToHex(System.Byte[])">
+            <summary>
+            Converts the byte array to hex string.
+            </summary>
+            <param name="bytes">The bytes to convert.</param>
+            <returns>The hex string after convert.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.HexToBytes(System.String)">
+            <summary>
+            Convert the hex string to byte array.
+            </summary>
+            <param name="hex">The hex string to convert.</param>
+            <returns>The byte array after convert.</returns>
+        </member>
+        <member name="M:JingTum.Lib.Utils.UnixTimeToDateTime(System.Int64)">
+            <summary>
+            Convert the unix time to local date time.
+            </summary>
+            <param name="unixTime">The unit time.</param>
+            <returns>The local date time after convert.</returns>
+        </member>
+    </members>
+</doc>
