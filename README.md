@@ -2,6 +2,21 @@
 The jingtum-lib-csharp library to be used for interacting with jingtum blockchain network. 
 This is the c# version.
 
+## Source code  
+* src/jingtum-lib  
+The source codes of jingtum lib.
+* src/UnitTests
+The unit tests for jingtum lib.
+* src/TespApp
+The WindowsForm application for testing the jingtum lib apis.
+* Samples
+The samples to use the jingtum lib.
+* Documentation
+The documentation for the jingtum lib.
+* Bin
+The releases of the jingtum lib.
+
+## Summary
 The jingtum-lib-csharp library is based on the ws protocol to connect with jingtum system. 
 The Remote class provides public APIs to create two kinds of objects: Request object by GET
 method, and Transaction object by POST method. And then can submit data to server through 
@@ -19,7 +34,7 @@ Submit() method.
 3) Create a Request object by calling the Request*** methods. You can get the result data 
 by the callback function.  
 
-    remote.RequestServerInfo((result)=&gt;  
+    remote.RequestServerInfo.Submit((result)=&gt;  
     {  
 	    // log result.Exception or result.Message  
     });  
@@ -52,16 +67,3 @@ You can listen events of the server.
 * Listening all events for specific account. (Remote.CreateAccountStub method)
 * Listening all events for specific orderbook pair. (Remote.CreateOrderBooksStub method)
 
-## Source code  
-Source Code is in "src/jingtum-lib" folder.  
-* src/jingtum-lib  
-The main classes are defined in this folder, like: Remote class, Request class, Transaction&lt;T&gt;
-class and so on.
-* src/jingtum-lib/Core  
-The implementation of encryption algorithm of local sign.
-* src/jingtum-lib/Models  
-The models which are used for requests and responses of calling jingtum APIs.
-* src/jingtum-lib/Serialization  
-The JSON converters for JSON serialization and deserialization.
-* src/jingtum-lib/SerializedTypes  
-The blob serialization which is used for transaction local sign.
