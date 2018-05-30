@@ -25,7 +25,7 @@ namespace JingTum.Lib
             {
                 var value = (long)reader.Value;
                 if (value == 0) return DateTime.MinValue;
-                return Utils.UnitTimeToDateTime(value);
+                return Utils.UnixTimeToDateTime(value);
             }
 
             return null;

@@ -9,9 +9,21 @@ using System.Xml.Linq;
 
 namespace JingTum.Lib
 {
+    /// <summary>
+    /// Represents the util class which offers utility methods.
+    /// </summary>
     public static class Utils
     {
         private static Regex CurrencyRegex = new Regex("^([a-zA-Z0-9]{3,6}|[A-F0-9]{40})$", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Checks whether the currency is valid.
+        /// </summary>
+        /// <remarks>
+        /// The valid currency is 3 to 6 length string, or 40 length wallet address.
+        /// </remarks>
+        /// <param name="currency">The currency string.</param>
+        /// <returns>true if the currency is valid; false for invalie currencty.</returns>
         public static bool IsValidCurrency(string currency)
         {
             if (string.IsNullOrEmpty(currency))
@@ -29,12 +41,22 @@ namespace JingTum.Lib
             return HashRegex.IsMatch(hash);
         }
 
+        /// <summary>
+        /// Checks whether the wallet address is valid.
+        /// </summary>
+        /// <param name="address">The wallet address.</param>
+        /// <returns>true if the address is valid; false for invalid address.</returns>
         public static bool IsValidAddress(string address)
         {
             if (string.IsNullOrEmpty(address)) return false;
             return Wallet.IsValidAddress(address);
         }
 
+        /// <summary>
+        /// Checks whether the amount is valid.
+        /// </summary>
+        /// <param name="amount">The amount to check.</param>
+        /// <returns>true if the amount is valid; false for invalid amount.</returns>
         public static bool IsValidAmount(Amount amount)
         {
             // check amount value
@@ -47,6 +69,11 @@ namespace JingTum.Lib
             return IsValidAmount0(amount);
         }
 
+        /// <summary>
+        /// Checks whether the amount is valid, ignore the <see cref="Amount.Value"/>.
+        /// </summary>
+        /// <param name="amount">The amount to check.</param>
+        /// <returns>true if the amount is valid; false for invalid amount.</returns>
         public static bool IsValidAmount0(Amount amount)
         {
             // check amount currency
@@ -70,7 +97,7 @@ namespace JingTum.Lib
             return true;
         }
 
-        public static object ToAmount(Amount amount)
+        internal static object ToAmount(Amount amount)
         {
             if (amount == null) return null;
 
@@ -101,6 +128,11 @@ namespace JingTum.Lib
             return BytesToHex(hash.Hash);
         }
 
+        /// <summary>
+        /// Converts the string to hex format.
+        /// </summary>
+        /// <param name="s">The string to convert.</param>
+        /// <returns>The hex string after convert.</returns>
         public static string StringToHex(string s)
         {
             var sb = new StringBuilder();
@@ -111,6 +143,11 @@ namespace JingTum.Lib
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Converts the hex string to string.
+        /// </summary>
+        /// <param name="hex">The string in hex format.</param>
+        /// <returns>The string after convert.</returns>
         public static string HexToString(string hex)
         {
             var sb = new StringBuilder();
@@ -128,6 +165,11 @@ namespace JingTum.Lib
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Converts the byte array to hex string.
+        /// </summary>
+        /// <param name="bytes">The bytes to convert.</param>
+        /// <returns>The hex string after convert.</returns>
         public static string BytesToHex(byte[] bytes)
         {
             var sb = new StringBuilder();
@@ -138,6 +180,11 @@ namespace JingTum.Lib
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Convert the hex string to byte array.
+        /// </summary>
+        /// <param name="hex">The hex string to convert.</param>
+        /// <returns>The byte array after convert.</returns>
         public static byte[] HexToBytes(string hex)
         {
             int i = 0, j = 0;
@@ -202,9 +249,14 @@ namespace JingTum.Lib
                    || value is decimal);
         }
 
-        public static DateTime UnitTimeToDateTime(long unitTime)
+        /// <summary>
+        /// Convert the unix time to local date time.
+        /// </summary>
+        /// <param name="unixTime">The unit time.</param>
+        /// <returns>The local date time after convert.</returns>
+        public static DateTime UnixTimeToDateTime(long unixTime)
         {
-            return Utility.ConvertUnixTime2DateTime(unitTime + 0x386D4380);
+            return Utility.ConvertUnixTime2DateTime(unixTime + 0x386D4380);
         }
 
         internal static bool IsHexString(string test)

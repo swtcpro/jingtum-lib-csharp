@@ -68,7 +68,7 @@ namespace UnitTests
             Assert.AreEqual("iZ2848appwoZ", result.HostId);
             Assert.AreEqual("EA11FCEE992292106808E2D3B124EF6C63B7EDE4E094177F96785F8D6AC8344B", result.LedgerHash);
             Assert.AreEqual((uint)1640880, result.LedgerIndex);
-            Assert.AreEqual(Utils.UnitTimeToDateTime(579432630), result.LedgerTime);
+            Assert.AreEqual(Utils.UnixTimeToDateTime(579432630), result.LedgerTime);
             Assert.AreEqual(256, result.LoadBase);
             Assert.AreEqual(256, result.LoadFactor);
             Assert.AreEqual("n9M1PrHjWz6GV6y6zaJk1UrPe3cik7hgvnoDAGNpyieQFA5BwfXq", result.PubkeyNode);
