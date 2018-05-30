@@ -51,6 +51,7 @@ namespace JingTum.Lib
             { "ClearFlag", new KeyValuePair<int, int>(2, 34) },
             { "RelationType", new KeyValuePair<int, int>(2, 35) },
             { "Method", new KeyValuePair<int, int>(2, 36) },
+            { "Contracttype", new KeyValuePair<int, int>(2, 39) },
             //Int64
             { "IndexNext", new KeyValuePair<int, int>(3, 1) },
             { "IndexPrevious", new KeyValuePair<int, int>(3, 2) },

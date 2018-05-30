@@ -103,6 +103,7 @@ namespace JingTum.Lib
                     new List<object>{ "Args", _optionalMeta },
                     new List<object>{ "Destination", _optionalMeta },
                     new List<object>{ "ContractMethod", _optionalMeta },
+                    new List<object>{ "Contracttype", _optionalMeta },
                 }
             },
             { TransactionType.Contract,
