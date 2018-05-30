@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Misc")]
     public class ErrorsTests
     {
         [TestMethod]

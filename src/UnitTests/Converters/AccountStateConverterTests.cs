@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 namespace UnitTests.Converters
 {
     [TestClass]
+    [TestCategory("Json: Converters")]
     public class AccountStateConverterTests
     {
         [TestMethod]

@@ -14,6 +14,7 @@ using System.Threading;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Json: Deserialize")]
     public class ResponseDataTests
     {
         private const int DeferredWaitingTime = 10000;
@@ -479,6 +480,7 @@ namespace UnitTests
             var result = response.Result;
             Assert.IsNotNull(result);
 
+            Assert.AreEqual("85D1BA494D44582FBDA5F3D51BCB8C55435FF764E23292074A9F7493DD7E0FE9", result.Marker);
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", result.Account);
             Assert.AreEqual("A7C9D84B7FAD0AE7DA7A835AA74FAAF02CF69042735E32EA13EEB30C00CD972E", result.LedgerHash);
             Assert.AreEqual((uint)9646353, result.LedgerIndex);
@@ -532,6 +534,7 @@ namespace UnitTests
             var result = response.Result;
             Assert.IsNotNull(result);
 
+            Assert.AreEqual("85D1BA494D44582FBDA5F3D51BCB8C55435FF764E23292074A9F7493DD7E0FE9", result.Marker);
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", result.Account);
             Assert.AreEqual("39210701654A5DCDA1B01EF636B0A4FFA5159342B75F082B81B58E92DDCB24B1", result.LedgerHash);
             Assert.AreEqual((uint)9646438, result.LedgerIndex);

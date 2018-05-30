@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Remote: Invalid Parameter")]
     public class RemoteParameterTests
     {
         private const int DeferredWaitingTime = 10000;

@@ -134,7 +134,7 @@ namespace JingTum.Lib
         string Account { get; set; }
         LedgerSettings Ledger { get; set; }
         UInt32? Limit { get; set; }
-        Marker Marker { get; set; }
+        string Marker { get; set; }
         string Peer { get; set; }
     }
 
@@ -159,7 +159,7 @@ namespace JingTum.Lib
         public LedgerSettings Ledger { get; set; }
 
         UInt32? IAccountOptions.Limit { get; set; }
-        Marker IAccountOptions.Marker { get; set; }
+        string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
@@ -184,7 +184,7 @@ namespace JingTum.Lib
         public LedgerSettings Ledger { get; set; }
 
         UInt32? IAccountOptions.Limit { get; set; }
-        Marker IAccountOptions.Marker { get; set; }
+        string IAccountOptions.Marker { get; set; }
         string IAccountOptions.Peer { get; set; }
     }
 
@@ -222,12 +222,12 @@ namespace JingTum.Lib
         /// </remarks>
         public UInt32? Limit { get; set; }
         /// <summary>
-        /// The marker settings.
+        /// The marker for this reqeust.
         /// </summary>
         /// <remarks>
-        /// Optional.
+        /// Optional. It's from the previous reqeust with limit.
         /// </remarks>
-        public Marker Marker { get; set; }
+        public string Marker { get; set; }
         /// <summary>
         /// The peer string.
         /// </summary>
@@ -264,12 +264,12 @@ namespace JingTum.Lib
         /// </remarks>
         public UInt32? Limit { get; set; }
         /// <summary>
-        /// The marker settings.
+        /// The marker for this request.
         /// </summary>
         /// <remarks>
-        /// Optional.
+        /// Optional. It's from the previous reqeust with limit.
         /// </remarks>
-        public Marker Marker { get; set; }
+        public string Marker { get; set; }
 
         string IAccountOptions.Peer { get; set; }
     }
@@ -322,10 +322,10 @@ namespace JingTum.Lib
         /// </remarks>
         public UInt32? Offset { get; set; }
         /// <summary>
-        /// The marker settings.
+        /// The marker settings for this request.
         /// </summary>
         /// <remarks>
-        /// Optional.
+        /// Optional. It's from the previous reqeust with limit.
         /// </remarks>
         public Marker Marker { get; set; }
         /// <summary>

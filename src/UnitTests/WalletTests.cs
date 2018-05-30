@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Wallet")]
     public class WalletTests
     {
         [TestMethod]

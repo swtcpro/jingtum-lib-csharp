@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Remote: Request")]
     public class RequestTests
     {
         private const int DeferredWaitingTime = 10000;
@@ -174,6 +175,195 @@ namespace UnitTests
             Assert.AreEqual("jMw3xrkX2ySwdQiEorymyuTLUSSa85wvSr", txr.CounterParty);
             Assert.AreEqual(new Amount { Currency = "SWT", Issuer = "", Value = "10000" }, txr.Amount);
             Assert.AreEqual(TxResultType.Sent, txr.Type);
+        }
+
+        [TestMethod]
+        public void TestRequestAccountInfo()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<AccountInfoResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new AccountInfoOptions();
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                var req = _remote.RequestAccountInfo(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Result);
+            var accountData = response.Result.AccountData;
+            Assert.IsNotNull(accountData);
+            Assert.AreEqual("j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", accountData.Account);
+        }
+
+        [TestMethod]
+        public void TestRequestAccountTums()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<AccountTumsResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new AccountTumsOptions();
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                var req = _remote.RequestAccountTums(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.SendCurrencies);
+            Assert.IsNotNull(result.ReceiveCurrencies);
+        }
+
+        [TestMethod]
+        public void TestRequestAccountRelations()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<AccountRelationsResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new AccountRelationsOptions();
+                options.Limit = 1;
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                var req = _remote.RequestAccountRelations(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", result.Account);
+            Assert.IsNotNull(result.Lines);
+        }
+
+        [TestMethod]
+        public void TestRequestAccountOffers()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<AccountOffersResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new AccountOffersOptions();
+                options.Limit = 1;
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                var req = _remote.RequestAccountOffers(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", result.Account);
+            Assert.IsNotNull(result.Offers);
+        }
+
+        [TestMethod]
+        public void TestRequestAccountTx()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<AccountTxResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new AccountTxOptions();
+                options.Limit = 1;
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                var req = _remote.RequestAccountTx(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", result.Account);
+            Assert.IsNotNull(result.Transactions);
+            Assert.IsNotNull(result.Marker);
+        }
+
+        [TestMethod]
+        public void TestRequestOrderBook()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<OrderBookResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new OrderBookOptions();
+                options.Limit = 1;
+                options.Gets = Amount.SWT();
+                options.Pays = new Amount("CNY", "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS");
+                var req = _remote.RequestOrderBook(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Offers);
+        }
+
+        [TestMethod]
+        public void TestRequestPathFind()
+        {
+            var deferred = new Task(() => { });
+            _remote = new Remote(ServerUrl);
+            MessageResult<PathFindResponse> response = null;
+            _remote.Connect(r =>
+            {
+                var options = new PathFindOptions();
+                options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+                options.Destination = "jBKaXuYemkAb5HytZgosAcWgWDZbBvz6KR";
+                options.Amount = new Amount("CNY", "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", "0.1");
+                var req = _remote.RequestPathFind(options);
+                req.Submit(r1 =>
+                {
+                    response = r1;
+                    deferred.Start();
+                });
+            });
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", result.Source);
+            Assert.AreEqual("jBKaXuYemkAb5HytZgosAcWgWDZbBvz6KR", result.Destination);
         }
     }
 }

@@ -5,9 +5,11 @@ using Newtonsoft.Json;
 namespace UnitTests.Converters
 {
     [TestClass]
+    [TestCategory("Json: Converters")]
     public class LedgerTransactionConverterTests
     {
         [TestMethod]
+        [TestCategory("Json: Converters")]
         public void TestSimpleLedgerTx()
         {
             var json = "{transactions:[\"hash1\", \"hash2\"]}";

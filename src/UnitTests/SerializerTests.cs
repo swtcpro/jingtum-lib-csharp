@@ -12,6 +12,7 @@ namespace UnitTests
     /// Unit tests compare with the result of Node.js.
     /// </summary>
     [TestClass]
+    [TestCategory("Serializer")]
     public class SerializerTests
     {
         [TestMethod]

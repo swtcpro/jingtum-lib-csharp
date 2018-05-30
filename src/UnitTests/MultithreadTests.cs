@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Multithreads")]
     public class MultithreadTests
     {
         private const int DeferredWaitingTime = 10000;

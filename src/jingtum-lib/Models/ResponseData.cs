@@ -1208,6 +1208,12 @@ namespace JingTum.Lib
         public UInt32 LedgerIndex { get; internal set; }
 
         /// <summary>
+        /// Gets the marker string for next request.
+        /// </summary>
+        [JsonProperty("marker")]
+        public string Marker { get; internal set; }
+
+        /// <summary>
         /// Gets the trust lines of this account.
         /// </summary>
         [JsonProperty("lines")]
@@ -1321,10 +1327,10 @@ namespace JingTum.Lib
         public Offer[] Offers { get; internal set; }
 
         /// <summary>
-        /// Gets the marker.
+        /// Gets the marker for next request.
         /// </summary>
         [JsonProperty("marker")]
-        public Marker Marker { get; internal set; }
+        public string Marker { get; internal set; }
 
         /// <summary>
         /// Gets a boolean value indicating whether the ledger is validated.
@@ -1404,7 +1410,7 @@ namespace JingTum.Lib
         public UInt32 LedgerIndexMin { get; internal set; }
 
         /// <summary>
-        /// Gets the marker of current record.
+        /// Gets the marker for next request.
         /// </summary>
         [JsonProperty("marker")]
         public Marker Marker { get; internal set; }

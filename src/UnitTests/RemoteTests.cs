@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Remote")]
     public class RemoteTests
     {
         private const int DeferredWaitingTime = 10000;

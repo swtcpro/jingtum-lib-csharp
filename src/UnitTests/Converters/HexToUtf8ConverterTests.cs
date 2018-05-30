@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
+    [TestCategory("Json: Converters")]
     public class HexToUtf8ConverterTests
     {
         [TestMethod]

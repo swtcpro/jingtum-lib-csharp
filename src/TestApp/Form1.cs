@@ -494,7 +494,7 @@ namespace TestApp
         {
             var options = new OfferCreateTxOptions();
             options.Type = OfferType.Sell;
-            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1 ";
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
             options.TakerPays = new Amount { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS", Value = "0.01" };
             options.TakerGets = new Amount { Currency = "SWT", Issuer = "", Value = "1" };
             pgBuildOfferCreateTxOptions.SelectedObject = options;
@@ -523,12 +523,12 @@ namespace TestApp
         private void InitBuildOfferCancelTxOptions()
         {
             var options = new OfferCancelTxOptions();
-            options.Account = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
-            options.Sequence = 688;
+            options.Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1";
+            options.Sequence = 1;
             pgBuildOfferCancelTxOptions.SelectedObject = options;
 
             var settings = new TxSettings();
-            settings.Secret = "sn37nYrQ6KPJvTFmaBYokS3FjXUWd";
+            settings.Secret = "ssGkkAMnKCBkhGVQd9CNzSQv5zdNi";
             settings.SendMax = new Amount();
             pgBuildOfferCancelTxSettings.SelectedObject = settings;
         }
