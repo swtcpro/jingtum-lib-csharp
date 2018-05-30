@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace JingTum.Lib
 {
+    /// <summary>
+    /// Represents the wallet.
+    /// </summary>
     public class Wallet
     {
         private IKeyPair _keyPair;
@@ -19,9 +22,20 @@ namespace JingTum.Lib
             _keyPair = Seed.GetKeyPair(secret);
         }
 
+        /// <summary>
+        /// Gets the wallet address.
+        /// </summary>
         public string Address { get; private set; }
+
+        /// <summary>
+        /// Gets the wallet secret.
+        /// </summary>
         public string Secret { get; private set; }
 
+        /// <summary>
+        /// Generates a new instance of <see cref="Wallet"/> object.
+        /// </summary>
+        /// <returns>A <see cref="Wallet"/> object.</returns>
         public static Wallet Generate()
         {
             var secret = Seed.GenerateSecret();
@@ -29,6 +43,13 @@ namespace JingTum.Lib
             return new Wallet(address, secret);
         }
 
+        /// <summary>
+        /// Constructs the <see cref="Wallet"/> instance from a scerect.
+        /// </summary>
+        /// <param name="secret">The secret.</param>
+        /// <returns>A <see cref="Wallet"/> object.</returns>
+        /// <exception cref="ArgumentNullException">secret is null.</exception>
+        /// <exception cref="InvalidSecretException">secret is invalid.</exception>
         public static Wallet FromSecret(string secret)
         {
             if (secret == null)
@@ -78,7 +99,7 @@ namespace JingTum.Lib
             return sha512.Finish256();
         }
 
-        public Org.BouncyCastle.Math.BigInteger GetPublicKey()
+        internal Org.BouncyCastle.Math.BigInteger GetPublicKey()
         {
             return _keyPair?.Pub;
         }

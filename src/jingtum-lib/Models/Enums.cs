@@ -103,7 +103,13 @@ namespace JingTum.Lib
         /// Force regular key.
         /// </summary>
         DisableMaster = 4,
+        /// <summary>
+        /// todo:
+        /// </summary>
         NoFreeze = 6,
+        /// <summary>
+        /// todo:
+        /// </summary>
         GlobalFreeze = 7
     }
 
@@ -113,6 +119,9 @@ namespace JingTum.Lib
     [Flags]
     public enum UniversalFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         FullyCanonicalSig = 0x80000000
     }
 
@@ -122,11 +131,29 @@ namespace JingTum.Lib
     [Flags]
     public enum AccountSetFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         RequireDestTag = 0x00010000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         OptionalDestTag = 0x00020000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         RequireAuth = 0x00040000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         OptionalAuth = 0x00080000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         DisallowSWT = 0x00100000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         AllowSWT = 0x00200000
     }
 
@@ -136,11 +163,29 @@ namespace JingTum.Lib
     [Flags]
     public enum TrustSetFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         SetAuth = 0x00010000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         NoSkywell = 0x00020000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         SetNoSkywell = 0x00020000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         ClearNoSkywell = 0x00040000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         SetFreeze = 0x00100000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         ClearFreeze = 0x00200000
     }
 
@@ -150,9 +195,21 @@ namespace JingTum.Lib
     [Flags]
     public enum OfferCreateFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         Passive = 0x00010000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         ImmediateOrCancel = 0x00020000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         FillOrKill = 0x00040000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Sell = 0x00080000
     }
 
@@ -162,8 +219,17 @@ namespace JingTum.Lib
     [Flags]
     public enum PaymentFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         NoSkywellDirect = 0x00010000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         PartialPayment = 0x00020000,
+        /// <summary>
+        /// todo:
+        /// </summary>
         LimitQuality = 0x00040000
     }
 
@@ -173,7 +239,13 @@ namespace JingTum.Lib
     [Flags]
     public enum RelationSetFlags : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         Authorize = 0x00000001,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Freeze = 0x00000011
     }
 
@@ -202,7 +274,13 @@ namespace JingTum.Lib
         /// For <see cref="Remote.BuildOfferCancelTx(OfferCancelTxOptions)"/> transaction.
         /// </summary>
         OfferCancel = 8,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Contract = 9,
+        /// <summary>
+        /// todo:
+        /// </summary>
         RemoveContract = 10,
         /// <summary>
         /// For <see cref="Remote.BuildRelationTx(RelationTxOptions)"/> transaction.
@@ -217,7 +295,7 @@ namespace JingTum.Lib
         /// </summary>
         RelationDel = 22,
         /// <summary>
-        /// For <see cref="Remote.BuildDelegateKeySet(AccountSetTxOptions, Transaction)"/> transaction and <see cref="Remote.CallContractTx(CallContractTxOptions)"/> transaction.
+        /// For <see cref="Remote.DeployContractTx(DeployContractTxOptions)"/> transaction and <see cref="Remote.CallContractTx(CallContractTxOptions)"/> transaction.
         /// </summary>
         ConfigContract = 30,
         /// <summary>
@@ -225,30 +303,84 @@ namespace JingTum.Lib
         /// </summary>
         EnableFeature = 100,
 
+        /// <summary>
+        /// todo:
+        /// </summary>
         SetFee = 101,
 
         // following transaction type value is unknown
+        /// <summary>
+        /// todo:
+        /// </summary>
         Signer,
+        /// <summary>
+        /// todo:
+        /// </summary>
         SignSet,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Operation,
     }
 
+    /// <summary>
+    /// todo:
+    /// </summary>
     public enum LedgerEntryType : UInt32
     {
+        /// <summary>
+        /// todo:
+        /// </summary>
         Unknown,
 
+        /// <summary>
+        /// todo:
+        /// </summary>
         State,
+        /// <summary>
+        /// todo:
+        /// </summary>
         ManageIssuer,
 
+        /// <summary>
+        /// todo:
+        /// </summary>
         AccountRoot = 97,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Contract = 99,
+        /// <summary>
+        /// todo:
+        /// </summary>
         DirectoryNode = 100,
+        /// <summary>
+        /// todo:
+        /// </summary>
         EnabledFeatures = 102,
+        /// <summary>
+        /// todo:
+        /// </summary>
         GeneratorMap = 103,
+        /// <summary>
+        /// todo:
+        /// </summary>
         LedgerHashes = 104,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Nickname = 110,
+        /// <summary>
+        /// todo:
+        /// </summary>
         Offer = 111,
+        /// <summary>
+        /// todo:
+        /// </summary>
         SkywellState = 114 ,
+        /// <summary>
+        /// todo:
+        /// </summary>
         FeeSettings = 115,
     };
 

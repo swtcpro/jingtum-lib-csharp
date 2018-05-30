@@ -27,7 +27,7 @@ namespace JingTum.Lib
         private TxData _txJson;
         private bool _localSigned;
 
-        protected Transaction(Remote remote, Func<object, T> filter = null)
+        internal Transaction(Remote remote, Func<object, T> filter = null)
         {
             _remote = remote;
             _filter = filter;

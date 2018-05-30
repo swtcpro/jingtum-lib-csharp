@@ -759,7 +759,7 @@ namespace JingTum.Lib
 
         #region path find request
         /// <summary>
-        /// Creates the <see cref="Reqeust"/> object and gets path from one currency to another.
+        /// Creates the <see cref="Request{T}"/> object and gets path from one currency to another.
         /// </summary>
         /// <param name="options">The options for this request.</param>
         /// <returns>A <see cref="Request{T}"/> object.</returns>
@@ -857,10 +857,10 @@ namespace JingTum.Lib
 
         #region transaction request
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds normal payment transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds normal payment transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction<PaymentTxResponse> BuildPaymentTx(PaymentTxOptions options)
         {
             var tx = new InnerTransaction<PaymentTxData, PaymentTxResponse>(this);
@@ -892,10 +892,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the deploy contract transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the deploy contract transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction<DeployContractTxResponse> DeployContractTx(DeployContractTxOptions options)
         {
             var tx = new InnerTransaction<ContractTxData, DeployContractTxResponse>(this);
@@ -922,10 +922,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the call contract transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the call contract transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction< CallContractTxResponse> CallContractTx(CallContractTxOptions options)
         {
             var tx = new InnerTransaction<ContractTxData, CallContractTxResponse>(this);
@@ -964,10 +964,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the sign transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the sign transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction< SignTxResponse> BuildSignTx(SignTxOptions options)
         {
             var tx = new InnerTransaction<TxData, SignTxResponse>(this);
@@ -1043,10 +1043,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the relation transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the relation transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction<RelationTxResponse> BuildRelationTx(RelationTxOptions options)
         {
             var tx = new InnerTransaction<RelationTxData, RelationTxResponse>(this);
@@ -1120,10 +1120,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the set account attribute transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the set account attribute transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction<AccountSetTxResponse> BuildAccountSetTx(AccountSetTxOptions options)
         {
             var tx = new InnerTransaction<AccountSetTxData, AccountSetTxResponse>(this);
@@ -1143,10 +1143,10 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the offer create transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the offer create transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction<OfferCreateTxResponse> BuildOfferCreateTx(OfferCreateTxOptions options)
         {
             var tx = new InnerTransaction<OfferCreateTxData, OfferCreateTxResponse>(this);
@@ -1184,14 +1184,14 @@ namespace JingTum.Lib
         }
 
         /// <summary>
-        /// Creates the <see cref=Transaction{T}"/> object and builds the offer cancel transaction.
+        /// Creates the <see cref="Transaction{T}"/> object and builds the offer cancel transaction.
         /// </summary>
         /// <param name="options">The options for this transaction.</param>
         /// <remarks>
         /// The order can be cancel by order sequence. 
         /// The sequence can be get when order is submitted or from offer query operation.
         /// </remarks>
-        /// <returns>A <see cref=Transaction{T}"/> object.</returns>
+        /// <returns>A <see cref="Transaction{T}"/> object.</returns>
         public Transaction< OfferCancelTxResponse> BuildOfferCancelTx(OfferCancelTxOptions options)
         {
             var tx = new InnerTransaction<OfferCancelTxData, OfferCancelTxResponse>(this);
@@ -1210,6 +1210,9 @@ namespace JingTum.Lib
         #endregion
 
         #region IDisposable
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             if (_server != null)

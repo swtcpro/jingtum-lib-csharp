@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace JingTum.Lib
 {
+    /// <summary>
+    /// Represents the order book stub for order book events.
+    /// </summary>
     public class OrderBook
     {
         private Remote _remote;
@@ -18,12 +21,23 @@ namespace JingTum.Lib
             _remote.Transactions += _remote_Transactions;
         }
 
+        /// <summary>
+        /// Registers the listener for given order book pair.
+        /// </summary>
+        /// <param name="gets">The amount of gets.</param>
+        /// <param name="pays">The amount of pays.</param>
+        /// <param name="callback">The callback.</param>
         public void RegisterListener(Amount gets, Amount pays, MessageCallback<TxResult> callback)
         {
             var key = ResponseParser.GetAmoutPairKey(gets, pays);
             _books[key] = callback;
         }
 
+        /// <summary>
+        /// Unregisters the listener for given order book pair.
+        /// </summary>
+        /// <param name="gets">The gets.</param>
+        /// <param name="pays">The pays.</param>
         public void UnregisterListener(Amount gets, Amount pays)
         {
             var key = ResponseParser.GetAmoutPairKey(gets, pays);
