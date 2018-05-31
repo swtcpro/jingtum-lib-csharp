@@ -20,7 +20,7 @@ namespace JingTum.Lib
         private ServerState _state = ServerState.Offline;
         private int _id;
         private Timer _timer;
-        private static object _locker = new object();
+        private object _locker = new object();
 
         public Server(Remote remote, string url)
         {

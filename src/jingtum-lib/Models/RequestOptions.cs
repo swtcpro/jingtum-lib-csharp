@@ -15,7 +15,7 @@ namespace JingTum.Lib
         /// <remarks>
         /// Opitonal. If <see cref="LedgerIndex"/> and <see cref="LedgerHash"/> are not provided, then last closed ledger is returned.
         /// </remarks>
-        public long? LedgerIndex { get; set; }
+        public UInt32? LedgerIndex { get; set; }
         /// <summary>
         /// The ledger hash to return.
         /// </summary>
