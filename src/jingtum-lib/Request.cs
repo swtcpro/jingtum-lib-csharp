@@ -53,25 +53,32 @@ namespace JingTum.Lib
         /// Callback entry for request.
         /// </summary>
         /// <param name="callback">The callback for the request result.</param>
-        public void Submit(MessageCallback<T> callback = null)
+        public async void Submit(MessageCallback<T> callback = null)
         {
-            SubmitAsync(callback);
+            await SubmitAsync(callback);
         }
 
         /// <summary>
         /// The async version of <see cref="Submit(MessageCallback{T})"/>.
         /// </summary>
         /// <param name="callback">The callback for the request result.</param>
-        /// <param name="timeout">The millisends to wait for the result.</param>
+        /// <param name="timeout">The millisends to wait for the result. Default is 60000.</param>
         /// <returns>The task.</returns>
-        public Task SubmitAsync(MessageCallback<T> callback = null, int timeout = -1)
+        public async Task<MessageResult<T>> SubmitAsync(MessageCallback<T> callback = null, int timeout = 60000)
         {
+            MessageResult<T> result = null;
+            MessageCallback<T> callbackWrapper = r =>
+            {
+                result = r;
+                callback?.Invoke(r);
+            };
+
             foreach (KeyValuePair<string, object> pair in _message)
             {
                 if (pair.Value is Exception exception)
                 {
-                    callback?.Invoke(new MessageResult<T>(null, exception));
-                    return AsyncEx.Complete();
+                    callbackWrapper(new MessageResult<T>(null, exception));
+                    return result;
                 }
             }
 
@@ -80,14 +87,15 @@ namespace JingTum.Lib
             {
                 if (!resetEvent.WaitOne(timeout))
                 {
-                    throw new TimeoutException();
+                    callbackWrapper(new MessageResult<T>(null, new TimeoutException()));
                 }
                 resetEvent.Dispose();
             });
             task.Start();
 
-            _remote.Submit(_command, _message, _filter, callback, resetEvent);
-            return task;
+            _remote.Submit(_command, _message, _filter, callbackWrapper, resetEvent);
+            await task;
+            return result;
         }
 
         /// <summary>

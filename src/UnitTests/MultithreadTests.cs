@@ -76,22 +76,17 @@ namespace UnitTests
                 }
                 else
                 {
-                    var t1 = remote.RequestServerInfo().SubmitAsync(r1 =>
-                    {
-                        results[0] = r1.Result;
-                    });
+                    var t1 = remote.RequestServerInfo().SubmitAsync();
+                    var t2 = remote.RequestLedgerClosed().SubmitAsync();
+                    var t3 = remote.RequestLedger().SubmitAsync();
 
-                    var t2 = remote.RequestLedgerClosed().SubmitAsync(r2 =>
+                    Task.WhenAll(t1, t2, t3).ContinueWith(p =>
                     {
-                        results[1] = r2.Result;
+                        results[0] = t1.Result.Result;
+                        results[1] = t2.Result.Result;
+                        results[2] = t3.Result.Result;
+                        deferred.Start();
                     });
-
-                    var t3 = remote.RequestLedger().SubmitAsync(r3 =>
-                    {
-                        results[2] = r3.Result;
-                    });
-
-                    Task.WhenAll(t1, t2, t3).ContinueWith(p => { deferred.Start(); });
                 }
             });
 
@@ -145,11 +140,12 @@ namespace UnitTests
                 options.Amount = Amount.SWT("0.5");
                 var tx = remote.BuildPaymentTx(options);
                 tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
-                var task = tx.SubmitAsync(tr =>
+                var task = tx.SubmitAsync();
+                task.ContinueWith(_ =>
                 {
-                    result = tr.Result;
+                    result = task.Result.Result;
+                    resetEvent.Set();
                 });
-                task.ContinueWith(_ => { resetEvent.Set(); });
             });
             resetEvent.WaitOne();
 

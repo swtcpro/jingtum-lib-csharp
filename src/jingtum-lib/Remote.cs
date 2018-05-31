@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace JingTum.Lib
 {
@@ -78,6 +79,22 @@ namespace JingTum.Lib
                 var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseData<ConnectResponse>>(data as string);
                 return response.Result;
             });
+        }
+
+        /// <summary>
+        /// Connects to jintum asynchronous.
+        /// </summary>
+        /// <param name="timeout">The timeout. Default is 60000.</param>
+        /// <returns>The result of connect.</returns>
+        public async Task<MessageResult<ConnectResponse>> ConnectAsync(int timeout = 60000)
+        {
+            var task = _server.ConnectAsync(null, data =>
+            {
+                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseData<ConnectResponse>>(data as string);
+                return response.Result;
+            }, timeout);
+            await task;
+            return task.Result;
         }
 
         /// <summary>

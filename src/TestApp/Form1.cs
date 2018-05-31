@@ -207,7 +207,7 @@ namespace TestApp
         private void InitRequestLedgerOptions()
         {
             var options = new LedgerOptions();
-            options.LedgerIndex = 330784;
+            options.LedgerIndex = 330853;
             pgRequestLedgerOptions.SelectedObject = options;
         }
 

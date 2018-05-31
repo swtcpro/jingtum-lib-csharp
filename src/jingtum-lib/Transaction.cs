@@ -397,29 +397,39 @@ namespace JingTum.Lib
         /// Submits entry for transaction.
         /// </summary>
         /// <param name="callback">The callback.</param>
-        public void Submit(MessageCallback<T> callback)
+        public async void Submit(MessageCallback<T> callback)
         {
-            SubmitAsync(callback);
+            await SubmitAsync(callback);
         }
 
         /// <summary>
         /// The async version of <see cref="Submit(MessageCallback{T})"/>.
         /// </summary>
         /// <param name="callback">The callback for the request result.</param>
-        /// <param name="timeout">The millisends to wait for the result.</param>
+        /// <param name="timeout">The millisends to wait for the result. Default is 60000</param>
         /// <returns>The task.</returns>
-        public Task SubmitAsync(MessageCallback<T> callback, int timeout = -1)
+        public async Task<MessageResult<T>> SubmitAsync(MessageCallback<T> callback = null, int timeout = 60000)
         {
+            MessageResult<T> result = null;
+            MessageCallback<T> callbackWrapper = r =>
+            {
+                result = r;
+                callback?.Invoke(r);
+            };
+
             if (_txJson.Exception != null)
             {
-                callback?.Invoke(new MessageResult<T>(null, _txJson.Exception));
-                return AsyncEx.Complete();
+                callbackWrapper(new MessageResult<T>(null, _txJson.Exception));
+                return result;
             }
 
             var resetEvent = new AutoResetEvent(false);
             var task = new Task(() =>
             {
-                resetEvent.WaitOne(timeout);
+                if (!resetEvent.WaitOne(timeout))
+                {
+                    callbackWrapper(new MessageResult<T>(null, new TimeoutException()));
+                }
                 resetEvent.Dispose();
             });
             task.Start();
@@ -428,21 +438,21 @@ namespace JingTum.Lib
             {
                 dynamic data = new ExpandoObject();
                 data.tx_blob = _txJson.Blob;
-                _remote.Submit("submit", data, _filter, callback, resetEvent);
+                _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
             }
             else if (_remote.LocalSign)//签名之后传给底层
             {
-                Sign(result =>
+                Sign(r =>
                 {
-                    if (result.Exception != null)
+                    if (r.Exception != null)
                     {
-                        callback?.Invoke(new MessageResult<T>("sign error: ", result.Exception));
-                        return;
+                        callbackWrapper(new MessageResult<T>("sign error: ", result.Exception));
+                        resetEvent.Set();
                     }
 
                     dynamic data = new ExpandoObject();
-                    data.tx_blob = result.Result;
-                    _remote.Submit("submit", data, _filter, callback, resetEvent);
+                    data.tx_blob = r.Result;
+                    _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
                 });
             }
             else//不签名交易传给底层
@@ -450,10 +460,11 @@ namespace JingTum.Lib
                 dynamic data = new ExpandoObject();
                 data.secret = _secret;
                 data.tx_json = _txJson;
-                _remote.Submit("submit", data, _filter, callback, resetEvent);
+                _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
             }
 
-            return task;
+            await task;
+            return result;
         }
     }
 

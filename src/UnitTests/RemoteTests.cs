@@ -45,6 +45,21 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestConnectAsync()
+        {
+            _remote = new Remote(ServerUrl);
+            var tc = _remote.ConnectAsync();
+            Assert.IsTrue(tc.Wait(DeferredWaitingTime));
+
+            Assert.IsTrue(_remote.IsConnected);
+            var response = tc.Result;
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Result);
+            Assert.IsNotNull(response.Message);
+            Assert.IsNull(response.Exception);
+        }
+
+        [TestMethod]
         public void TestDisconnect()
         {
             var deferred = new Task(() => { });
