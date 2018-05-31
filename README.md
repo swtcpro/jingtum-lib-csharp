@@ -16,6 +16,13 @@ The documentation for the jingtum lib.
 * Releases
 The releases of the jingtum lib.
 
+## References:
+The following libraries are referenced.
+* Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json)
+* Portable.BouncyCastle (http://www.bouncycastle.org/csharp/)
+* WebSocket4Net (https://github.com/kerryjiang/WebSocket4Net)
+* SuperSocket.ClientEngine.Core (https://github.com/kerryjiang/SuperSocket)
+
 ## Summary
 The jingtum-lib-csharp library is based on the ws protocol to connect with jingtum system. 
 The Remote class provides public APIs to create two kinds of objects: Request object by GET
