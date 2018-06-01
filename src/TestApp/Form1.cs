@@ -705,7 +705,7 @@ namespace TestApp
         {
             var stub = _remote.CreateOrderBooksStub();
             var swtAmount = new Amount { Currency = "SWT" };
-            var cnyAmount = new Amount { Currency = "CNY", Issuer = "jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS" };
+            var cnyAmount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or" };
             stub.RegisterListener(swtAmount, cnyAmount, OnSwtCnyOrderBook);
             stub.RegisterListener(cnyAmount, swtAmount, OnCnySwtOrderBook);
         }

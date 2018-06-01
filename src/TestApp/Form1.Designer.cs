@@ -124,12 +124,14 @@
             this.btnResetBuildOfferCancelTxOptions = new System.Windows.Forms.Button();
             this.btnBuildOfferCancelTx = new System.Windows.Forms.Button();
             this.DeployContractTx = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.pgDeployContractTxOptions = new System.Windows.Forms.PropertyGrid();
             this.pgDeployContractTxSettings = new System.Windows.Forms.PropertyGrid();
             this.btnResetDeployContractTxOptions = new System.Windows.Forms.Button();
             this.btnDeployContractTx = new System.Windows.Forms.Button();
             this.tabCallContractTx = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
             this.splitContainer12 = new System.Windows.Forms.SplitContainer();
             this.pgCallContractTxOptions = new System.Windows.Forms.PropertyGrid();
             this.pgCallContractTxSettings = new System.Windows.Forms.PropertyGrid();
@@ -188,8 +190,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.ovResult = new TestApp.ObjectViewer();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1389,6 +1390,15 @@
             this.DeployContractTx.Text = "DeployContractTx";
             this.DeployContractTx.UseVisualStyleBackColor = true;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(141, 7);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(185, 24);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
+            // 
             // splitContainer4
             // 
             this.splitContainer4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1461,6 +1471,15 @@
             this.tabCallContractTx.TabIndex = 6;
             this.tabCallContractTx.Text = "CallContractTx";
             this.tabCallContractTx.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(142, 6);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(185, 24);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
             // 
             // splitContainer12
             // 
@@ -1795,6 +1814,7 @@
             // 
             // tabOrderBooksStub
             // 
+            this.tabOrderBooksStub.Controls.Add(this.label14);
             this.tabOrderBooksStub.Controls.Add(this.tabCreateOrderBooksStub);
             this.tabOrderBooksStub.Controls.Add(this.chkRefreshOrderBook);
             this.tabOrderBooksStub.Controls.Add(this.btnOrderBooksStub);
@@ -2016,16 +2036,16 @@
             this.txtAccountStubAccount.Name = "txtAccountStubAccount";
             this.txtAccountStubAccount.Size = new System.Drawing.Size(415, 21);
             this.txtAccountStubAccount.TabIndex = 2;
-            this.txtAccountStubAccount.Text = "jB7rxgh43ncbTX4WeMoeadiGMfmfqY2xLZ";
+            this.txtAccountStubAccount.Text = "jEoSyfChhUMzpRDttAJXuie8XhqyoPBYvV";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(6, 3);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
+            this.label10.Size = new System.Drawing.Size(245, 12);
             this.label10.TabIndex = 1;
-            this.label10.Text = "Account:";
+            this.label10.Text = "Account:  (use wss://s.jingtum.com:5020)";
             // 
             // btnCreateAccountStub
             // 
@@ -2116,23 +2136,14 @@
             this.ovResult.Size = new System.Drawing.Size(400, 134);
             this.ovResult.TabIndex = 0;
             // 
-            // label12
+            // label14
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(142, 6);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(185, 24);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(141, 7);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(185, 24);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "Use test server for contract: \r\nws://139.129.194.175:5020";
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(171, 36);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(191, 12);
+            this.label14.TabIndex = 9;
+            this.label14.Text = " (use wss://s.jingtum.com:5020)";
             // 
             // Form1
             // 
@@ -2407,6 +2418,7 @@
         private System.Windows.Forms.Button btnCreateAccountStub;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
     }
 }
 

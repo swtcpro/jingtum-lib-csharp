@@ -131,6 +131,7 @@ namespace JingTum.Lib
                 decimal amountValue;
                 if (decimal.TryParse(amount.Value, out amountValue))
                 {
+                    amountValue *= 1000000;
                     amountValue *= new decimal(1.0001);
                     return amountValue.ToString("0");
                 }

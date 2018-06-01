@@ -329,7 +329,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestDeployContractTx()
+        public void TestSignDeployContractTx()
         {
             var remote = new Remote("");
             remote.SetMockServer(new MockServer(remote, "RequestAccountInfo.json"));
@@ -356,7 +356,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestCallContractTx()
+        public void TestSignCallContractTx()
         {
             var remote = new Remote("");
             remote.SetMockServer(new MockServer(remote, "RequestAccountInfo.json"));
