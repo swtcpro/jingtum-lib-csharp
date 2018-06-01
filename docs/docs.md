@@ -5,14 +5,18 @@ Usage for jingtum-lib-csharp. All classes are under the namespace JingTum.Lib.
 ### Genreate()
 Genereates a new wallet.
 
-sample:
+#### sample
+```
 var wallet = Wallet.Genereate();
+```
 
 ### FromSecret(secret)
 Creates a wallet from existing secret. The secret is the private secret of jingtum wallet.
 
-sample:
+#### sample
+```
 var wallet = Wallet.FromSecret("shJBucfMWjirJv4DiDe1DNmeRSub3");
+```
 
 ## Remote class
 Main function class in jingtum-lib-csharp. It creates a handle with jingtum, makes request to jingtum, subscribs event to jingtum, and gets info from jingtum.
@@ -42,41 +46,48 @@ Main function class in jingtum-lib-csharp. It creates a handle with jingtum, mak
 * CallContractTx(options)
 
 ### Remote(url, localSign)
-options:
+#### options
 url: The jingtum websocket server url.
 localSign: Whether sign transaction in local.
 
-sample:
+#### sample
+```
 var remote = new remote("ws://123.57.219.57:5020", true);
+```
 
 ### Connect(callback)
 Each remote object should connect jingtum first. Now jingtum should connect manual, only then you can send request to backend.
 Callback as MessageCallback<ConnectResponse>.
 
 #### sample
+```
 remote.Connect(result =>
 {
-	if(result.Exception != null)
-	{
-		Console.Write(result.Exception.Message);
-	}
-	else
-	{
-		Console.Write(result.Message);
-	}
+	if(result.Exception != null)	
+	{	
+		Console.Write(result.Exception.Message);		
+	}	
+	else	
+	{	
+		Console.Write(result.Message);		
+	}	
 });
+```
 
 ### Disconnect()
 Remote object can be disconnected manual, and no parameters are required.
 
-sample:
+#### sample
+```
 remote.Disconnect();
+```
 
 ### RequestServerInfo()
 Create request object and get server info from jingtum.
 Callback as MessageCallback<ServerInfoResponse>.
 
-sample:
+#### sample
+```
 var req = remote.RequestServerInfo();
 req.Submit(reqResult =>
 {
@@ -86,13 +97,14 @@ req.Submit(reqResult =>
 	// Node: "n9LxdTZbjjQnuPiM5SgwPYQndfb64YHbmCp1mhsoch7uw5HQJ3k6" //jingtum node id
 	// State: "full   34:35:40" //currenct jingtum node state.
 });
-
+```
 
 ### RequestLedgerClosed()
 Create request object and get last closed ledger in system.
 Callback as MessageCallback<LedgerClosedResponse>.
 
-Sample:
+#### sample
+```
 var req = remote.RequestLedgerClosed();
 req.Submit(reqResult =>
 {
@@ -100,18 +112,20 @@ req.Submit(reqResult =>
 	// LedgerIndex: 375596 //last closed ledger height info.
 	// LedgerHash: "B5F6758A269778C7DD503109F711D4EE41653C0F78D908A4FCD5BB022D2E74D8" //last closed ledger height info.
 });
+```
 
 ### RequestLedger(options)
 Create request object and get ledger in system.
 Callback as MessageCallback<LedgerResponse>.
 
-options:
+#### options
 (If none is provided, then last closed ledger is returned.)
 LedgerIndex: The ledger index.
 LedgerHash: The ledger hash.
 Transactions: Whether include the transactions list in ledger.
 
-sample:
+#### sample
+```
 var req = remote.RequestLedger(newLedgerOptions{ LedgerIndex = 330784, Transactions = true});
 req.Submit(reqResult =>
 {
@@ -123,15 +137,17 @@ req.Submit(reqResult =>
 	//TotalCoins: "600000000000000000" //total swt in system. 
 	//Transactions: [array] //transactions list
 });
+```
 
 ### RequestTx(options)
 Query one transaction information.
 Callback as MessageCallback<TxResponse>.
 
-options:
+#### options
 Hash: The transaction hash.
 
-sample:
+#### sample
+```
 var req = remote.RequestTx(new TxOptions { Hash = "BDE5FAA4F287353E65B3AC603F538DE091F1D8F4723A120BD7D930C5C4668FE2" });
 req.Submit(reqResult =>
 {
@@ -151,16 +167,18 @@ req.Submit(reqResult =>
 	//Meta: [JingTum.Lib.Meta]
 	//TxResult: [JingTum.Lib.SentTxResult] // diffrent transaction type has different type of TxResult
 });
+```
 
 ### RequestAccountInfo(options)
 Get account info.
 Callback as MessageCallback<AccountInfoResponse>.
 
-options:
+#### options
 Account: The wallet address.
 LedgerIndex: (optional) 
 
-sample:
+#### sample
+```
 var req = remote.RequestAccountInfo(new AccountInfoOptions { Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1" });
 req.Submit(reqResult =>
 {
@@ -178,17 +196,18 @@ req.Submit(reqResult =>
 	//Sequence: 99
 	//Index: "1DEF8374E9B8043F6B7306E9DCC039D513C8B48E8415BBC8467F24F0DCDB767E"
 });
-
+```
 
 ### RequestAccountTums(options)
 Each account helds many jingtum tums, and the received and sent tums can be found by RequestAccountTums.
 Callback as MessageCallback<AccountTumsResponse>.
 
-options:
+#### options
 Account: The wallet address.
 LedgerIndex: (optional)
 
-sample:
+#### sample
+```
 var req = remote.RequestAccountTums(new AccountTumsOptions { Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1" });
 req.Submit(reqResult =>
 {
@@ -199,19 +218,20 @@ req.Submit(reqResult =>
 	//SendCurrencies: ["CNY"] //tums that will be sent by this account.
 	//Validated: True
 });
-
+```
 
 ### RequestAccountRelations(options)
 Jingtum wallet is connected by many relations. Now jingtum support `trust`, `authorize` and `freeze` relation, all can be query by requestAccountRelations.
 Callback as MessageCallback<AccountRelationsResponse>.
 
-options:
+#### options
 Account: The wallet addres.
 Type: Trust, Ahthorize, Freeze
 Ledger: (Optional)
 Limit: (options) Limit the return relations count.
 
-sample:
+#### sample
+```
 var req = remote.RequestAccountRelations(new AccountRelationsOptions
 {
 	Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
@@ -233,17 +253,19 @@ req.Submit(reqResult =>
 	//Currency: "CNY"
 	//Limit: "100"
 });
+```
 
 ### RequestAccountOffers(options)
 Query account's current offer that is suspended on jingtum system, and will be filled by other accounts.
 Callback as MessageCallback<AccountOffers>.
 
-options:
+#### options
 Account: The wallet address.
 LedgerIndex: (optional)
 Limit: (options) Limit the return offers count.
 
-sample:
+#### sample
+```
 var req = remote.RequestAccountOffers(new AccountOffersOptions
 {
 	Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
@@ -266,17 +288,19 @@ req.Submit(reqResult =>
 	//TakerPays: [CNY:jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS]
 	//IsSell: True
 });
+```
 
 ### RequestAccountTx(options)
 Query account transactions.
 Callback as MessageCallback<AccountTxResponse>.
 
-options:
+#### options
 Account: The wallet address.
 LedgerIndex: (optional) 
 Limit: (optional) Limit the return tx count.
 
-sample:
+#### sample
+```
 var req = remote.RequestAccountTx(new AccountTxOptions
 {
 	Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1"
@@ -301,6 +325,7 @@ req.Submit(reqResult =>
 	//Memos: [Array]
 	//Effects: [Array]
 });
+```
 
 ### RequestOrderBook(options)
 Query order book info.
@@ -309,11 +334,12 @@ Callback as MessageCallback<OrderBookReponse>.
 Firstly , each order book has a currency pair, as AAA/BBB. When to quer the bid orders, gets is AAA and pays is BBB. When to query the ask orders, gets is BBB and pays is AAA.
 The result is array of orders.
 
-options:
+#### options
 Gets: Amount object. (ignore the Value)
 Pays: Amount object. (ignore the Value)
 
-sample:
+#### sample
+```
 var req = remote.RequestOrderBook(new OrderBookOptions
 {
 	Gets = new Amount ("SWT", ""),
@@ -340,17 +366,19 @@ req.Submit(reqResult =>
 	//IsSell: False
 	//Price: "0.42999976299225661844123393"
 });
+```
 
 ### RequestPathFind(options)
 Query path from one curreny to another.
 Callback as MessageCallback<PathFindResponse>.
 
-options:
+#### options
 Account: The payment source address.
 Destination: The payment target address.
 Amount: The payment amount.
 
-sample:
+#### sample
+```
 var req = remote.RequestOrderBook(new OrderBookOptions
 {
 	Account = "jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT",
@@ -369,6 +397,7 @@ req.Submit(reqResult =>
 	//Key: "BC3B31D597947B3FEAFEE7D78A460DB16B37C939"
 	//Choice: [SWT] (Value: "0.300752")
 }
+```
 
 In this path find, the user want to send CNY to another account. The system provides one choice which is to use SWT.
 
