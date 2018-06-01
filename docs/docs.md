@@ -47,8 +47,8 @@ Main function class in jingtum-lib-csharp. It creates a handle with jingtum, mak
 
 ### Remote(url, localSign)
 #### options
-url: The jingtum websocket server url.
-localSign: Whether sign transaction in local.
+* url: The jingtum websocket server url.
+* localSign: Whether sign transaction in local.
 
 #### sample
 ```
@@ -57,7 +57,7 @@ var remote = new remote("ws://123.57.219.57:5020", true);
 
 ### Connect(callback)
 Each remote object should connect jingtum first. Now jingtum should connect manual, only then you can send request to backend.
-Callback as MessageCallback<ConnectResponse>.
+Callback as MessageCallback&lt;ConnectResponse&gt;.
 
 #### sample
 ```
@@ -84,7 +84,7 @@ remote.Disconnect();
 
 ### RequestServerInfo()
 Create request object and get server info from jingtum.
-Callback as MessageCallback<ServerInfoResponse>.
+Callback as MessageCallback&lt;ServerInfoResponse&gt;.
 
 #### sample
 ```
@@ -101,7 +101,7 @@ req.Submit(reqResult =>
 
 ### RequestLedgerClosed()
 Create request object and get last closed ledger in system.
-Callback as MessageCallback<LedgerClosedResponse>.
+Callback as MessageCallback&lt;LedgerClosedResponse&gt;.
 
 #### sample
 ```
@@ -116,13 +116,13 @@ req.Submit(reqResult =>
 
 ### RequestLedger(options)
 Create request object and get ledger in system.
-Callback as MessageCallback<LedgerResponse>.
+Callback as MessageCallback&lt;LedgerResponse&gt;.
 
 #### options
 (If none is provided, then last closed ledger is returned.)
-LedgerIndex: The ledger index.
-LedgerHash: The ledger hash.
-Transactions: Whether include the transactions list in ledger.
+* LedgerIndex: The ledger index.
+* LedgerHash: The ledger hash.
+* Transactions: Whether include the transactions list in ledger.
 
 #### sample
 ```
@@ -141,10 +141,10 @@ req.Submit(reqResult =>
 
 ### RequestTx(options)
 Query one transaction information.
-Callback as MessageCallback<TxResponse>.
+Callback as MessageCallback&lt;TxResponse&gt;.
 
 #### options
-Hash: The transaction hash.
+* Hash: The transaction hash.
 
 #### sample
 ```
@@ -171,11 +171,11 @@ req.Submit(reqResult =>
 
 ### RequestAccountInfo(options)
 Get account info.
-Callback as MessageCallback<AccountInfoResponse>.
+Callback as MessageCallback&lt;AccountInfoResponse&gt;.
 
 #### options
-Account: The wallet address.
-LedgerIndex: (optional) 
+* Account: The wallet address.
+* LedgerIndex: (optional) 
 
 #### sample
 ```
@@ -200,11 +200,11 @@ req.Submit(reqResult =>
 
 ### RequestAccountTums(options)
 Each account helds many jingtum tums, and the received and sent tums can be found by RequestAccountTums.
-Callback as MessageCallback<AccountTumsResponse>.
+Callback as MessageCallback&lt;AccountTumsResponse&gt;.
 
 #### options
-Account: The wallet address.
-LedgerIndex: (optional)
+* Account: The wallet address.
+* LedgerIndex: (optional)
 
 #### sample
 ```
@@ -222,13 +222,13 @@ req.Submit(reqResult =>
 
 ### RequestAccountRelations(options)
 Jingtum wallet is connected by many relations. Now jingtum support `trust`, `authorize` and `freeze` relation, all can be query by requestAccountRelations.
-Callback as MessageCallback<AccountRelationsResponse>.
+Callback as MessageCallback&lt;AccountRelationsResponse&gt;.
 
 #### options
-Account: The wallet addres.
-Type: Trust, Ahthorize, Freeze
-Ledger: (Optional)
-Limit: (options) Limit the return relations count.
+* Account: The wallet addres.
+* Type: Trust, Ahthorize, Freeze
+* Ledger: (Optional)
+* Limit: (options) Limit the return relations count.
 
 #### sample
 ```
@@ -257,12 +257,12 @@ req.Submit(reqResult =>
 
 ### RequestAccountOffers(options)
 Query account's current offer that is suspended on jingtum system, and will be filled by other accounts.
-Callback as MessageCallback<AccountOffers>.
+Callback as MessageCallback&lt;AccountOffers&gt;.
 
 #### options
-Account: The wallet address.
-LedgerIndex: (optional)
-Limit: (options) Limit the return offers count.
+* Account: The wallet address.
+* LedgerIndex: (optional)
+* Limit: (options) Limit the return offers count.
 
 #### sample
 ```
@@ -292,12 +292,12 @@ req.Submit(reqResult =>
 
 ### RequestAccountTx(options)
 Query account transactions.
-Callback as MessageCallback<AccountTxResponse>.
+Callback as MessageCallback&lt;AccountTxResponse&gt;.
 
 #### options
-Account: The wallet address.
-LedgerIndex: (optional) 
-Limit: (optional) Limit the return tx count.
+* Account: The wallet address.
+* LedgerIndex: (optional) 
+* Limit: (optional) Limit the return tx count.
 
 #### sample
 ```
@@ -329,14 +329,14 @@ req.Submit(reqResult =>
 
 ### RequestOrderBook(options)
 Query order book info.
-Callback as MessageCallback<OrderBookReponse>.
+Callback as MessageCallback&lt;OrderBookReponse&gt;.
 
 Firstly , each order book has a currency pair, as AAA/BBB. When to quer the bid orders, gets is AAA and pays is BBB. When to query the ask orders, gets is BBB and pays is AAA.
 The result is array of orders.
 
 #### options
-Gets: Amount object. (ignore the Value)
-Pays: Amount object. (ignore the Value)
+* Gets: Amount object. (ignore the Value)
+* Pays: Amount object. (ignore the Value)
 
 #### sample
 ```
@@ -370,12 +370,12 @@ req.Submit(reqResult =>
 
 ### RequestPathFind(options)
 Query path from one curreny to another.
-Callback as MessageCallback<PathFindResponse>.
+Callback as MessageCallback&lt;PathFindResponse&gt;.
 
 #### options
-Account: The payment source address.
-Destination: The payment target address.
-Amount: The payment amount.
+* Account: The payment source address.
+* Destination: The payment target address.
+* Amount: The payment amount.
 
 #### sample
 ```
