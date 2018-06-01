@@ -703,7 +703,7 @@ namespace TestApp
 
         private void btnOrderBooksStub_Click(object sender, EventArgs e)
         {
-            var stub = _remote.CreateOrderBooksStub();
+            var stub = _remote.CreateOrderBookStub();
             var swtAmount = new Amount { Currency = "SWT" };
             var cnyAmount = new Amount { Currency = "CNY", Issuer = "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or" };
             stub.RegisterListener(swtAmount, cnyAmount, OnSwtCnyOrderBook);

@@ -876,7 +876,7 @@ namespace JingTum.Lib
         /// Creates the order book stub to subscribe events of order book.
         /// </summary>
         /// <returns>A <see cref="OrderBook"/> object.</returns>
-        public OrderBook CreateOrderBooksStub()
+        public OrderBook CreateOrderBookStub()
         {
             return new OrderBook(this);
         }
