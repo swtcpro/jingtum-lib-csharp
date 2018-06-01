@@ -53,9 +53,18 @@ namespace JingTum.Lib
         /// Callback entry for request.
         /// </summary>
         /// <param name="callback">The callback for the request result.</param>
-        public async void Submit(MessageCallback<T> callback = null)
+        public void Submit(MessageCallback<T> callback = null)
         {
-            await SubmitAsync(callback);
+            foreach (KeyValuePair<string, object> pair in _message)
+            {
+                if (pair.Value is Exception exception)
+                {
+                    callback(new MessageResult<T>(null, exception));
+                    return;
+                }
+            }
+
+            _remote.Submit(_command, _message, _filter, callback);
         }
 
         /// <summary>
@@ -66,34 +75,26 @@ namespace JingTum.Lib
         /// <returns>The task.</returns>
         public async Task<MessageResult<T>> SubmitAsync(MessageCallback<T> callback = null, int timeout = 60000)
         {
+            var resetEvent = new AutoResetEvent(false);
             MessageResult<T> result = null;
             MessageCallback<T> callbackWrapper = r =>
             {
                 result = r;
                 callback?.Invoke(r);
+                resetEvent.Set();
             };
 
-            foreach (KeyValuePair<string, object> pair in _message)
-            {
-                if (pair.Value is Exception exception)
-                {
-                    callbackWrapper(new MessageResult<T>(null, exception));
-                    return result;
-                }
-            }
-
-            var resetEvent = new AutoResetEvent(false);
             var task = new Task(() =>
             {
                 if (!resetEvent.WaitOne(timeout))
                 {
                     callbackWrapper(new MessageResult<T>(null, new TimeoutException()));
                 }
-                resetEvent.Dispose();
             });
             task.Start();
 
-            _remote.Submit(_command, _message, _filter, callbackWrapper, resetEvent);
+            Submit(callbackWrapper);
+
             await task;
             return result;
         }

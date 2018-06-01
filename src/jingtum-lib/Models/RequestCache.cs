@@ -13,7 +13,6 @@ namespace JingTum.Lib
         public object Data { get; set; }
         public Func<object, object> Filter { get; set; }
         public MessageCallback<object> Callback { get; set; }
-        public AutoResetEvent ResetEvent { get; set; }
     }
 
     internal class PathCache

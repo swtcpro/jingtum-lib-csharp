@@ -84,17 +84,33 @@ namespace JingTum.Lib
         /// <summary>
         /// Connects to jintum asynchronous.
         /// </summary>
+        /// <param name="callback">The callback.</param>
         /// <param name="timeout">The timeout. Default is 60000.</param>
         /// <returns>The result of connect.</returns>
-        public async Task<MessageResult<ConnectResponse>> ConnectAsync(int timeout = 60000)
+        public async Task<MessageResult<ConnectResponse>> ConnectAsync(MessageCallback<ConnectResponse> callback = null, int timeout = 60000)
         {
-            var task = _server.ConnectAsync(null, data =>
+            var resetEvent = new AutoResetEvent(false);
+            MessageResult<ConnectResponse> result = null;
+            MessageCallback<ConnectResponse> callbackWrapper = r =>
             {
-                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseData<ConnectResponse>>(data as string);
-                return response.Result;
-            }, timeout);
+                result = r;
+                callback?.Invoke(r);
+                resetEvent.Set();
+            };
+
+            var task = new Task(() =>
+            {
+                if (!resetEvent.WaitOne(timeout))
+                {
+                    callbackWrapper(new MessageResult<ConnectResponse>(null, new TimeoutException()));
+                }
+            });
+            task.Start();
+
+            Connect(callbackWrapper);
+
             await task;
-            return task.Result;
+            return result;
         }
 
         /// <summary>
@@ -220,11 +236,6 @@ namespace JingTum.Lib
                     var requestJson = response.Request?.ToString();
                     request.Callback(new MessageResult<object>(data, new ResponseException(message) { Error = response.Error, ErrorCode = response.ErrorCode, Request=requestJson }));
                 }
-
-                if (request.ResetEvent != null)
-                {
-                    request.ResetEvent.Set();
-                }
             }
         }
 
@@ -250,7 +261,7 @@ namespace JingTum.Lib
             OnPathFind(args);
         }
 
-        internal void Submit<T>(string command, dynamic data, Func<object, T> filter, MessageCallback<T> callback, AutoResetEvent resetEvent = null)
+        internal void Submit<T>(string command, dynamic data, Func<object, T> filter, MessageCallback<T> callback)
         {
             int requestId = _server.SendMessage(command, data);
             if (requestId < 0)
@@ -261,7 +272,6 @@ namespace JingTum.Lib
             var cache = new RequestCache();
             cache.Command = command;
             cache.Data = data;
-            cache.ResetEvent = resetEvent;
 
             cache.Filter = (message =>
             {

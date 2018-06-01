@@ -110,7 +110,7 @@ namespace UnitTests
             for (int i = 0; i < count; i++)
             {
                 var remote = new Remote(ServerUrl);
-                var tc = remote.ConnectAsync(DeferredWaitingTime * 10);
+                var tc = remote.ConnectAsync(null, DeferredWaitingTime * 10);
                 var index = i;
                 var task = tc.ContinueWith(_ =>
                 {
@@ -147,21 +147,17 @@ namespace UnitTests
             var watch = new Stopwatch();
             watch.Start();
 
-            var results = new ServerInfoResponse[count];
-            var tasks = new Task[count];
+            var tasks = new Task<MessageResult<ServerInfoResponse>>[count];
             for (int i = 0; i < count; i++)
             {
                 var remote = new Remote(ServerUrl);
-                var tc= remote.ConnectAsync(DeferredWaitingTime*10);
+                var tc= remote.ConnectAsync(null, DeferredWaitingTime*10);
                 var index = i;
                 tasks[i] = tc.ContinueWith(_ =>
                 {
                     var tr = remote.RequestServerInfo().SubmitAsync(null, DeferredWaitingTime * 10);
-                    if (tr.Wait(DeferredWaitingTime*10))
-                    {
-                        results[index] = tr.Result.Result;
-                    }
-                });
+                    return tr;
+                }).Result;
             }
 
             var success = Task.WaitAll(tasks, DeferredWaitingTime * 100);
@@ -171,12 +167,58 @@ namespace UnitTests
             Assert.IsTrue(success);
 
             var failedCount = 0;
-            foreach (var result in results)
+            foreach (var task in tasks)
             {
-                //var hash = result?.Ledger?.Hash;
-                var hash = result?.Info?.Version;
-                if (hash == null) failedCount++;
+                var version = task.Result?.Result?.Info?.Version;
+                if (version == null) failedCount++;
             }
+            Assert.AreEqual(0, failedCount);
+        }
+
+        [TestMethod]
+        [DataRow(2)]
+        [DataRow(10)]
+        [DataRow(20)]
+        [DataRow(50)]
+        [DataRow(100)]
+        public void TestOneRemoteDifferentQueries_Parallel(int count)
+        {
+            var remote = new Remote(ServerUrl);
+            var tc = remote.ConnectAsync();
+            Assert.IsTrue(tc.Wait(DeferredWaitingTime));
+
+            var watch = new Stopwatch();
+            watch.Start();
+            var tasks = new Task[count];
+            for (int i = 0; i < count; i++)
+            {
+                tasks[i] = i % 2 == 0
+                    ? (Task)remote.RequestLedger().SubmitAsync()
+                    : remote.RequestServerInfo().SubmitAsync();
+            }
+
+            var success = Task.WaitAll(tasks, DeferredWaitingTime * 100);
+            watch.Stop();
+            TestContext.WriteLine(watch.ElapsedMilliseconds.ToString());
+            Assert.IsTrue(success);
+
+            var failedCount = 0;
+            for (int i = 0; i < count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    var task = (Task<MessageResult<LedgerResponse>>)tasks[i];
+                    var hash = task.Result?.Result?.Ledger?.Hash;
+                    if (hash == null) failedCount++;
+                }
+                else
+                {
+                    var task = (Task<MessageResult<ServerInfoResponse>>)tasks[i];
+                    var version = task.Result?.Result?.Info?.Version;
+                    if (version == null) failedCount++;
+                }
+            }
+
             Assert.AreEqual(0, failedCount);
         }
     }

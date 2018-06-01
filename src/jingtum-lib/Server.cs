@@ -38,43 +38,20 @@ namespace JingTum.Lib
             Disconnect();
         }
 
-        public async virtual void Connect(MessageCallback<ConnectResponse> callback, Func<object, ConnectResponse> filter = null)
+        public virtual void Connect(MessageCallback<ConnectResponse> callback, Func<object, ConnectResponse> filter = null)
         {
-            await ConnectAsync(callback, filter);
-        }
-
-        internal async Task<MessageResult<ConnectResponse>> ConnectAsync(MessageCallback<ConnectResponse> callback, Func<object, ConnectResponse> filter = null, int timeout = 60000)
-        {
-            if (_connected) return null;
+            if (_connected) return;
 
             lock (_locker)
             {
                 // already connected
                 if (_ws != null && (_ws.State == WebSocketState.Connecting || _ws.State == WebSocketState.Open))
                 {
-                    return null;
+                    return;
                 }
             }
 
             var resetEvent = new AutoResetEvent(false);
-
-            MessageResult<ConnectResponse> result = null;
-            MessageCallback<ConnectResponse> callbackWrapper = r =>
-            {
-                result = r;
-                callback?.Invoke(r);
-                resetEvent.Set();
-            };
-
-            var task = new Task(() =>
-            {
-                if (!resetEvent.WaitOne(timeout))
-                {
-                    callbackWrapper(new MessageResult<ConnectResponse>(null, new TimeoutException()));
-                }
-                resetEvent.Dispose();
-            });
-            task.Start();
 
             try
             {
@@ -82,8 +59,8 @@ namespace JingTum.Lib
             }
             catch (Exception ex)
             {
-                callbackWrapper(new MessageResult<ConnectResponse>(null, ex));
-                return result;
+                callback(new MessageResult<ConnectResponse>(null, ex));
+                return;
             }
 
             Disconnect();
@@ -100,27 +77,24 @@ namespace JingTum.Lib
                             _ws.Opened += (s, e) =>
                             {
                                 _opened = true;
-                                _remote.Subscribe<ConnectResponse>("ledger", "server").SetFilter(filter).Submit(callbackWrapper);
+                                _remote.Subscribe<ConnectResponse>("ledger", "server").SetFilter(filter).Submit(callback);
                             };
                             _ws.Closed += OnWSClosed;
                             _ws.Error += (s, e) =>
                             {
-                                callbackWrapper(new MessageResult<ConnectResponse>(null, e.Exception));
+                                callback(new MessageResult<ConnectResponse>(null, e.Exception));
                             };
                             _ws.MessageReceived += OnWSMessage;
                         }
                         catch (Exception ex)
                         {
-                            callbackWrapper(new MessageResult<ConnectResponse>(null, ex));
+                            callback(new MessageResult<ConnectResponse>(null, ex));
                         }
 
                         _ws.Open();
                     }
                 }
             }
-
-            await task;
-            return result;
         }
 
         public virtual void Disconnect()

@@ -397,9 +397,41 @@ namespace JingTum.Lib
         /// Submits entry for transaction.
         /// </summary>
         /// <param name="callback">The callback.</param>
-        public async void Submit(MessageCallback<T> callback)
+        public void Submit(MessageCallback<T> callback)
         {
-            await SubmitAsync(callback);
+            if (_txJson.Exception != null)
+            {
+                callback(new MessageResult<T>(null, _txJson.Exception));
+                return;
+            }
+
+            if (_type == TransactionType.Signer || _localSigned)//直接将blob传给底层
+            {
+                dynamic data = new ExpandoObject();
+                data.tx_blob = _txJson.Blob;
+                _remote.Submit("submit", data, _filter, callback);
+            }
+            else if (_remote.LocalSign)//签名之后传给底层
+            {
+                Sign(r =>
+                {
+                    if (r.Exception != null)
+                    {
+                        callback(new MessageResult<T>("sign error: ", r.Exception));
+                    }
+
+                    dynamic data = new ExpandoObject();
+                    data.tx_blob = r.Result;
+                    _remote.Submit("submit", data, _filter, callback);
+                });
+            }
+            else//不签名交易传给底层
+            {
+                dynamic data = new ExpandoObject();
+                data.secret = _secret;
+                data.tx_json = _txJson;
+                _remote.Submit("submit", data, _filter, callback);
+            }
         }
 
         /// <summary>
@@ -410,58 +442,25 @@ namespace JingTum.Lib
         /// <returns>The task.</returns>
         public async Task<MessageResult<T>> SubmitAsync(MessageCallback<T> callback = null, int timeout = 60000)
         {
+            var resetEvent = new AutoResetEvent(false);
             MessageResult<T> result = null;
             MessageCallback<T> callbackWrapper = r =>
             {
                 result = r;
                 callback?.Invoke(r);
+                resetEvent.Set();
             };
 
-            if (_txJson.Exception != null)
-            {
-                callbackWrapper(new MessageResult<T>(null, _txJson.Exception));
-                return result;
-            }
-
-            var resetEvent = new AutoResetEvent(false);
             var task = new Task(() =>
             {
                 if (!resetEvent.WaitOne(timeout))
                 {
                     callbackWrapper(new MessageResult<T>(null, new TimeoutException()));
                 }
-                resetEvent.Dispose();
             });
             task.Start();
 
-            if (_type == TransactionType.Signer || _localSigned)//直接将blob传给底层
-            {
-                dynamic data = new ExpandoObject();
-                data.tx_blob = _txJson.Blob;
-                _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
-            }
-            else if (_remote.LocalSign)//签名之后传给底层
-            {
-                Sign(r =>
-                {
-                    if (r.Exception != null)
-                    {
-                        callbackWrapper(new MessageResult<T>("sign error: ", result.Exception));
-                        resetEvent.Set();
-                    }
-
-                    dynamic data = new ExpandoObject();
-                    data.tx_blob = r.Result;
-                    _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
-                });
-            }
-            else//不签名交易传给底层
-            {
-                dynamic data = new ExpandoObject();
-                data.secret = _secret;
-                data.tx_json = _txJson;
-                _remote.Submit("submit", data, _filter, callbackWrapper, resetEvent);
-            }
+            Submit(callbackWrapper);
 
             await task;
             return result;
