@@ -59,7 +59,7 @@ by the callback function.
 Main handler for backend system. It creates a handle with jingtum, makes request to jingtum, 
 subscribes event to jingtum, and gets info from jingtum.
 
-## Requestn&lt;T&gt; class
+## Request&lt;T&gt; class
 Request server and account info without secret. Request is used to get server, account, orderbook 
 and path info. Request is not secret required, and will be public to every one. All request is 
 asynchronized and should provide a callback. Each callback has two parameter, one is error and 
