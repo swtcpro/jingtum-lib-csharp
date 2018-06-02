@@ -3,18 +3,17 @@ The jingtum-lib-csharp library to be used for interacting with jingtum blockchai
 This is the c# version.
 
 ## Source code  
-* src/jingtum-lib  
-The source codes of jingtum lib.
-* src/UnitTests
-The unit tests for jingtum lib.
-* src/TespApp
-The WindowsForm application for testing the jingtum lib apis.
-* Samples
-The samples to use the jingtum lib.
-* Docs
-The documentation for the jingtum lib.
-* Releases
-The releases of the jingtum lib.
+* src/jingtum-lib - The source codes of jingtum lib.
+* src/UnitTests - The unit tests for jingtum lib.
+* src/TestApp - The WindowsForm application for testing the jingtum lib apis.
+* Samples - The samples to use the jingtum lib.
+* docs - The documentation for the jingtum lib.
+
+## Development Environment
+* Windows 10
+* VisualStudio 2017
+* C# 7.0
+* .NET Framework 4.5
 
 ## References:
 The following libraries are referenced.
@@ -68,8 +67,8 @@ the other is result.
 ## Transaction&lt;T&gt; class
 Post request to server with account secret. Transaction is used to make transaction and collect 
 transaction parameter. Each transaction is secret required, and transaction can be signed local 
-or remote. Now remote sign and local sign are supported. All transaction is asynchronized and 
-should provide a callback. Each callback has two parameter, one is error and the other is result.
+or remote. Now remote sign and local sign are supported. All transactions are asynchronized and 
+should provide a callback. Each callback provides the json message, exception, and result object.
 
 ## Events  
 You can listen events of the server.  
