@@ -18,10 +18,12 @@ https://github.com/swtcpro/jingtum-lib-nodejs
 * Both Request class and Transacton class both use Submit(callback) method to submit date to server.
 * The result can be handled by the callback.
 
+```
 |-----------|     |--------------|     |--------|     |--> [ Request Object ]
 | WebSocket | --> | Server       | --> | Remote | --> |    
 | Protocal  | <-- | Inner Class  | <-- | Class  |     |--> [ Transaction Object]
 |-----------|     |--------------|     |--------|
+```
 
 ## Stubs
 * Account stub listen all the transactions in server, and then filter them for specfic account.
