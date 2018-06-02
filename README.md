@@ -5,7 +5,7 @@ This is the c# version.
 ## Source code  
 * src/jingtum-lib - The source codes of jingtum lib.
 * src/UnitTests - The unit tests for jingtum lib.
-* src/TestApp - The WindowsForm application for testing the jingtum lib apis.
+* src/TestApp - The Windows Forms application for testing the jingtum lib apis.
 * Samples - The samples to use the jingtum lib.
 * docs - The documentation for the jingtum lib.
 
@@ -46,8 +46,8 @@ Submit() method.
 request to server. You can get the result data by the callback function.  
 
     remote.RequestServerInfo.Submit((result)=&gt;  
-    {  
-	    // log result.Exception or result.Message  
+    {
+        // log result.Exception or result.Message  
     });  
 
 4) Close the connection.
@@ -60,9 +60,9 @@ subscribes event to jingtum, and gets info from jingtum.
 
 ## Request&lt;T&gt; class
 Request server and account info without secret. Request is used to get server, account, orderbook 
-and path info. Request is not secret required, and will be public to every one. All request is 
-asynchronized and should provide a callback. Each callback has two parameter, one is error and 
-the other is result.
+and path info. Request is not secret required, and will be public to every one. All requests are 
+asynchronized and should provide a callback. Each callback provides the json message, exception, 
+and result object.
 
 ## Transaction&lt;T&gt; class
 Post request to server with account secret. Transaction is used to make transaction and collect 
