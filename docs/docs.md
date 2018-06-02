@@ -15,7 +15,7 @@ https://github.com/swtcpro/jingtum-lib-nodejs
 * The Remote class provides public APIs to create two kinds of objects: Request object, and Transaction object.
 * The Request class is used to request info.
 * The Transaction class is used to operate transactions. 
-* Both Request class and Transacton class both use Submit(callback) method to submit date to server.
+* Request class and Transacton class both use Submit(callback) method to submit data to server.
 * The result can be handled by the callback.
 
 ```
@@ -27,7 +27,7 @@ https://github.com/swtcpro/jingtum-lib-nodejs
 
 ## Stubs
 * Account stub listen all the transactions in server, and then filter them for specfic account.
-* OrderBook stub listen all the transactions in server, and then filter them for specfic gets/pays paire.
+* OrderBook stub listen all the transactions in server, and then filter them for specfic gets/pays pair.
 
 ## Data
 * The json string is sent to server for request operation.
@@ -189,7 +189,7 @@ Callback as MessageCallback&lt;LedgerResponse&gt;.
 
 #### sample
 ```
-var req = remote.RequestLedger(newLedgerOptions{ LedgerIndex = 330784, Transactions = true});
+var req = remote.RequestLedger(new LedgerOptions{ LedgerIndex = 330784, Transactions = true});
 req.Submit(reqResult =>
 {
 	var info = reqResult.Result.Ledger;
@@ -262,7 +262,7 @@ req.Submit(reqResult =>
 ```
 
 ### RequestAccountTums(options)
-Each account helds many jingtum tums, and the received and sent tums can be found by RequestAccountTums.
+Each account holds many jingtum tums, and the received and sent tums can be found by RequestAccountTums.
 Callback as MessageCallback&lt;AccountTumsResponse&gt;.
 
 #### options
@@ -284,7 +284,7 @@ req.Submit(reqResult =>
 ```
 
 ### RequestAccountRelations(options)
-Jingtum wallet is connected by many relations. Now jingtum support `trust`, `authorize` and `freeze` relation, all can be query by requestAccountRelations.
+Jingtum wallet is connected by many relations. Now jingtum supports `trust`, `authorize` and `freeze` relation, all can be queried by requestAccountRelations.
 Callback as MessageCallback&lt;AccountRelationsResponse&gt;.
 
 #### options
@@ -360,7 +360,7 @@ Callback as MessageCallback&lt;AccountTxResponse&gt;.
 #### options
 * Account: The wallet address.
 * LedgerIndex: (optional) 
-* Limit: (optional) Limit the return tx count.
+* Limit: (optional) Limit the return trancations count.
 
 #### sample
 ```
@@ -395,9 +395,9 @@ req.Submit(reqResult =>
 
 ### RequestOrderBook(options)
 Query order book info.
-Callback as MessageCallback&lt;OrderBookReponse&gt;.
+Callback as MessageCallback&lt;OrderBookResponse&gt;.
 
-Firstly , each order book has a currency pair, as AAA/BBB. When to quer the bid orders, gets is AAA and pays is BBB. When to query the ask orders, gets is BBB and pays is AAA.
+Firstly, each order book has a currency pair, as AAA/BBB. When to query the bid orders, gets is AAA and pays is BBB. When to query the ask orders, gets is BBB and pays is AAA.
 The result is array of orders.
 
 #### options
@@ -465,15 +465,15 @@ req.Submit(reqResult =>
 }
 ```
 
-In this path find, the user want to send CNY to another account. The system provides one choice which is to use SWT.
+In this path find, the user wants to send CNY to another account. The system provides one choice which is to use SWT.
 
 In each choice, one `Key` is presented. Key is used to "SetPath" in transaction parameter setting.
 
 ### CreateAccountStub()
-AcccountStub is Account class, and is used to subscribe events of account. Can subscribe each account on account stub. 
+AcccountStub is Account class, and is used to subscribe events of account. User can subscribe each account on account stub. 
 
 ### CreateOrderBookStub()
-OrderBookStub is same as AccountStub. Can subscrible each currency pair on orderbook stub.
+OrderBookStub is same as AccountStub. User can subscrible each currency pair on orderbook stub.
 
 ### BuildPaymentTx(options)
 Normal payment transaction. 
@@ -611,7 +611,7 @@ tx.Submit(txResult => {
 ```
 
 ### BuildOfferCancelTx(options)
-Order can be cancel by order sequence. The sequence can be get when order is submitted or from offer query operation.
+Order can be canceled by order sequence. The sequence can be get when order is submitted or from offer query operation.
 
 #### options
 * Account: The account address.
@@ -720,7 +720,7 @@ Select one ledger for current request, ledger can be follow options,
 
 After ledger is selected, the result is for the specified ledger.
 
-### submit(callback)
+### Submit(callback)
 
 Callback entry for request. Each callback returns the raw json message, exception and parsed result.
 
@@ -877,7 +877,7 @@ User creates a new offer. It has following info.
 ```
 
 ### OfferCancel
-User cancel the previous created offer. It has following info.
+User cancels the previous created offer. It has following info.
 
 ```
 //Type: OfferCancel
@@ -905,8 +905,8 @@ The offer is bought by or sold to others after the offer is created. It has foll
 //Effects: [Array]
 ```
 
-## NodeEffe class
-Each transaction can have many affect nodes. And different node has different affect. The Effect property indicates the type of the effect. The following transaction effects are listed.
+## NodeEffect class
+Each transaction can have many affect nodes. And different node has different effect. The Effect property indicates the type of the effect. The following transaction effects are listed.
 
 ### OfferFunded
 The offer is actually funded. The suggest prompt message could be: "Offer funded, you use XXX bought/sold XXX with price XXX" . It has following info.
