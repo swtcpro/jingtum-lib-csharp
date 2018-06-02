@@ -448,7 +448,7 @@ namespace JingTum.Lib
             var value1 = decimal.Parse(amount1.Value);
             var value2 = decimal.Parse(amount2.Value);
             var ratio = value1 / value2;
-            return ratio.ToString();
+            return ratio.ToString("0.######");
         }
 
         public static string GetPrice(Amount pays, Amount gets, bool founded)
