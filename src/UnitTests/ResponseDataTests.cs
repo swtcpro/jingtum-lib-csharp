@@ -596,6 +596,139 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestRequestAccountTxResponse_Full()
+        {
+            var remote = new Remote("");
+            remote.SetMockServer(new MockServer(remote, "RequestAccountTx_Full.json"));
+
+            MessageResult<AccountTxResponse> response = null;
+            var deferred = new Task(() => { });
+            var options = new AccountTxOptions();
+            options.Account = "jB9eHCFeCaoxw6d9V9pBx5hiKUGW9K2fbs";
+            remote.RequestAccountTx(options).Submit(r =>
+            {
+                response = r;
+                deferred.Start();
+            });
+
+            Assert.IsTrue(deferred.Wait(DeferredWaitingTime));
+
+            Assert.IsNotNull(response);
+            var result = response.Result;
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual("jB9eHCFeCaoxw6d9V9pBx5hiKUGW9K2fbs", result.Account);
+
+            var tx0 = result.Transactions[0] as ReceivedTxResult;
+            Assert.IsNotNull(tx0);
+
+            var tx3 = result.Transactions[3] as OfferNewTxResult;
+            Assert.IsNotNull(tx3);
+            Assert.AreEqual("850D805B7C3962B72E55CBCDCADEEA53B6B50DBFD1E4F33E728D18C3FA0D813C", tx3.Hash);
+            Assert.AreEqual(OfferType.Sell, tx3.OfferType);
+            var effect3 = tx3.Effects[0] as OfferCreatedEffect;
+            Assert.IsNotNull(effect3);
+            Assert.AreEqual(OfferEffectType.Sell, effect3.Type);
+            Assert.AreEqual("0.042", effect3.Price);
+
+            var tx4 = result.Transactions[4] as SentTxResult;
+            Assert.IsNotNull(tx4);
+
+            var tx5 = result.Transactions[5] as OfferCancelTxResult;
+            Assert.IsNotNull(tx5);
+            Assert.AreEqual("ABFD3C2AC5B97156FB5246C504CBBC071147B666151260756A5FBEC6FCD82A9F", tx5.Hash);
+            Assert.AreEqual(1, tx5.OfferSeq);
+            var effect5 = tx5.Effects[0] as OfferCancelledEffect;
+            Assert.IsNotNull(effect5);
+            Assert.AreEqual(OfferEffectType.Sell, effect5.Type);
+            Assert.AreEqual("0.042", effect5.Price);
+            Assert.IsTrue(effect5.Deleted);
+
+            var tx12 = result.Transactions[12] as RelationSetTxResult;
+            Assert.IsNotNull(tx12);
+
+            var tx15 = result.Transactions[15] as OfferNewTxResult;
+            Assert.IsNotNull(tx15);
+            Assert.AreEqual("2F235C6C5F7839DC16E8896338FA4AB202538BD4415B55688F8B2DBC47269E0E", tx15.Hash);
+            Assert.AreEqual(OfferType.Sell, tx15.OfferType);
+            var effect15 = tx15.Effects[0] as OfferCreatedEffect;
+            Assert.IsNotNull(effect15);
+            Assert.AreEqual(OfferEffectType.Sell, effect15.Type);
+            Assert.AreEqual("1234", effect15.Price);
+
+            var tx20 = result.Transactions[20] as OfferNewTxResult;
+            Assert.IsNotNull(tx20);
+            Assert.AreEqual("6F691169061F18E531D1318BCF695A6F31D8DEC788EC5EF4DB3F91D854112310", tx20.Hash);
+            Assert.AreEqual(OfferType.Sell, tx20.OfferType);
+            var effect20 = tx20.Effects[0] as OfferCreatedEffect;
+            Assert.IsNotNull(effect20);
+            Assert.AreEqual(OfferEffectType.Sell, effect20.Type);
+            Assert.AreEqual("100", effect20.Price);
+
+            var tx22 = result.Transactions[22] as OfferCancelTxResult;
+            Assert.IsNotNull(tx22);
+            Assert.AreEqual("9657367114647ED1A5E12FB49B451F5F85BCFE7A811B15028ACE43522BE4EFB9", tx22.Hash);
+            Assert.AreEqual(12, tx22.OfferSeq);
+            var effect22 = tx22.Effects[0] as OfferCancelledEffect;
+            Assert.IsNotNull(effect22);
+            Assert.AreEqual(OfferEffectType.Sell, effect22.Type);
+            Assert.AreEqual("1234", effect22.Price);
+
+            var tx23 = result.Transactions[23] as AccountSetTxResult;
+            Assert.IsNotNull(tx23);
+
+            var tx25 = result.Transactions[25] as SetRegularKeyTxResult;
+            Assert.IsNotNull(tx25);
+
+            var tx31 = result.Transactions[31] as OfferNewTxResult;
+            Assert.IsNotNull(tx31);
+            Assert.AreEqual("C932078F12BF21A3FF61F8ED921B1DDDFC69D9A4DF0B34FD786ABAD8177715C2", tx31.Hash);
+            Assert.AreEqual(OfferType.Buy, tx31.OfferType);
+            var effect31 = tx31.Effects[0] as OfferBoughtEffect;
+            Assert.IsNotNull(effect31);
+            Assert.AreEqual(OfferEffectType.Bought, effect31.Type);
+            Assert.AreEqual("0.04105", effect31.Price);
+
+            var tx32 = result.Transactions[32] as OfferNewTxResult;
+            Assert.IsNotNull(tx32);
+            Assert.AreEqual("39211C024C8545ABB99EBDC3950F3AA7AA71802AB73699FE6BEF17C4B6179E23", tx32.Hash);
+            Assert.AreEqual(OfferType.Sell, tx32.OfferType);
+            var effect32 = tx32.Effects[0] as OfferCreatedEffect;
+            Assert.IsNotNull(effect32);
+            Assert.AreEqual(OfferEffectType.Sell, effect32.Type);
+            Assert.AreEqual("0.04111", effect32.Price);
+
+            var tx36 = result.Transactions[36] as OfferNewTxResult;
+            Assert.IsNotNull(tx36);
+            Assert.AreEqual("794A871A19D316A3E642C31F8AABA3E9E2D13B823761CE23B8A5B92F2A284878", tx36.Hash);
+            Assert.AreEqual(OfferType.Sell, tx36.OfferType);
+            var effect36 = tx36.Effects[0] as OfferBoughtEffect;
+            Assert.IsNotNull(effect36);
+            Assert.AreEqual(OfferEffectType.Sold, effect36.Type);
+            Assert.AreEqual("0.04104", effect36.Price);
+
+            var tx38 = result.Transactions[38] as OfferEffectTxResult;
+            Assert.IsNotNull(tx38);
+            Assert.AreEqual("0009FD0FE7C41CB30655856E0EB1674FB2E38D692207D55AA290FD6515BAA208", tx38.Hash);
+            var effect38 = tx38.Effects[0] as OfferFundedEffect;
+            Assert.IsNotNull(effect38);
+            Assert.AreEqual(OfferEffectType.Bought, effect38.Type);
+            Assert.AreEqual("0.04103", effect38.Price);
+
+            var tx39 = result.Transactions[39] as OfferEffectTxResult;
+            Assert.IsNotNull(tx39);
+            Assert.AreEqual("8C87C7298D327E4CD909002E2A51BCAD9E6F7B7CF38E682C917164AE22417E74", tx39.Hash);
+            var effect39 = tx39.Effects[0] as OfferFundedEffect;
+            Assert.IsNotNull(effect39);
+            Assert.AreEqual(OfferEffectType.Sold, effect39.Type);
+            Assert.AreEqual("0.04105", effect39.Price);
+            Assert.AreEqual("CNY", effect39.Got.Currency);
+            Assert.AreEqual("0.4105", effect39.Got.Value);
+            Assert.AreEqual("SWT", effect39.Paid.Currency);
+            Assert.AreEqual("10", effect39.Paid.Value);
+        }
+
+        [TestMethod]
         public void TestRequestOrderBookResponse()
         {
             var remote = new Remote("");

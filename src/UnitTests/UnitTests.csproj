@@ -92,6 +92,7 @@
     <None Include="JsonFiles\RequestAccountRelations.json" />
     <None Include="JsonFiles\RequestAccountTums.json" />
     <None Include="JsonFiles\RequestAccountTx.json" />
+    <None Include="JsonFiles\RequestAccountTx_Full.json" />
     <None Include="JsonFiles\RequestLedger_Transactions.json" />
     <None Include="JsonFiles\RequestLedger.json" />
     <None Include="JsonFiles\RequestLedgerClosed.json" />
