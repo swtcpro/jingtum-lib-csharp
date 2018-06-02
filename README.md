@@ -35,24 +35,28 @@ Submit() method.
 
 ## How to use
 1) Create a new instance of Remote class.  
-
+```
     var remote = new Remote("wss://s.jingtum.com:5020", true);
+```
 
 2) Connect to server.  
-
+```
     remote.Connect();
+```
 
 3) Create a Request object by calling the Request*** methods. Call the Submit method to send 
 request to server. You can get the result data by the callback function.  
-
+```
     remote.RequestServerInfo.Submit((result)=&gt;  
     {
         // log result.Exception or result.Message  
     });  
+```
 
 4) Close the connection.
-
+```
     remote.Disconnect();
+```
 
 ## Remote class
 Main handler for backend system. It creates a handle with jingtum, makes request to jingtum, 
