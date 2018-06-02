@@ -196,6 +196,14 @@
             </remarks>
             <param name="callback">The callback.</param>
         </member>
+        <member name="M:JingTum.Lib.Remote.ConnectAsync(JingTum.Lib.MessageCallback{JingTum.Lib.ConnectResponse},System.Int32)">
+            <summary>
+            Connects to jintum asynchronous.
+            </summary>
+            <param name="callback">The callback.</param>
+            <param name="timeout">The timeout. Default is 60000.</param>
+            <returns>The result of connect.</returns>
+        </member>
         <member name="M:JingTum.Lib.Remote.Disconnect">
             <summary>
             Disconnects to jingtum.
@@ -323,7 +331,7 @@
             </summary>
             <returns>A <see cref="T:JingTum.Lib.Account"/> object.</returns>
         </member>
-        <member name="M:JingTum.Lib.Remote.CreateOrderBooksStub">
+        <member name="M:JingTum.Lib.Remote.CreateOrderBookStub">
             <summary>
             Creates the order book stub to subscribe events of order book.
             </summary>
@@ -527,7 +535,7 @@
             The async version of <see cref="M:JingTum.Lib.Transaction`1.Submit(JingTum.Lib.MessageCallback{`0})"/>.
             </summary>
             <param name="callback">The callback for the request result.</param>
-            <param name="timeout">The millisends to wait for the result.</param>
+            <param name="timeout">The millisends to wait for the result. Default is 60000</param>
             <returns>The task.</returns>
         </member>
         <member name="T:JingTum.Lib.InnerTransaction`2">
@@ -4231,7 +4239,7 @@
             The async version of <see cref="M:JingTum.Lib.Request`1.Submit(JingTum.Lib.MessageCallback{`0})"/>.
             </summary>
             <param name="callback">The callback for the request result.</param>
-            <param name="timeout">The millisends to wait for the result.</param>
+            <param name="timeout">The millisends to wait for the result. Default is 60000.</param>
             <returns>The task.</returns>
         </member>
         <member name="M:JingTum.Lib.Request`1.SelectLedger(JingTum.Lib.LedgerState)">

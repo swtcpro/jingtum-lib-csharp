@@ -1,6 +1,8 @@
 JinTum Lib for .Net Ver 1.0.0
 https://github.com/swtcpro/jingtum-lib-csharp
 
+2018-06-02
+
 # jingtum-lib-csharp
 The jingtum-lib-csharp library to be used for interacting with jingtum blockchain network. 
 This is the c# version.
