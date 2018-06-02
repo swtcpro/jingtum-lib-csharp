@@ -1,5 +1,66 @@
+# Design Spec
+
+## Features
+It has the same funtionalities as jingtum-lib-nodejs. 
+
+https://github.com/swtcpro/jingtum-lib-nodejs
+
+## References
+* WebSocket4Net (https://github.com/kerryjiang/WebSocket4Net) The jingtum-lib-csharp library is based on the ws protocol to connect with jingtum system. 
+* Portable.BouncyCastle (http://www.bouncycastle.org/csharp/) The jingtum-lib-csharp libray local sign depends on ECDSA signature.
+* Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json) The json string format is used to communite with jingtum system.
+
+## Models
+* The inner Server class performs the websocket communication.
+* The Remote class provides public APIs to create two kinds of objects: Request object, and Transaction object.
+* The Request class is used to request info.
+* The Transaction class is used to operate transactions. 
+* Both Request class and Transacton class both use Submit(callback) method to submit date to server.
+* The result can be handled by the callback.
+
+|-----------|     |--------------|     |--------|     |--> [ Request Object ]
+| WebSocket | --> | Server       | --> | Remote | --> |    
+| Protocal  | <-- | Inner Class  | <-- | Class  |     |--> [ Transaction Object]
+|-----------|     |--------------|     |--------|
+
+## Stubs
+* Account stub listen all the transactions in server, and then filter them for specfic account.
+* OrderBook stub listen all the transactions in server, and then filter them for specfic gets/pays paire.
+
+## Data
+* The json string is sent to server for request operation.
+* The json string is sent to server for transaction operation (server sign).
+* The json string is sent to server for transaction operation (local sign).
+* The json string is reveived from server for reqeust and transaction operations.
+* The callback result contains:
+** The raw message from server, in json format.
+** The exception message if the operation is refused by the server.
+** The result object if the operation is succeed. It is parsed from the json message.
+
+## Local Sign
+The local sign is implemented by serializing the json string into binary blob, and then send the blob string to server. 
+
+The inner Serializer class performs the serialization. The data members are grouped into different categories, and then serialized as data type and data value pair.
+
+The category contains:
+* Int8
+* Int16
+* Int32
+* Int64
+* Hash128
+* Hash160
+* hash256
+* Amount
+* VL (string)
+* Account (string)
+* PathSet
+* Object
+* Array
+
 # Dcuments
-Usage for jingtum-lib-csharp. All classes are under the namespace JingTum.Lib.
+Usage for jingtum-lib-csharp. All classes are under the namespace JingTum.Lib. 
+
+For the detail documents for each api, please refer to the jingtum-lib.chm.
 
 ## Wallet class
 ### Genreate()
@@ -324,6 +385,9 @@ req.Submit(reqResult =>
 	//Result: "tesSUCCESS"
 	//Memos: [Array]
 	//Effects: [Array]
+	
+	var effect = tx.Effects[0];
+	// differenct type of transactions can have different type of effects.
 });
 ```
 
@@ -404,22 +468,515 @@ In this path find, the user want to send CNY to another account. The system prov
 In each choice, one `Key` is presented. Key is used to "SetPath" in transaction parameter setting.
 
 ### CreateAccountStub()
+AcccountStub is Account class, and is used to subscribe events of account. Can subscribe each account on account stub. 
 
 ### CreateOrderBookStub()
+OrderBookStub is same as AccountStub. Can subscrible each currency pair on orderbook stub.
 
 ### BuildPaymentTx(options)
+Normal payment transaction. 
+
+More parameters can be set by Transaction members. The secret is requried, and others are optional.
+
+#### options
+* Account: The source address.
+* To: The destination address.
+* Amount: The payment amount.
+
+#### sample
+```
+ var tx = remote.BuildPaymentTx(new PaymentTxOptions {
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	To = "jBKaXuYemkAb5HytZgosAcWgWDZbBvz6KR",
+	Amount = new Amount
+	{
+		Value = "0.5",
+		Currency = "SWT",
+		Issuer = ""
+	}
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.AddMemo("给jBKaXuYemkAb5HytZgosAcWgWDZbBvz6KR支付0.5swt.");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.PaymentTxJson]
+});
+```
 
 ### BuildRelationTx(options)
+Build relation Transaction. Now Jingtum supports "trust", "authorize" and "freeze" relation setting.
+
+Same as payment transaction parameter setting, secret is required and others are optional.
+
+#### options
+* Account: The source address.
+* Target: The target address.
+* Type: The relation type. "Trust", "Authorize", "Freeze".
+* Limit: The limit amount.
+
+#### sample
+```
+var tx = remote.BuildRelationTx(new RelationTxOptions {
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Target = "jBKaXuYemkAb5HytZgosAcWgWDZbBvz6KR",
+	Limit = new Amount
+	{
+		Value = "0.01",
+		Currency = "CNY",
+		Issuer = " jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS"
+	},
+	Type = RelationType.Authorize
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.RelationTxJson]
+});
+```
 
 ### BuildAccountSetTx(options)
+AccountSet Transaction is used to set account attribute. Now Jingtum supoorts three account attributes setting, as "property", "delegate" and "signer". "property" is used to set normal account info, "delegate" is used to set delegate account for this account, and "signer" is used to set signers for this acccount.
+
+Same as payment transaction parameter setting, secret is required and others are optional.
+
+#### options
+* Account: The source address.
+* Type: The property type. "Property", "Delegate", "Signer".
+* SetFlag: (optional) The attribute to set for property type.
+* ClearFlag: (optional) The attribute to remove for property type.
+* DelegateKey: (optional) The regualar address for delegate type.
+
+#### sample
+```
+var tx = remote.BuildAccountSetTx(new AccountSetTxOptions
+{
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Type =  AccountSetType.Property，
+	SetFlag = SetClearFlag.RequireDest
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.AccountSetTxJson]
+});
+```
 
 ### BuildOfferCreateTx(options)
+Create one offer and submit to system. 
+
+#### options
+* Account: The source address.
+* Type: "Sell" or "Buy".
+* TakerGets: The amount to get by taker.
+* TakerPays: The amount to pay by taker.
+
+#### sample
+```
+var tx = remote.BuildOfferCreateTx(new OfferCreateTxOptions
+{
+	Account = " j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Type = OfferType.Sell,
+	TakerGets = new Amount
+	{
+		Value = "0.01",
+		Currency = " SWT ",
+		Issuer = ""
+	},
+	TakerPays = new Amount
+	{
+		Value = "1",
+		Currency = "CNY",
+		Issuer = " jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS "
+	}
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.OfferCreateTxJson]
+});
+```
 
 ### BuildOfferCancelTx(options)
+Order can be cancel by order sequence. The sequence can be get when order is submitted or from offer query operation.
+
+#### options
+* Account: The account address.
+* Sequence: The order sequence. It can be get from RequestAccountOffers operation.
+
+#### sample
+```
+var tx = remote.BuildOfferCancelTx(new OfferCancelTxOptions
+{
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Sequence = 8
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.OfferCancelTxJson]
+});
+```
 
 ### DeployContractTx(options)
+Deploy contract to the system. The contract address is return in the ContractState property.
+
+#### options
+* Account: The source address.
+* Amount: The swt to active the contract address.
+* Paylaod: The lua scripts.
+* Params: (optional) The parameters.
+
+#### sample
+```
+var tx = remote.DeployContractTx(new DeployContractTxOptions
+{
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Amount = 35,
+	Payload = "result={}; function Init(t) result=scGetAccountInfo(t) return result end; function foo(t) a={} result=scGetAccountInfo(t) return result end;",
+	Params = new string[]{"j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1"}
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//ContractState: "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn"
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.DeployContractTxJson]
+});
+```
 
 ### CallContractTx(options)
+Call the contract. The call result is return in the ContractState property.
+
+#### options
+* Account: The source address.
+* Destination: The contract address.
+* Foo: The function name to call.
+* Params: (optional) The parameters.
+
+#### sample
+```
+var tx = remote.CallContractTx(new CallContractTxOptions
+{
+	Account = "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1",
+	Destination = "jaVDaozkmFzCGwuBYL5wQ3SvhnUrySuofn",
+	Foo = "foo",
+	Params = new string[]{"j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1"}
+});
+tx.SetSecret("ssGkkAMnKCBkhGVQd9CNzSQv5zdNi");
+tx.Submit(txResult => {
+	var info = txResult.Result; 
+	//ContractState: "{"Account" : "j9FGhAW9dSzL3RjbXkyW6Z6bHGxFk8cmB1", "Balance" : "853871574", ......}"
+	//EngineResult: "tesSUCCESS"
+	//EngineResultCode: 0
+	//EngineResultMessage: "The transaction was applied. Only final in a validated ledger."
+	//TxJson: [JingTum.Lib.CallContractTxJson]
+});
+```
+
+### Events
+
+#### Transactions
+* Listening all transactions occur in the system.
+
+#### LedgerClosed
+* Listening all last closed ledger event.
+
+#### ServerStatusChanged
+* Listening all server status change event.
+
+## Request&lt;T&gt; class
+
+Request is used to get server, account, orderbook and path info. Request is not secret required, and will be public to every one. All requests are asynchronized and should provide a callback. Each callback returns the raw json message, exception and parsed result.
+
+* SelectLedger(ledger)
+* Submit(callback)
+
+### SelectLedger(ledger)
+
+Select one ledger for current request, ledger can be follow options,
+
+* ledger index: The ledger index.
+* ledger hash: The ledger hash.
+* ledger state: The ledger state. "Current", "Validated", "Closed". 
+
+After ledger is selected, the result is for the specified ledger.
+
+### submit(callback)
+
+Callback entry for request. Each callback returns the raw json message, exception and parsed result.
+
+* Message: The raw json message received from the jingtum system.
+* Exception: The exception for local parameter validation or error message from the jingtum system.
+* Result: The parsed result object.
 
 
+## Transaction&lt;T&gt; class
 
+Transaction is used to make transaction and collect transaction parameter. Each transaction is secret required, and transaction can be signed local or remote. All transactions are asynchronized and should provide a callback. Each callback returns the raw json message, exception and parsed result.
+
+* Account (get)
+* TransactionType (get)
+* SetSecret(secret)
+* AddMemo(memo)
+* SetPath(key)
+* SetSendMax(amount)
+* SetTransferRate(rate)
+* SetFlags(flags)
+* Submit(callback)
+
+### Account property
+Each transaction has source address, and its secret should be set.
+
+Account can be master account, delegate account or operation account.
+
+### TransactionType property
+
+Get transaction type. Now Jingtum supports `Payment`, `OfferCreate`, `OfferCancel`, `AccountSet` and so on. 
+
+### SetSecret(secret)
+
+Set Transaction secret, this method is required before transaction submit.
+
+### AddMemo(memo)
+
+Add one memo to transaction, memo is string and is limited to 2k.
+
+### SetPath(key)
+
+Set path for one transaction. The key parameter is request by RequestPathFind method. When the key is set, "SendMax" parameter is also set.
+
+### SetSendMax(amount)
+
+Set payment transaction max amount when needed. It is set by "SetPath" default.
+
+### SetTransferRate(rate)
+
+Set transaction transfer rate. It should be check with fee. 
+
+### SetFlags(flags)
+
+Set transaction flags. It is used to set Offer type mainly. As follows
+
+```
+SetFlags((UInt32)OfferCreateFlags.Sell)
+```
+    
+### Submit(callback)
+
+Submit entry for transaction. Each callback returns the raw json message, exception and parsed result.
+
+* Message: The raw json message received from the jingtum system.
+* Exception: The exception for local parameter validation or error message from the jingtum system.
+* Result: The parsed result object.
+
+## Account class
+
+Account is account stub for account events. One Account stub can subscribe many account events.
+
+### Subscribe(account, callback)
+
+Subscribe account event.
+
+### Unsubscribe(account)
+
+Unsubscribe account event.
+
+## OrderBook class
+OrderBook is order book stub for order book events. One OrderBook stub can subscribe many order book events. 
+
+### RegisterListener(gets, pays, callback)
+
+Subscribe orderbook event.
+
+### UnregisterListener(gets, pays)
+
+Unsubscribe orderbook event.
+
+## TxResult class
+In the result of RequestAccountOffers and RequestTx, the transaction item contains lots of info. The Type property indicates different type of transaction. Each transaction has different result. The following transaction types are listed.
+
+### Sent
+The payment operation to other address. It has following info:
+
+```
+//Type: Sent
+//CounterParty: "jJ3KZo6Zr3BVLiXBBKqMfQoQZHiYFZKNFT"
+//Amount: [SWT]
+//Date: 2018-04-28 22:04:30
+//Hash: "66B1D54953B277CD4FC438ACF198BCB1E456E70D4260CDECA2020AB0E36893B9"
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+### Received
+The payment operation from other address. It has following info:
+
+```
+//Type: Received
+//CounterParty: "jpGnxQzw4KX1r6C9rbygDNdPqn843thpea"
+//Amount: [SWT]
+//Date: 2018-04-27 0:39:30
+//Hash: "5C73414C742388348B7DC3F915A627A69912E4E63F5D5A56D03AACCDEFD7C8FD"
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+### Convert
+User processed convert operation. It has following info. (I have not submitted the convert operation, here just list the info properties.)
+
+```
+//Type: Received
+//Spent: [SWT]
+//Amount: [CNY:jBciDE8Q3uJjf111VeiUNM775AMKHEbBLS]
+//Date: ...
+//Hash: "..."
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+### OfferNew
+User creates a new offer. It has following info.
+
+```
+//Type: OfferNew
+//OfferType: Sell
+//Gets: [SWT]
+//Pays: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Seq: 12
+//Date: 2018-05-02 23:57:00
+//Hash: "2F235C6C5F7839DC16E8896338FA4AB202538BD4415B55688F8B2DBC47269E0E"
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+### OfferCancel
+User cancel the previous created offer. It has following info.
+
+```
+//Type: OfferCancel
+//OfferSeq: 1
+//Gets: [SWT]
+//Pays: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Date: 2018-04-19 0:36:20
+//Hash: "ABFD3C2AC5B97156FB5246C504CBBC071147B666151260756A5FBEC6FCD82A9F"
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+### OfferEffect
+The offer is bought by or sold to others after the offer is created. It has following info.
+
+```
+//Type: OfferEffect
+//Date: 2018-05-04 23:52:30
+//Hash: "1FBD88D0AA001BBECB9C567F0D7128502ECE50BE5379CC22E2E8A496A91EC16C"
+//Fee: "0.01"
+//Result: "tesSUCCESS"
+//Memos: [Array]
+//Effects: [Array]
+```
+
+## NodeEffe class
+Each transaction can have many affect nodes. And different node has different affect. The Effect property indicates the type of the effect. The following transaction effects are listed.
+
+### OfferFunded
+The offer is actually funded. The suggest prompt message could be: "Offer funded, you use XXX bought/sold XXX with price XXX" . It has following info.
+
+```
+//Effect: OfferFunded
+//CounterParty: [JingTum.Lib.CounterParty]
+//Got: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Paid: [SWT]
+//Seq: 0
+//Type: Bought
+//Price: "0.041"
+//Deleted: True
+```
+
+### OfferPartiallyFunded
+The offer is partially funded. The suggest prompt message could be: "Offer partially funded, you use XXX bought/sold XXX with price XXX, the offer is cancel since the remained amount is not enough (optional, based on Cancelled property), the remained amount is XXX (optional, based on Remaining property)". It has following info. (I have no partially funded offer now, so just list the properties.)
+
+```
+//Effect: OfferPartiallyFunded
+//Type: Bought
+//Seq: 0
+//CounterParty: [JingTum.Lib.CounterParty]
+//Paid: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or:3001.96998]
+//Got: [SWT:9999]
+//Price: "0.03002"
+//Gets:  [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Pays:  [SWT:1]
+//Cancelled: false
+//Remaining: true
+```
+
+The above contains the following key info.
+
+* The offer is partially funded, you got SWT 9999, paid CNY amount is 3001.96998.
+* The remaining is true, means have remain offer, the remain amount is 1, price is 0.03002.
+
+### OfferCancelled
+The offer is cancelled by BuildOfferCancelTx operation. The suggest prompt message could be: "The offer is cancelled, offer sequence is XXX". It has following info.
+
+```
+//Effect: OfferCancelled
+//Type: Sell
+//Gets: [SWT]
+//Pays: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Seq: 1
+//Price: "0.042"
+//Deleted: True
+```
+
+### OfferCreated
+A new offer is created. The suggest prompt message could be: "You create a buy/sell offer, use XXX transfer XXX". It has following info.
+
+```
+//Effect: OfferCreated
+//Type: Sell
+//Gets: [SWT]
+//Pays: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Seq: 36
+//Price: "2"
+//Deleted: False
+```
+
+### OfferBought
+The orderbook is sold/bought by others buy/sell offer. The suggest prompt message could be: "You use XXX bought/sold XXX". It has following info.
+
+```
+//Effect: OfferBought
+//Type: Sold
+//CounterParty: [JingTum.Lib.CounterParty]
+//Paid: [SWT]
+//Got: [CNY:jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or]
+//Price: "0.03336"
+//Deleted: False
+```

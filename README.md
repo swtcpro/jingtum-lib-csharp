@@ -11,7 +11,7 @@ The unit tests for jingtum lib.
 The WindowsForm application for testing the jingtum lib apis.
 * Samples
 The samples to use the jingtum lib.
-* Documentation
+* Docs
 The documentation for the jingtum lib.
 * Releases
 The releases of the jingtum lib.
@@ -22,6 +22,11 @@ The following libraries are referenced.
 * Portable.BouncyCastle (http://www.bouncycastle.org/csharp/)
 * WebSocket4Net (https://github.com/kerryjiang/WebSocket4Net)
 * SuperSocket.ClientEngine.Core (https://github.com/kerryjiang/SuperSocket)
+
+## Install
+Install from nuget package manager. 
+
+https://www.nuget.org/packages/JingTum.Lib/
 
 ## Summary
 The jingtum-lib-csharp library is based on the ws protocol to connect with jingtum system. 

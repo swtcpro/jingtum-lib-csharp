@@ -67,11 +67,11 @@ namespace JingTum.Lib
                 }
             }
 
-            public long Flags
+            public UInt32 Flags
             {
                 get
                 {
-                    long? flags;
+                    UInt32? flags;
                     TryGetProperty("Flags", out flags);
                     return flags == null ? 0 : flags.Value;
                 }
@@ -127,7 +127,15 @@ namespace JingTum.Lib
                             }
                             catch
                             {
-                                continue;
+                                try
+                                {
+                                    value = (T)Convert.ChangeType(propertyValue, typeof(T));
+                                    return true;
+                                }
+                                catch
+                                {
+                                    continue;
+                                }
                             }
                         }
                     }

@@ -1084,7 +1084,7 @@ namespace JingTum.Lib
         /// Gets sequence of the account.
         /// </summary>
         [JsonProperty("Sequence")]
-        public UInt32? Sequence { get; internal set; }
+        public int Sequence { get; internal set; }
 
         /// <summary>
         /// Gets the amount of taker gets.
