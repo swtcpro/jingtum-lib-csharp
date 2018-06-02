@@ -42,8 +42,8 @@ Submit() method.
 
     remote.Connect();
 
-3) Create a Request object by calling the Request*** methods. You can get the result data 
-by the callback function.  
+3) Create a Request object by calling the Request*** methods. Call the Submit method to send 
+request to server. You can get the result data by the callback function.  
 
     remote.RequestServerInfo.Submit((result)=&gt;  
     {  
@@ -76,5 +76,5 @@ You can listen events of the server.
 * Listening all last closed ledger event. (Remote.LedgerClosed event)
 * Listening all server status change event. (Remote.ServerStatusChanged event)
 * Listening all events for specific account. (Remote.CreateAccountStub method)
-* Listening all events for specific orderbook pair. (Remote.CreateOrderBooksStub method)
+* Listening all events for specific orderbook pair. (Remote.CreateOrderBookStub method)
 
