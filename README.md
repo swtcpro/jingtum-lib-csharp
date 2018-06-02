@@ -36,7 +36,7 @@ Submit() method.
 ## How to use
 1) Create a new instance of Remote class.  
 
-    var remote = new Remote("ws://123.57.219.57:5020");
+    var remote = new Remote("wss://s.jingtum.com:5020", true);
 
 2) Connect to server.  
 
