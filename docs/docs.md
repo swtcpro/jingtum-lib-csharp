@@ -7,7 +7,7 @@ https://github.com/swtcpro/jingtum-lib-nodejs
 
 ## References
 * WebSocket4Net (https://github.com/kerryjiang/WebSocket4Net) The jingtum-lib-csharp library is based on the ws protocol to connect with jingtum system. 
-* Portable.BouncyCastle (http://www.bouncycastle.org/csharp/) The jingtum-lib-csharp libray local sign depends on ECDSA signature.
+* Portable.BouncyCastle (http://www.bouncycastle.org/csharp/) The jingtum-lib-csharp library local sign depends on ECDSA signature.
 * Newtonsoft.Json (https://github.com/JamesNK/Newtonsoft.Json) The json string format is used to communite with jingtum system.
 
 ## Models
@@ -32,12 +32,12 @@ https://github.com/swtcpro/jingtum-lib-nodejs
 ## Data
 * The json string is sent to server for request operation.
 * The json string is sent to server for transaction operation (server sign).
-* The json string is sent to server for transaction operation (local sign).
+* The transaction data is serialized to blob string and then sent to server for transaction operation (local sign).
 * The json string is reveived from server for reqeust and transaction operations.
 * The callback result contains:
-** The raw message from server, in json format.
-** The exception message if the operation is refused by the server.
-** The result object if the operation is succeed. It is parsed from the json message.
+  * The raw message from server, in json format.
+  * The exception message if the operation is refused by the server.
+  * The result object if the operation is succeed. It is parsed from the json message.
 
 ## Local Sign
 The local sign is implemented by serializing the json string into binary blob, and then send the blob string to server. 
@@ -290,8 +290,9 @@ Callback as MessageCallback&lt;AccountRelationsResponse&gt;.
 #### options
 * Account: The wallet addres.
 * Type: Trust, Ahthorize, Freeze
-* Ledger: (Optional)
-* Limit: (options) Limit the return relations count.
+* Ledger: (optional)
+* Limit: (optional) Limit the return relations count.
+* Marker: (optional) Request from the marker position. It can be got from the response of previous request.
 
 #### sample
 ```
@@ -325,7 +326,8 @@ Callback as MessageCallback&lt;AccountOffers&gt;.
 #### options
 * Account: The wallet address.
 * LedgerIndex: (optional)
-* Limit: (options) Limit the return offers count.
+* Limit: (optional) Limit the return offers count.
+* Marker: (optional) Request from the marker position. It can be got from the response of previous request.
 
 #### sample
 ```
@@ -361,6 +363,7 @@ Callback as MessageCallback&lt;AccountTxResponse&gt;.
 * Account: The wallet address.
 * LedgerIndex: (optional) 
 * Limit: (optional) Limit the return trancations count.
+* Marker: (optional) Request from the marker position. It can be got from the response of previous request.
 
 #### sample
 ```
@@ -635,7 +638,7 @@ tx.Submit(txResult => {
 ```
 
 ### DeployContractTx(options)
-Deploy contract to the system. The contract address is return in the ContractState property.
+Deploy contract to the system. The contract address is returned in the ContractState property.
 
 #### options
 * Account: The source address.
@@ -664,7 +667,7 @@ tx.Submit(txResult => {
 ```
 
 ### CallContractTx(options)
-Call the contract. The call result is return in the ContractState property.
+Call the contract. The call result is returned in the ContractState property.
 
 #### options
 * Account: The source address.
@@ -725,7 +728,7 @@ After ledger is selected, the result is for the specified ledger.
 Callback entry for request. Each callback returns the raw json message, exception and parsed result.
 
 * Message: The raw json message received from the jingtum system.
-* Exception: The exception for local parameter validation or error message from the jingtum system.
+* Exception: The exception for local argument validation or error message from the jingtum system.
 * Result: The parsed result object.
 
 
@@ -785,7 +788,7 @@ SetFlags((UInt32)OfferCreateFlags.Sell)
 Submit entry for transaction. Each callback returns the raw json message, exception and parsed result.
 
 * Message: The raw json message received from the jingtum system.
-* Exception: The exception for local parameter validation or error message from the jingtum system.
+* Exception: The exception for local argument validation or error message from the jingtum system.
 * Result: The parsed result object.
 
 ## Account class
@@ -812,7 +815,7 @@ Subscribe orderbook event.
 Unsubscribe orderbook event.
 
 ## TxResult class
-In the result of RequestAccountOffers and RequestTx, the transaction item contains lots of info. The Type property indicates different type of transaction. Each transaction has different result. The following transaction types are listed.
+In the result of RequestAccountOffers and RequestTx, the transaction item contains lots of info. The Type property indicates different type of transaction. Different transaction has different result. The following transaction types are listed.
 
 ### Sent
 The payment operation to other address. It has following info:
@@ -893,7 +896,7 @@ User cancels the previous created offer. It has following info.
 ```
 
 ### OfferEffect
-The offer is bought by or sold to others after the offer is created. It has following info.
+The offer is bought by or sold to others after the offer was created. It has following info.
 
 ```
 //Type: OfferEffect
@@ -923,7 +926,7 @@ The offer is actually funded. The suggest prompt message could be: "Offer funded
 ```
 
 ### OfferPartiallyFunded
-The offer is partially funded. The suggest prompt message could be: "Offer partially funded, you use XXX bought/sold XXX with price XXX, the offer is cancel since the remained amount is not enough (optional, based on Cancelled property), the remained amount is XXX (optional, based on Remaining property)". It has following info. (I have no partially funded offer now, so just list the properties.)
+The offer is partially funded. Suggest prompt message: "Offer partially funded, you use XXX bought/sold XXX with price XXX, the offer is cancel since the remained amount is not enough (optional, based on Cancelled property), the remained amount is XXX (optional, based on Remaining property)". It has following info. (I have no partially funded offer now, so just list the properties.)
 
 ```
 //Effect: OfferPartiallyFunded
@@ -945,7 +948,7 @@ The above contains the following key info.
 * The remaining is true, means have remain offer, the remain amount is 1, price is 0.03002.
 
 ### OfferCancelled
-The offer is cancelled by BuildOfferCancelTx operation. The suggest prompt message could be: "The offer is cancelled, offer sequence is XXX". It has following info.
+The offer is cancelled by BuildOfferCancelTx operation. Suggest prompt message: "The offer is cancelled, offer sequence is XXX". It has following info.
 
 ```
 //Effect: OfferCancelled
@@ -958,7 +961,7 @@ The offer is cancelled by BuildOfferCancelTx operation. The suggest prompt messa
 ```
 
 ### OfferCreated
-A new offer is created. The suggest prompt message could be: "You create a buy/sell offer, use XXX transfer XXX". It has following info.
+A new offer is created. Suggest prompt message: "You create a buy/sell offer, use XXX transfer XXX". It has following info.
 
 ```
 //Effect: OfferCreated
@@ -971,7 +974,7 @@ A new offer is created. The suggest prompt message could be: "You create a buy/s
 ```
 
 ### OfferBought
-The orderbook is sold/bought by others buy/sell offer. The suggest prompt message could be: "You use XXX bought/sold XXX". It has following info.
+The orderbook is sold/bought by other's buy/sell offer. Suggest prompt message: "You use XXX bought/sold XXX". It has following info.
 
 ```
 //Effect: OfferBought
