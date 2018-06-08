@@ -165,7 +165,7 @@ namespace JingTum.Lib
         }
     }
 
-    public class ParameterInfo : ICloneable
+    internal class ParameterInfo : ICloneable
     {
         public string Parameter { get; internal set; }
 
