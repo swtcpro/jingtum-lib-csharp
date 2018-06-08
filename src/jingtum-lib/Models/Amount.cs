@@ -7,7 +7,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the tum amount.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     [JsonConverter(typeof(AmountConverter))]
     public class Amount : ICloneable
     {

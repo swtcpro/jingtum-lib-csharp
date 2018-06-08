@@ -70,7 +70,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the ledger settings.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class LedgerSettings
     {
         private UInt32? _ledgerIndex;
@@ -340,7 +342,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the marker.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class Marker
     {
         /// <summary>

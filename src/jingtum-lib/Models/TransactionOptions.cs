@@ -10,7 +10,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for payment transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class PaymentTxOptions
     {
         /// <summary>
@@ -60,7 +62,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for deploy contract transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class DeployContractTxOptions : ContractTxOptions
     {
         /// <summary>
@@ -82,7 +86,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for call contract transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class CallContractTxOptions : ContractTxOptions
     {
         /// <summary>
@@ -104,7 +110,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for sign transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class SignTxOptions
     {
         /// <summary>
@@ -119,7 +127,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for relation transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class RelationTxOptions
     {
         /// <summary>
@@ -169,7 +179,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for set account atribute transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class AccountSetTxOptions
     {
         /// <summary>
@@ -212,7 +224,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for offer create transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class OfferCreateTxOptions
     {
         /// <summary>
@@ -248,7 +262,9 @@ namespace JingTum.Lib
     /// <summary>
     /// Represents the options for offer cancel transaction.
     /// </summary>
+#if !NETSTANDARD
     [TypeConverter(typeof(ExpandableObjectConverterEx))]
+#endif
     public class OfferCancelTxOptions
     {
         /// <summary>

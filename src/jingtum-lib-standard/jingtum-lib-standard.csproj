@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>JingTum.Lib</AssemblyName>
+    <RootNamespace>JingTum.Lib</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0;NETSTANDARD</DefineConstants>
+    <DocumentationFile>bin\Debug\netstandard2.0\JingTum.Lib.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0;NETSTANDARD</DefineConstants>
+    <DocumentationFile>bin\Release\netstandard2.0\JingTum.Lib.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\jingtum-lib\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+  <Compile Remove="..\jingtum-lib\Properties\**" />
+    <Compile Remove="..\jingtum-lib\Design\**" />
+    <Compile Remove="..\jingtum-lib\obj\Debug\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.2" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
+  </ItemGroup>
+
+</Project>
