@@ -18,6 +18,9 @@ namespace TestApp
         public Form1()
         {
             InitializeComponent();
+#if NETSTANDARD
+            Text += " (NETSTANDARD)";
+#endif
         }
 
         private void Form1_Load(object sender, EventArgs e)
