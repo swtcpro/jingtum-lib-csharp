@@ -186,7 +186,7 @@
   <ItemGroup>
     <ProjectReference Include="..\jingtum-lib-standard\jingtum-lib-standard.csproj">
       <Project>{9670b015-735d-4347-b5f4-6c20faaa05d6}</Project>
-      <Name>JingTum.Lib.Standard</Name>
+      <Name>jingtum-lib-standard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
