@@ -63,6 +63,12 @@ namespace JingTum.Lib
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
 
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
         public object Clone()
         {
             var that = new Amount();
@@ -72,12 +78,25 @@ namespace JingTum.Lib
             return that;
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             if (Currency == Config.Currency) return Currency;
             return string.Format("{0}:{1}", Currency, Issuer);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             var that = obj as Amount;
@@ -86,6 +105,12 @@ namespace JingTum.Lib
             return this.Currency == that.Currency && this.Issuer == that.Issuer && this.Value == that.Value;
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return (Currency == null ? 0 : Currency.GetHashCode())

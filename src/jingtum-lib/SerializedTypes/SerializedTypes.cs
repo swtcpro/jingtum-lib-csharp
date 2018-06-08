@@ -403,8 +403,7 @@ namespace JingTum.Lib
                     lo = val.Value.LongValue & 0xffffffff;
                 }
 
-                /** Convert from a bitArray to an array of bytes.
-                 **/
+                // Convert from a bitArray to an array of bytes.
                 var arr = new long[]{ hi, lo};
                 int l = arr.Length;
                 long bl;

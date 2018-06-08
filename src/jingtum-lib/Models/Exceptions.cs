@@ -33,6 +33,12 @@ namespace JingTum.Lib
         /// </summary>
         public string Request { get; internal set; }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("({0}: {1}): {2}", Error == null ? "" : Error, ErrorCode.ToString(), Message == null ? "" : Message);
@@ -60,6 +66,9 @@ namespace JingTum.Lib
         /// </summary>
         public string Secret { get; private set; }
 
+        /// <summary>
+        /// Gets a message that describes the current exception.
+        /// </summary>
         public override string Message => Secret == null ? "Secret is null." : string.Format("Invalid secret \"{0}\".", Secret);
     }
 
@@ -92,6 +101,9 @@ namespace JingTum.Lib
         /// </summary>
         public string Address { get; private set; }
 
+        /// <summary>
+        /// Gets a message that describes the current exception.
+        /// </summary>
         public override string Message => base.Message ?? (Address == null ? "Address is null." : string.Format("Invalid addess \"\".", Address));
     }
 
@@ -124,6 +136,9 @@ namespace JingTum.Lib
         /// </summary>
         public string Hash { get; private set; }
 
+        /// <summary>
+        /// Gets a message that describes the current exception.
+        /// </summary>
         public override string Message => base.Message ?? (Hash == null ? "Hash is null." : string.Format("Invalid hash \"\".", Hash));
     }
 
@@ -156,6 +171,9 @@ namespace JingTum.Lib
         /// </summary>
         public Amount Amount { get; private set; }
 
+        /// <summary>
+        /// Gets a message that describes the current exception.
+        /// </summary>
         public override string Message => base.Message ?? (Amount == null ? "Amount is null." : "Invalid amount.");
     }
 }
