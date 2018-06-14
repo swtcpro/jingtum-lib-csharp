@@ -9,7 +9,7 @@ This is the c# version.
 * Samples - The samples to use the jingtum lib.
 * docs - The documentation for the jingtum lib.
 
-## Suport Environment
+## Support Environment
 * .NET Framework 4.5
 * .NET Standard 2.0
 
