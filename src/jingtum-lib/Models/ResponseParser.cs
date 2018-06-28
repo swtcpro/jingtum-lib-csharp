@@ -150,7 +150,7 @@ namespace JingTum.Lib
         {
             if (tx == null || meta == null) return null;
 
-            var isSell = ((long)LedgerOfferFlags.Sell & tx.Flags) != 0;
+            var isSell = ((uint)LedgerOfferFlags.Sell & tx.Flags) != 0;
             var books = new List<string>();
             foreach(var an in meta.AffectedNodes)
             {
@@ -271,7 +271,7 @@ namespace JingTum.Lib
                 if (node.LedgerEntryType == "Offer")
                 {
                     // for new and cancelled offers
-                    var sell = fieldsSet.Flags == (long)LedgerOfferFlags.Sell;
+                    var sell = fieldsSet.Flags == (uint)LedgerOfferFlags.Sell;
                     OfferEffect offerEffect = null;
 
                     // current account offer
@@ -506,7 +506,7 @@ namespace JingTum.Lib
                 case TxResultType.OfferNew:
                     {
                         var result = new OfferNewTxResult();
-                        result.OfferType = tx.Flags == (long)OfferCreateFlags.Sell ? OfferType.Sell : OfferType.Buy;
+                        result.OfferType = tx.Flags == (uint)OfferCreateFlags.Sell ? OfferType.Sell : OfferType.Buy;
                         result.Gets = tx.TakerGets;
                         result.Pays = tx.TakerPays;
                         result.Seq = tx.Sequence;
