@@ -431,6 +431,11 @@ namespace JingTum.Lib
             if (amount1 == null) return amount2;
             if (amount2 == null) return amount1;
 
+            if(amount1.Currency != amount2.Currency)
+            {
+                throw new ArgumentException("The currency types of these 2 Amounts should be the same.");
+            }
+
             var value1 = decimal.Parse(amount1.Value);
             var value2 = decimal.Parse(amount2.Value);
             var value = value1 + value2;
