@@ -244,7 +244,7 @@ namespace JingTum.Lib
             int.TryParse(tx.Fee, out fee);
             result.Fee = (fee / 1000000d).ToString("0.######");
             result.Result = meta != null ? meta.TransactionResult : "failed";
-            result.Memos = ParseMemos(tx);
+            result.Memos = ParseMemos(tx.Memos);
 
             if (meta != null && meta.TransactionResult == "tesSUCCESS")
             {
@@ -456,11 +456,10 @@ namespace JingTum.Lib
             return founded ? AmountRatio(gets, pays) : AmountRatio(pays, gets);
         }
 
-        private static string[] ParseMemos(Tx tx)
+        private static string[] ParseMemos(MemoData[] memos)
         {
-            if (tx.Memos == null || tx.Memos.Length == 0) return null;
-
-            return tx.Memos.Select(m => m.Memo == null ? null : m.Memo.MemoData).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            if (memos == null) return null;
+            return memos.Select(m => m.Memo?.MemoData).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
         private static TxResult CreateTxResult(Tx tx, string account)
