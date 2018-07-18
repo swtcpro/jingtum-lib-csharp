@@ -713,7 +713,7 @@ namespace JingTum.Lib
         /// Gets the transaction flags.
         /// </summary>
         [JsonProperty("Flags")]
-        public long Flags { get; internal set; }
+        public uint Flags { get; internal set; }
 
         /// <summary>
         /// Gets the list of memos.

@@ -150,7 +150,7 @@ namespace JingTum.Lib
         {
             if (tx == null || meta == null) return null;
 
-            var isSell = ((long)LedgerOfferFlags.Sell & tx.Flags) != 0;
+            var isSell = ((uint)LedgerOfferFlags.Sell & tx.Flags) != 0;
             var books = new List<string>();
             foreach(var an in meta.AffectedNodes)
             {
@@ -244,7 +244,7 @@ namespace JingTum.Lib
             int.TryParse(tx.Fee, out fee);
             result.Fee = (fee / 1000000d).ToString("0.######");
             result.Result = meta != null ? meta.TransactionResult : "failed";
-            result.Memos = ParseMemos(tx);
+            result.Memos = ParseMemos(tx.Memos);
 
             if (meta != null && meta.TransactionResult == "tesSUCCESS")
             {
@@ -271,7 +271,7 @@ namespace JingTum.Lib
                 if (node.LedgerEntryType == "Offer")
                 {
                     // for new and cancelled offers
-                    var sell = fieldsSet.Flags == (long)LedgerOfferFlags.Sell;
+                    var sell = fieldsSet.Flags == (uint)LedgerOfferFlags.Sell;
                     OfferEffect offerEffect = null;
 
                     // current account offer
@@ -431,6 +431,11 @@ namespace JingTum.Lib
             if (amount1 == null) return amount2;
             if (amount2 == null) return amount1;
 
+            if(amount1.Currency != amount2.Currency)
+            {
+                throw new ArgumentException("The currency types of these 2 Amounts should be the same.");
+            }
+
             var value1 = decimal.Parse(amount1.Value);
             var value2 = decimal.Parse(amount2.Value);
             var value = value1 + value2;
@@ -456,11 +461,10 @@ namespace JingTum.Lib
             return founded ? AmountRatio(gets, pays) : AmountRatio(pays, gets);
         }
 
-        private static string[] ParseMemos(Tx tx)
+        private static string[] ParseMemos(MemoData[] memos)
         {
-            if (tx.Memos == null || tx.Memos.Length == 0) return null;
-
-            return tx.Memos.Select(m => m.Memo == null ? null : m.Memo.MemoData).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            if (memos == null) return null;
+            return memos.Select(m => m.Memo?.MemoData).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
         private static TxResult CreateTxResult(Tx tx, string account)
@@ -507,7 +511,7 @@ namespace JingTum.Lib
                 case TxResultType.OfferNew:
                     {
                         var result = new OfferNewTxResult();
-                        result.OfferType = tx.Flags == (long)OfferCreateFlags.Sell ? OfferType.Sell : OfferType.Buy;
+                        result.OfferType = tx.Flags == (uint)OfferCreateFlags.Sell ? OfferType.Sell : OfferType.Buy;
                         result.Gets = tx.TakerGets;
                         result.Pays = tx.TakerPays;
                         result.Seq = tx.Sequence;

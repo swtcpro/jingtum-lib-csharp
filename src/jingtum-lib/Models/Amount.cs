@@ -86,8 +86,12 @@ namespace JingTum.Lib
         /// </returns>
         public override string ToString()
         {
-            if (Currency == Config.Currency) return Currency;
-            return string.Format("{0}:{1}", Currency, Issuer);
+            var result = Currency == Config.Currency ? Currency : string.Format("{0}:{1}", Currency, Issuer);
+            if (!string.IsNullOrEmpty(Value))
+            {
+                result += ":" + Value;
+            }
+            return result;
         }
 
         /// <summary>

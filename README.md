@@ -9,6 +9,9 @@ This is the c# version.
 * Samples - The samples to use the jingtum lib.
 * docs - The documentation for the jingtum lib.
 
+## Supporting Environment
+* .NET Framework 4.5
+
 ## Development Environment
 * Windows 10
 * VisualStudio 2017
