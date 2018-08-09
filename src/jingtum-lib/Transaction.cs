@@ -308,29 +308,50 @@ namespace JingTum.Lib
         }
 
         /// <summary>
+        /// Sets the sequence of the account for the local sign.
+        /// </summary>
+        /// <remarks>
+        /// Before local sign, the sequence of the account will be fetched by <see cref="Remote.RequestAccountInfo(AccountInfoOptions)"/> method.
+        /// This method is used to set the sequence if you already know its value.
+        /// </remarks>
+        /// <param name="sequence">The sequence.</param>
+        public void SetSequence(uint sequence)
+        {
+            _txJson.Sequence = sequence;
+        }
+
+        /// <summary>
         /// Sign the transaction.
         /// </summary>
         /// <param name="callback">The callback for the blob of sign result.</param>
         public void Sign(MessageCallback<string> callback)
         {
-            var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
-            req.Submit(accountInfoResult =>
+            if (_txJson.Sequence.HasValue)
             {
-                Sign(accountInfoResult, callback);
-            });
+                SignInternal(callback);
+            }
+            else
+            {
+                var req = _remote.RequestAccountInfo(new AccountInfoOptions { Account = _txJson.Account });
+                req.Submit(accountInfoResult =>
+                {
+                    if (accountInfoResult.Exception != null)
+                    {
+                        callback?.Invoke(new MessageResult<string>("sign error: ", accountInfoResult.Exception));
+                        return;
+                    }
+
+                    var accountInfo = accountInfoResult.Result;
+                    _txJson.Sequence = accountInfo.AccountData.Sequence;
+                    SignInternal(callback);
+                });
+            }
         }
 
-        private void Sign(MessageResult<AccountInfoResponse> accountInfoResult, MessageCallback<string> callback)
+        private void SignInternal(MessageCallback<string> callback)
         {
-            if (accountInfoResult.Exception != null)
-            {
-                callback?.Invoke(new MessageResult<string>("sign error: ", accountInfoResult.Exception));
-                return;
-            }
-
             const decimal factor = 1000000;
-            var accountInfo = accountInfoResult.Result;
-            _txJson.Sequence = accountInfo.AccountData.Sequence;
+
             var fee = Utils.TryGetNumber<decimal>(_txJson.Fee);
             if (fee == null)
             {
